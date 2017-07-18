@@ -14,7 +14,7 @@ class Nav extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="/"><img src="/uploads/principal_design/logo/57ecd28439e00104f883a1d0/thumb_70ef2cf9-77b2-4965-b7ab-d1b6e5a71eb5_2x.png" alt="Thumb 70ef2cf9 77b2 4965 b7ab d1b6e5a71eb5 2x" /></a>
+            <a className="navbar-brand" href="/"><img src="logo.png" alt="Thumb 70ef2cf9 77b2 4965 b7ab d1b6e5a71eb5 2x" /></a>
           </div>
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">

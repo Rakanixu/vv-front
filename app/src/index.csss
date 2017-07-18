@@ -21,11 +21,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  height:100%;
-}
-
-div {
-  height: 100%;
 }
 
 /* line 33, /usr/local/lib/ruby/gems/2.3.0/gems/bootstrap-sass-3.3.6/assets/stylesheets/bootstrap/_normalize.scss */
