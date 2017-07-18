@@ -4,20 +4,22 @@ import Event from './Event';
 import Footer from './Footer';
 import './App.css';
 
+const config = require('./../config.json');
+var divStyle;
+
 class Box extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props)
 
-    this.setState({outerStyle: {
-      backgroundImage: 'url(' + this.props.background + ')'
-    }});
+    divStyle = {
+      background: 'url(' + config.baseURL + this.props.background + ')',
+    };
   }
 
   render() {
     return (
-      <div className="event" style={this.props.outerStyle}>
-        <a href="/events/589874ef39e00104f8976810"></a>
+      <div className="event" style={divStyle}>
+        <a href={"/event/" + this.props.id}></a>
         <div className="info">
           <a href={this.props.link}>
           <div className="title">{this.props.title}</div>

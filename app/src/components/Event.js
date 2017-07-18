@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import config from './../config';
 import axios from 'axios';
 import './Event.css';
 import Box from'./Box.js';
+
+const config = require('./../config.json');
 
 class Event extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      url: 'http://localhost:9000/api/v1/event',
+      url: config.baseAPI_URL + 'event',
       events: []
     };
   }
