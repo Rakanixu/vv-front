@@ -25,29 +25,17 @@ class Event extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="content">
-              <div className="row">
-                <div className="col-md-8 col-md-offset-2">
-                  <div className="row">
-                    {this.state.events.map((event, i) =>
-                      <div className="event" key={event.id}>
-                        <Box key={i} 
-                            id={event.id} 
-                            title={event.title} 
-                            date={event.date} 
-                            background={event.event_background} 
-                            link="" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div>
+        {this.state.events.map((event, i) =>
+          <div className="event" key={event.id}>
+            <Box key={i} 
+                id={event.id} 
+                title={event.title} 
+                date={event.date} 
+                background={event.event_background} 
+                link="" />
           </div>
-        </div>    
+        )}
       </div>
     );
   }
