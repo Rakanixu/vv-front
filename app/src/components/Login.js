@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import './Login.css';
 
 const config = require('./../config.json');
-var divStyle;
 
 class Login extends Component {
   constructor(props) {
@@ -26,4 +26,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

@@ -1,5 +1,5 @@
 import React from 'react'
-import {AppBar, Tabs, Tab} from 'material-ui'
+import { Tabs, Tab} from 'material-ui'
 
 class Nav extends React.Component {
   render() {

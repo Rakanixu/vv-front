@@ -1,35 +1,39 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
-import Event from './Event';
-import Footer from './Footer';
-import './App.css';
+import { withRouter } from 'react-router-dom'
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import './Box.css';
 
 const config = require('./../config.json');
-var divStyle;
+var imgURL, cardStyle, cardMediaStyle;
 
 class Box extends Component {
   constructor(props) {
     super(props);
-
-    divStyle = {
-      background: 'url(' + config.baseURL + this.props.background + ')',
+    
+    imgURL = config.baseURL + this.props.background;
+    cardMediaStyle = {
+      minHeight: 250,
+      minWidth: 280,
+      cursor: 'pointer'
     };
+    cardStyle = {
+      padding: 25
+    };
+  }
+
+  redirect(e) {
+    this.props.history.push('/event/' + this.props.id);
   }
 
   render() {
     return (
-      <div className="event" style={divStyle}>
-        <a href={"/event/" + this.props.id}></a>
-        <div className="info">
-          <a href={this.props.link}>
-          <div className="title">{this.props.title}</div>
-          <div className="date">{this.props.date}</div>
-          </a>
-          <a className="btn btn-lg btn-primary btn-join" href={this.props.link}>Show event details</a>
-        </div>
-      </div>
+      <Card style={cardStyle} onTouchTap={this.redirect.bind(this)}>
+        <CardMedia style={cardMediaStyle} overlay={<CardTitle title={this.props.title} subtitle={this.props.date} />}>
+          <img src={imgURL} />
+        </CardMedia>
+      </Card>
     );
   }
 }
 
-export default Box;
+export default withRouter(Box);
