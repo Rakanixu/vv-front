@@ -4,6 +4,8 @@ import axios from 'axios';
 import Box from'./Box.js';
 import './Events.css';
 
+axios.defaults.withCredentials = true; 
+
 const config = require('./../config.json');
 
 class Events extends Component {
@@ -11,7 +13,7 @@ class Events extends Component {
     super(props);
 
     this.state = {
-      url: config.baseAPI_URL + 'event',
+      url: config.baseAPI_URL + '/event',
       events: []
     };
   }

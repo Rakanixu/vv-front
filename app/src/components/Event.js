@@ -45,7 +45,7 @@ class Event extends Component {
     super(props);
 
     this.state = {
-      url: config.baseAPI_URL + 'event/' + this.props.match.params.eventId,
+      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       event: {}
     };
   }
