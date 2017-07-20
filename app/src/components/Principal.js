@@ -32,7 +32,7 @@ class Principal extends Component {
     super(props);
 
     this.state = {
-      tableHeight: window.innerHeight - 60,
+      tableHeight: window.innerHeight - 125,
       error: null,
       url: config.baseAPI_URL + '/principal',
       principals: []
@@ -47,15 +47,12 @@ class Principal extends Component {
     axios.get(this.state.url).then(res => {
       this.setState({ principals: res.data });
     }).catch(err => {
-      this.setState({ error: err });
-      setTimeout(function() {
-        this.setState({ error: null });
-      }.bind(this), 5000);
+      this._handleError(err);
     });
   }
 
   _edit(e) {
-
+    this.props.history.push('/root/principal/edit/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {
