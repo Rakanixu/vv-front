@@ -6,7 +6,6 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
 import axios from 'axios';
 import ErrorReporting from 'material-ui-error-reporting';
-import Nav from './Nav';
 import './Principal.css';
 
 axios.defaults.withCredentials = true;

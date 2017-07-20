@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
+import { dataURItoBlob } from './../utils';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Upload from 'material-ui-upload/Upload';
+import ColorPicker from 'material-ui-color-picker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import Nav from './Nav';
 import axios from 'axios';
 import './NewPrincipal.css';
 
@@ -37,6 +37,14 @@ class NewPrincipal extends Component {
     state[e.target.dataset.val] = e.target.value;
     this.setState(state);
     this.setState({ error: null });
+  }
+
+  _handelPrimaryColorChange(color) {
+    this.state.primary_color = color;
+  }
+
+  _handelSecondaryColorChange(color) {
+    this.state.secondary_color = color;    
   }
 
   _onBackgroundChange = (pictures) => {
@@ -91,8 +99,8 @@ class NewPrincipal extends Component {
     data.append('secondary_color', this.state.secondary_color);
     data.append('tags', this.state.tags);
     data.append('description', this.state.description);
-    data.append('background', background);
-    data.append('logo', logo);
+    data.append('background', background, 'background');
+    data.append('logo', logo, 'logo');
 
     return axios.post(config.baseAPI_URL + '/principal', data);
   }
@@ -130,14 +138,12 @@ class NewPrincipal extends Component {
                       data-val="design"
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
-            <TextField floatingLabelText="Primary Color"
-                      data-val="primary_color"
-                      onChange={this._handleTextFieldChange.bind(this)} 
-                      fullWidth={true} />
-            <TextField floatingLabelText="Secondary Color"
-                      data-val="secondary_color"
-                      onChange={this._handleTextFieldChange.bind(this)} 
-                      fullWidth={true} />
+            <ColorPicker floatingLabelText="Primary color"
+                      defaultValue='#000'
+                      onChange={this._handelPrimaryColorChange.bind(this)} />
+            <ColorPicker floatingLabelText="Secondary color"
+                      defaultValue='#000'
+                      onChange={this._handelSecondaryColorChange.bind(this)} />                      
             <TextField floatingLabelText="Description"
                       data-val="description"
                       onChange={this._handleTextFieldChange.bind(this)} 
@@ -159,17 +165,6 @@ class NewPrincipal extends Component {
       </div>
     );
   }
-}
-
-function dataURItoBlob(dataURI) {
-  var binary = atob(dataURI.split(',')[1]);
-  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-  var array = [];
-  for(var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-  }
-
-  return new Blob([new Uint8Array(array)], {type: mimeString, extension: '.png'});
 }
 
 export default withRouter(NewPrincipal);

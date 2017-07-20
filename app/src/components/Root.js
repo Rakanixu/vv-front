@@ -18,6 +18,7 @@ class Root extends Component {
 
     this.state = { open: false };
   }
+
   componentWillMount() {
     if (!utils.IsRoot()) {
       this.props.history.push('/');
@@ -38,6 +39,7 @@ class Root extends Component {
       <div>
         <AppBar title="Principals" iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this._handleToggle}/>
         <Drawer open={this.state.open}>
+          <div><img className="logo" src="/logo.png"/></div>
           <MenuItem data-url="/root/principal/new" onTouchTap={this._handleRedirect.bind(this)}>New principal</MenuItem>
           <MenuItem data-url="/root/principal" onTouchTap={this._handleRedirect.bind(this)}>Overview</MenuItem>
         </Drawer>
@@ -45,7 +47,7 @@ class Root extends Component {
           <Route exact path={`${this.props.match.path}`} component={Principal} />
           <Route exact path={`${this.props.match.path}/principal`} component={Principal} />
           <Route exact path={`${this.props.match.path}/principal/new`} component={NewPrincipal} />
-          <Route exact path={`${this.props.match.path}/principal/edit`} component={EditPrincipal} />
+          <Route exact path={`${this.props.match.path}/principal/edit/:principalId`} component={EditPrincipal} />
         </Switch>
       </div>
     );
