@@ -1,11 +1,57 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import Events from './Events';
+import Event from './Event';
 import './Manager.css';
 
+const utils = require('./../utils.js');
+
 class Manager extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { open: false };
+  }
+
+  componentWillMount() {
+    if (!utils.IsRoot()) {
+      this.props.history.push('/');
+    }
+  }
+
+  _handleToggle = () => {
+    this.setState({ open: !this.state.open });
+  }
+
+  _handleRedirect(e) {
+    this.props.history.push(e.currentTarget.dataset.url);
+    this.setState({ open: false });
+  }
+
   render() {
     return (
-      <div></div>
+      <div>
+        <AppBar title="Manager" iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this._handleToggle}/>
+        <Drawer open={this.state.open}>
+          <div><img className="logo" src="/logo.png"/></div>
+          <MenuItem data-url="/manager/event" onTouchTap={this._handleRedirect.bind(this)}>Events overview</MenuItem>
+          <MenuItem data-url="/manager/event/new" onTouchTap={this._handleRedirect.bind(this)}>New event</MenuItem>
+          <MenuItem data-url="/manager/event_location" onTouchTap={this._handleRedirect.bind(this)}>Event locations</MenuItem>        
+          <MenuItem data-url="/manager/donations" onTouchTap={this._handleRedirect.bind(this)}>Donations</MenuItem>        
+          <MenuItem data-url="/manager/users" onTouchTap={this._handleRedirect.bind(this)}>Users</MenuItem>        
+          <MenuItem data-url="/manager/design_options" onTouchTap={this._handleRedirect.bind(this)}>Design options</MenuItem>        
+        </Drawer>
+        <Switch>
+          <Route exact path={`${this.props.match.path}/manager`} component={Events} />
+          <Route exact path={`${this.props.match.path}/manager/event`} component={Events} />
+          <Route exact path={`${this.props.match.path}/manager/event/new`} component={Events} />
+          <Route exact path={`${this.props.match.path}/manager/event/edit/:eventId`} component={Event} />
+        </Switch>
+      </div>
     );
   }
 }
