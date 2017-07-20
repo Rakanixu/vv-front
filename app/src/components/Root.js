@@ -6,9 +6,13 @@ import Principal from './Principal';
 import NewPrincipal from './NewPrincipal';
 import './Root.css';
 
+const utils = require('./../utils.js');
+
 class Root extends Component {
-  constructor(props) {
-    super(props);
+  componentWillMount() {
+    if (!utils.IsRoot()) {
+      this.props.history.push('/');
+    }
   }
 
   render() {

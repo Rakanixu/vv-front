@@ -31,7 +31,7 @@ class Register extends Component {
     var userParams = new URLSearchParams();
     var date = new Date().toISOString().split('T')[0];
     userParams.append('principal_id', principal.id);
-    userParams.append('role_id', config.roles.manager);
+    userParams.append('role_id', config.roles.manager.id);
     userParams.append('email', this.state.email);
     userParams.append('password', this.state.password);
     userParams.append('username', this.state.username);
@@ -56,24 +56,28 @@ class Register extends Component {
       this.state.email === undefined ||
       this.state.password !== this.state.passwordConfirmation) {
 
-      this.setState({
-        error: new Error('Invalid data')
-      });
-
-      setTimeout(function() {
-        this.setState({ error: null });
-      }.bind(this), 5000);
+      this._handleError();
       return;
     }
 
     this._createPrincipal()
     .then(this._createUser.bind(this))
-    .then(res => {
-      // TODO: redirect or something
-    })
-    .catch(err => {
-      console.log(err);
+    .then(function(res) {
+      this.props.history.push('/' + config.roles.manager.name);
+    }.bind(this))
+    .catch(function(err) {
+      this._handleError();
+    }.bind(this));
+  }
+
+  _handleError() {
+    this.setState({
+      error: new Error('Invalid data')
     });
+
+    setTimeout(function() {
+      this.setState({ error: null });
+    }.bind(this), 5000);
   }
 
   render() {

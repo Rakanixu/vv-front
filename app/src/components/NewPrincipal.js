@@ -5,6 +5,7 @@ import Nav from './Nav';
 import './NewPrincipal.css';
 
 class NewPrincipal extends Component {
+
   render() {
     return (
       <div>

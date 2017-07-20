@@ -10,8 +10,6 @@ const config = require('./../config.json');
 const _ = require('lodash/core');
 const loginErr = new Error('Invalid email or password');
 
-
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -51,7 +49,10 @@ class Login extends Component {
         break;
       case config.roles.user.name:
         this.props.history.push('/user/');
-        break;    
+        break;
+      default:
+        this.props.history.push('/');
+        break;
     }
   }
 

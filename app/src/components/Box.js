@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardMedia, CardTitle } from 'material-ui/Card';
 import './Box.css';
 
 const config = require('./../config.json');

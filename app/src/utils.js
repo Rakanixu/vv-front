@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+axios.defaults.withCredentials = true; 
+
 const config = require('./config.json');
 
 export function IsRoot() {
