@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Card, CardHeader, CardActions, CardMedia, CardTitle } from 'material-ui/Card';
+import { Card, CardActions, CardMedia, CardTitle } from 'material-ui/Card';
 import  RaisedButton  from 'material-ui/RaisedButton';
 import axios from 'axios';
 import './Event.css';

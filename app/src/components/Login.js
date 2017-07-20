@@ -41,6 +41,18 @@ class Login extends Component {
 
   _handleRole(res) {
     localStorage.setItem('alantu-role', JSON.stringify(res.data));
+
+    switch(res.data.name) {
+      case config.roles.root.name:
+        this.props.history.push('/root/');
+        break;
+      case config.roles.manager.name:
+        this.props.history.push('/manager/');
+        break;
+      case config.roles.user.name:
+        this.props.history.push('/user/');
+        break;    
+    }
   }
 
   _handleTextFieldChange(e) {
@@ -62,9 +74,9 @@ class Login extends Component {
     }
 
     this._login()
-    .then(this._getMe)
-    .then(this._getRole)
-    .then(this._handleRole)
+    .then(this._getMe.bind(this))
+    .then(this._getRole.bind(this))
+    .then(this._handleRole.bind(this))
     .catch(err => {
       this.setState({ error: loginErr });
     });

@@ -8,6 +8,9 @@ import Events from './Events';
 import Event from './Event';
 import Login from './Login';
 import Register from './Register';
+import Root from './Root';
+import Manager from './Manager';
+import User from './User';
 import Footer from './Footer';
 import './App.css';
 
@@ -25,6 +28,9 @@ class App extends Component {
               <Route exact path='/event/:eventId' component={Event} />
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />
+              <Route path='/root' component={Root} />
+              <Route path='/manager' component={Manager} />
+              <Route path='/user' component={User} />
             </Switch>
             <Footer />
           </div>
