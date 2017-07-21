@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
 import Nav from './Nav';
 import Principal from './Principal';
 import NewPrincipal from './NewPrincipal';
@@ -31,8 +32,13 @@ class Root extends Component {
     }
   }
 
-  _handleToggle = () => {
+  _handleToggle = (e) => {
     this.setState({ open: !this.state.open });
+  }
+
+  _logout = (e) => {
+    localStorage.clear();
+    this.props.history.push('/login');
   }
 
   _handleRedirect(e) {
@@ -43,7 +49,10 @@ class Root extends Component {
   render() {
     return (
       <div>
-        <AppBar title="Principals" iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this._handleToggle}/>
+        <AppBar title="Principals" 
+                onTouchTap={this._handleToggle}
+                onRightIconButtonTouchTap={this._logout}
+                iconElementRight={<FlatButton label="Logout" />} />
         <Drawer open={this.state.open}>
           <div><img ref="img" className="logo" src="/logo.png"/></div>
           <MenuItem data-url="/root/principal/new" onTouchTap={this._handleRedirect.bind(this)}>New principal</MenuItem>
