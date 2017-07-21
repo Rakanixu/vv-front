@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Events from './Events';
 import NewEvent from './NewEvent';
+import EventsGridList from './EventsGridList';
 import Event from './Event';
 import './Manager.css';
 
@@ -50,8 +51,8 @@ class Manager extends Component {
           <MenuItem data-url="/manager/design_options" onTouchTap={this._handleRedirect.bind(this)}>Design options</MenuItem>        
         </Drawer>
         <Switch>
-          <Route exact path={`${this.props.match.path}`} component={Events} />
-          <Route exact path={`${this.props.match.path}/event`} component={Events} />
+          <Route exact path={`${this.props.match.path}`} component={EventsGridList} />
+          <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
           <Route exact path={`${this.props.match.path}/event/new`} component={NewEvent} />
           <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={Event} />
         </Switch>
