@@ -25,6 +25,7 @@ const styles = {
     height: window.innerHeight - 200,
     overflowY: 'auto',
     padding: 50,
+    paddingTop: 10,
     cols: (window.innerWidth > 1000) ? 2 : 1
   },
   buttonEdit: {

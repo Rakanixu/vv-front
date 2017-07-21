@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Events from './Events';
 import NewEvent from './NewEvent';
+import NewEventWrapper from './NewEventWrapper';
 import EventsGridList from './EventsGridList';
 import Event from './Event';
 import './Manager.css';
@@ -53,7 +54,7 @@ class Manager extends Component {
         <Switch>
           <Route exact path={`${this.props.match.path}`} component={EventsGridList} />
           <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
-          <Route exact path={`${this.props.match.path}/event/new`} component={NewEvent} />
+          <Route exact path={`${this.props.match.path}/event/new`} component={NewEventWrapper} />
           <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={Event} />
         </Switch>
       </div>
