@@ -4,7 +4,9 @@ import { Switch, Route } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
 import Events from './Events';
+import NewEvent from './NewEvent';
 import Event from './Event';
 import './Manager.css';
 
@@ -18,7 +20,7 @@ class Manager extends Component {
   }
 
   componentWillMount() {
-    if (!utils.IsRoot()) {
+    if (!utils.IsManager()) {
       this.props.history.push('/');
     }
   }
@@ -35,7 +37,9 @@ class Manager extends Component {
   render() {
     return (
       <div>
-        <AppBar title="Manager" iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this._handleToggle}/>
+        <AppBar title="Manager" 
+                iconElementRight={<FlatButton label="Logout" />} 
+                onTouchTap={this._handleToggle}/>
         <Drawer open={this.state.open}>
           <div><img className="logo" src="/logo.png"/></div>
           <MenuItem data-url="/manager/event" onTouchTap={this._handleRedirect.bind(this)}>Events overview</MenuItem>
@@ -46,10 +50,10 @@ class Manager extends Component {
           <MenuItem data-url="/manager/design_options" onTouchTap={this._handleRedirect.bind(this)}>Design options</MenuItem>        
         </Drawer>
         <Switch>
-          <Route exact path={`${this.props.match.path}/manager`} component={Events} />
-          <Route exact path={`${this.props.match.path}/manager/event`} component={Events} />
-          <Route exact path={`${this.props.match.path}/manager/event/new`} component={Events} />
-          <Route exact path={`${this.props.match.path}/manager/event/edit/:eventId`} component={Event} />
+          <Route exact path={`${this.props.match.path}`} component={Events} />
+          <Route exact path={`${this.props.match.path}/event`} component={Events} />
+          <Route exact path={`${this.props.match.path}/event/new`} component={NewEvent} />
+          <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={Event} />
         </Switch>
       </div>
     );

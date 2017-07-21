@@ -110,6 +110,7 @@ class Register extends Component {
           <div className="verticalMargin">
             <RaisedButton label="Register" fullWidth={true} onTouchTap={this._handleRegister.bind(this)} />
           </div>
+          <a className="form-link" href="/login">Do you already have an account?</a>
         </form>
       </div>
     );

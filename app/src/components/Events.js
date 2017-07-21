@@ -36,7 +36,7 @@ class Events extends Component {
                  title={event.title} 
                  date={event.date} 
                  background={event.event_background} 
-                 link="" />
+                 link="/manager/event" />
           </div>
         )}
       </div>

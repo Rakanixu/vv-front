@@ -22,7 +22,8 @@ class Box extends Component {
   }
 
   redirect(e) {
-    this.props.history.push('/event/' + this.props.id);
+    debugger;
+    this.props.history.push(this.props.link + '/' + this.props.id);
   }
 
   render() {

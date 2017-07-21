@@ -98,6 +98,7 @@ class Login extends Component {
                     onChange={this._handleTextFieldChange.bind(this)} 
                     fullWidth={true} />
           <RaisedButton label="Login" fullWidth={true} onTouchTap={this._handleLogin.bind(this)} />
+          <a className="form-link" href="/register">Don't have an account?</a>
         </form>
       </div>
     );
