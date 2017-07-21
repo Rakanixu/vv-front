@@ -25,6 +25,12 @@ class Root extends Component {
     }
   }
 
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('alantu-user'))) {
+      this.refs.img.src = JSON.parse(localStorage.getItem('alantu-user')).avatar;
+    }
+  }
+
   _handleToggle = () => {
     this.setState({ open: !this.state.open });
   }
@@ -39,7 +45,7 @@ class Root extends Component {
       <div>
         <AppBar title="Principals" iconClassNameRight="muidocs-icon-navigation-expand-more" onTouchTap={this._handleToggle}/>
         <Drawer open={this.state.open}>
-          <div><img className="logo" src="/logo.png"/></div>
+          <div><img ref="img" className="logo" src="/logo.png"/></div>
           <MenuItem data-url="/root/principal/new" onTouchTap={this._handleRedirect.bind(this)}>New principal</MenuItem>
           <MenuItem data-url="/root/principal" onTouchTap={this._handleRedirect.bind(this)}>Overview</MenuItem>
         </Drawer>

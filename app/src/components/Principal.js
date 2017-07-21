@@ -45,6 +45,33 @@ class Principal extends Component {
   _getPricipals() {
     axios.get(this.state.url).then(res => {
       this.setState({ principals: res.data });
+
+      for (var i = 0; i < res.data.length; i++) {
+        this._getUsersByPrincipal(res.data[i].id, i);
+        this._getEventsByPrincipal(res.data[i].id, i);
+      }
+    }).catch(err => {
+      this._handleError(err);
+    });
+  }
+
+  _getUsersByPrincipal(principalId, i) {
+    axios.get(this.state.url + '/' + principalId + '/user').then(function(res) {
+      this.state.principals[i].userCount = res.data[0].count;
+      this.setState({
+        principals: this.state.principals
+      });
+    }.bind(this)).catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
+  }
+
+  _getEventsByPrincipal(principalId, i) {
+    axios.get(this.state.url + '/' + principalId + '/event').then(res => {
+      this.state.principals[i].eventCount = res.data[0].count;
+      this.setState({
+        principals: this.state.principals
+      });
     }).catch(err => {
       this._handleError(err);
     });
@@ -75,7 +102,7 @@ class Principal extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <Table fixedHeader={true} height={this.state.tableHeight.toString()}>
+        <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn style={styles.alignLeft}>Principal name</TableHeaderColumn>
@@ -89,12 +116,14 @@ class Principal extends Component {
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {this.state.principals.map((principal, i) =>
-              <TableRow data-id={principal.id}>
+              
+              <TableRow key={i} data-id={principal.id}>
+                
                 <TableRowColumn style={styles.alignLeft}>{principal.name}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{principal.domain}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}></TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}></TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}></TableRowColumn>
+                <TableRowColumn ref={'uc' + i} key={i} style={styles.alignLeft}>{principal.userCount}</TableRowColumn>
+                <TableRowColumn ref={'ec' + i} key={i} style={styles.alignLeft}>{principal.eventCount}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft}>{new Date(principal.created_at).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
               </TableRow>
