@@ -64,24 +64,11 @@ class NewEventWrapper extends Component {
           <Step><StepLabel>Add quizzes</StepLabel></Step>               
         </Stepper>
         <div style={contentStyle}>
-{/*           {finished ? (
-            <p>
-              <a
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
-                  this.setState({stepIndex: 0, finished: false});
-                }}
-              >
-                Click here
-              </a> to reset the example.
-            </p>
-          ) : ( */}
-            <div>
-              { showComponent[0] ? <NewEvent/> : null }
+          <div>
+            { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
               
 
-              <div style={{marginTop: 12}}>
+{/*               <div style={{marginTop: 12}}>
                 <FlatButton
                   label="Back"
                   disabled={stepIndex === 0}
@@ -93,9 +80,8 @@ class NewEventWrapper extends Component {
                   primary={true}
                   onTouchTap={this._handleNext.bind(this)}
                 />
-              </div>
-            </div>
-        {/*   )} */}
+              </div> */}
+          </div>
         </div>
       </div>
     );

@@ -85,7 +85,7 @@ class NewEvent extends Component {
 
     this._createEvent()
     .then(function(res) {
-      //this.props.history.push('/root/principal');
+      this.props.onDone();
     }.bind(this))
     .catch(err => {
       this._handleError(err);
