@@ -10,6 +10,7 @@ import NewEvent from './NewEvent';
 import NewEventWrapper from './NewEventWrapper';
 import EventsGridList from './EventsGridList';
 import Event from './Event';
+import Media from './Media';
 import './Manager.css';
 
 const utils = require('./../utils.js');
@@ -48,7 +49,8 @@ class Manager extends Component {
           <MenuItem data-url="/manager/event/new" onTouchTap={this._handleRedirect.bind(this)}>New event</MenuItem>
           <MenuItem data-url="/manager/event_location" onTouchTap={this._handleRedirect.bind(this)}>Event locations</MenuItem>        
           <MenuItem data-url="/manager/donations" onTouchTap={this._handleRedirect.bind(this)}>Donations</MenuItem>        
-          <MenuItem data-url="/manager/users" onTouchTap={this._handleRedirect.bind(this)}>Users</MenuItem>        
+          <MenuItem data-url="/manager/users" onTouchTap={this._handleRedirect.bind(this)}>Users</MenuItem>
+          <MenuItem data-url="/manager/media" onTouchTap={this._handleRedirect.bind(this)}>Media</MenuItem>      
           <MenuItem data-url="/manager/design_options" onTouchTap={this._handleRedirect.bind(this)}>Design options</MenuItem>        
         </Drawer>
         <Switch>
@@ -56,6 +58,7 @@ class Manager extends Component {
           <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
           <Route exact path={`${this.props.match.path}/event/new`} component={NewEventWrapper} />
           <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={Event} />
+          <Route exact path={`${this.props.match.path}/media`} component={Media} />
         </Switch>
       </div>
     );

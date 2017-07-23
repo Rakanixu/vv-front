@@ -20,3 +20,11 @@ a.form-link {
   top: 35px;
   font-size: 1.25em;
 }
+
+.delete button {
+  background-color: #dd4b39 !important;
+}
+
+.edit button {
+  background-color: #00a65a !important;
+}

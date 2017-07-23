@@ -20,10 +20,6 @@ class NewEventWrapper extends Component {
     showComponent: [true, false, false, false, false, false, false, false]
   };
 
-  componentWillUpdate(nextProps, nextState) {
-
-  }
-
   _handleNext = () => {
     const {stepIndex, showComponent} = this.state;
     showComponent.move(stepIndex, stepIndex + 1);
@@ -87,9 +83,5 @@ class NewEventWrapper extends Component {
     );
   }
 }
-
-Array.prototype.move = function(from, to) {
-    return this.splice(to, 0, this.splice(from, 1)[0]);
-};
 
 export default withRouter(NewEventWrapper);

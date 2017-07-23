@@ -9,7 +9,7 @@ import DatePicker from 'material-ui/DatePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
-import './NewEvent.css';
+import './NewMedia.css';
 
 axios.defaults.withCredentials = true; 
 
@@ -27,7 +27,7 @@ var styles = {
   }
 };
 
-class NewEvent extends Component {
+class NewMedia extends Component {
   constructor(props) {
     super(props);
 
@@ -73,7 +73,7 @@ class NewEvent extends Component {
     this.setState({ event_background: pictures });
   }
 
-  _handleNewEvent(e) {
+  _handleNewMedia(e) {
     setTimeout(function() {
       this.setState({ error: null });
     }.bind(this), 5000);
@@ -153,7 +153,7 @@ class NewEvent extends Component {
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="newEventForm">
+          <form className="NewMediaForm">
             <TextField floatingLabelText="Event title" 
                       data-val="title"
                       onChange={this._handleTextFieldChange.bind(this)} 
@@ -177,7 +177,7 @@ class NewEvent extends Component {
               <UploadPreview title="Event background" label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
             </div>
 
-            <RaisedButton label="Save & Continue" fullWidth={true} onTouchTap={this._handleNewEvent.bind(this)} />
+            <RaisedButton label="Save & Continue" fullWidth={true} onTouchTap={this._handleNewMedia.bind(this)} />
           </form>
         </div>  
       </div>
@@ -185,4 +185,4 @@ class NewEvent extends Component {
   }
 }
 
-export default withRouter(NewEvent);
+export default withRouter(NewMedia);

@@ -63,7 +63,7 @@ class EventsGridList extends Component {
     });
   }
 
-  _handleEdit(e) {debugger;
+  _handleEdit(e) {
     this.props.history.push('/manager/event/edit/' + e.currentTarget.dataset.id);
   }
 
