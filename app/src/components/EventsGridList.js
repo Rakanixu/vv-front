@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import {GridList, GridTile} from 'material-ui/GridList';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
@@ -37,6 +39,11 @@ const styles = {
     top: 60,
     right: 10,
     position: 'absolute'
+  },
+  paperFab: {
+    position: 'absolute',
+    bottom: 80,
+    right: 40
   }
 };
 
@@ -61,6 +68,10 @@ class EventsGridList extends Component {
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
+  }
+
+  _handlePageChange() {
+    this.props.history.push('/manager/event/new');
   }
 
   _handleEdit(e) {
@@ -117,6 +128,9 @@ class EventsGridList extends Component {
             </GridTile>
           ))}
         </GridList>
+        <FloatingActionButton style={styles.paperFab} onTouchTap={this._handlePageChange.bind(this)}>
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
     )
   }

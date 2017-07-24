@@ -53,7 +53,7 @@ class NewMedia extends Component {
 
     this._createMedia()
     .then(function(res) {
-      this.props.onDone();
+      this.props.history.push('/manager/media');
     }.bind(this))
     .catch(err => {
       this._handleError(err);

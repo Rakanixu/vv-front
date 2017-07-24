@@ -11,6 +11,7 @@ import NewEventWrapper from './NewEventWrapper';
 import EventsGridList from './EventsGridList';
 import Event from './Event';
 import Media from './Media';
+import NewMedia from './NewMedia';
 import './Manager.css';
 
 const utils = require('./../utils.js');
@@ -59,6 +60,7 @@ class Manager extends Component {
           <Route exact path={`${this.props.match.path}/event/new`} component={NewEventWrapper} />
           <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={Event} />
           <Route exact path={`${this.props.match.path}/media`} component={Media} />
+          <Route exact path={`${this.props.match.path}/media/new`} component={NewMedia} />
         </Switch>
       </div>
     );

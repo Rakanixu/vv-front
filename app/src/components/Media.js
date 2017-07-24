@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import {GridList, GridTile} from 'material-ui/GridList'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import RaisedButton from 'material-ui/RaisedButton';
-import ErrorReporting from 'material-ui-error-reporting';
 import Nav from './Nav';
 import NewMedia from './NewMedia';
 import MediaGridList from './MediaGridList';
-import axios from 'axios';
 import './Media.css';
-
-axios.defaults.withCredentials = true; 
 
 const config = require('./../config.json');
 const moment = require('moment');
@@ -24,7 +19,7 @@ const styles = {
   },
   gridList: {
     maxWidth: 1800,
-    height: window.innerHeight - 240,
+    height: window.innerHeight - 200,
     overflowY: 'auto',
     padding: 50,
     paddingTop: 10,
@@ -35,49 +30,32 @@ const styles = {
     top: 10,
     right: 10,
     position: 'absolute'
+  },
+  paperFab: {
+    position: 'absolute',
+    bottom: 80,
+    right: 40
   }
 };
 
 class Media extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      error: null,
-      url: config.baseAPI_URL + '/media',
-      images: [],
-      showComponent: [true, false],
-      tabs: [
-        {
-          title: 'Overview',
-          handleActive: this._handleTabChange.bind(this)
-        }, 
-        {
-          title: 'New image',
-          handleActive: this._handleTabChange.bind(this)
-        }
-      ]
-    };
   }
 
-  onDone() {
-    this.setState({ showComponent: [true, false] });
-  }
-
-  _handleTabChange = () => {
-    const showComponent = this.state.showComponent.move(0,1);
-    this.setState({ showComponent: showComponent });
+  _handlePageChange = () => {
+    this.props.history.push('/manager/media/new');
   }
 
   render() {
     return (
       <div>
-        <Nav tabs={this.state.tabs} onTabChange={this._handleTabChange}/>
-
         <div style={styles.root}>
-          { this.state.showComponent[0] ? <MediaGridList/>: null }
-          { this.state.showComponent[1] ? <NewMedia onDone={this.onDone.bind(this)} /> : null }
+          <MediaGridList/>
         </div>
+        <FloatingActionButton style={styles.paperFab} onTouchTap={this._handlePageChange.bind(this)}>
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
     )
   }
