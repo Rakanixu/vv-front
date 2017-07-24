@@ -23,7 +23,7 @@ var styles = {
     maxHeight: 400
   }, 
   screenHeight: {
-    height: window.innerHeight - 180
+    height: window.innerHeight - 220
   }
 };
 
@@ -85,7 +85,7 @@ class NewEvent extends Component {
 
     this._createEvent()
     .then(function(res) {
-      this.props.onDone();
+      this.props.onDone(res.data.id);
     }.bind(this))
     .catch(err => {
       this._handleError(err);

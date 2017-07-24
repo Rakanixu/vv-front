@@ -5,6 +5,7 @@ import { move } from './../utils';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import NewEvent from './NewEvent';
+import SliderImage from './SliderImage';
 import './NewEventWrapper.css';
 
 const config = require('./../config.json');
@@ -20,13 +21,14 @@ class NewEventWrapper extends Component {
     showComponent: [true, false, false, false, false, false, false, false]
   };
 
-  _handleNext = () => {
+  _handleNext = (eventId) => {
     const {stepIndex, showComponent} = this.state;
     showComponent.move(stepIndex, stepIndex + 1);
 
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 8,
+      eventId: eventId,
       showComponent: showComponent
     });
   };
@@ -49,7 +51,7 @@ class NewEventWrapper extends Component {
 
     return (
       <div style={{width: '100%', maxWidth: 1800, margin: 'auto'}}>
-        <Stepper activeStep={stepIndex}>
+        <Stepper activeStep={stepIndex} style={{width: '100%', margin: 'auto'}}>
           <Step><StepLabel>Create event</StepLabel></Step>
           <Step><StepLabel>Add previews</StepLabel></Step>
           <Step><StepLabel>Add admissions</StepLabel></Step>
@@ -62,6 +64,7 @@ class NewEventWrapper extends Component {
         <div style={contentStyle}>
           <div>
             { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
+            { showComponent[1] ? <SliderImage onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
               
 
 {/*               <div style={{marginTop: 12}}>
