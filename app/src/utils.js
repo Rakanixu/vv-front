@@ -26,6 +26,14 @@ export function IsUser() {
   return false;
 } 
 
+export function setBackground(url) {
+  document.querySelector('body').background = url;
+}
+
+export function setLogo(url) {
+  document.querySelector('#principalLogo').src = url;
+}
+
 export function dataURItoBlob(dataURI) {
   var binary = atob(dataURI.split(',')[1]);
   var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];

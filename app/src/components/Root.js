@@ -54,7 +54,7 @@ class Root extends Component {
                 onRightIconButtonTouchTap={this._logout}
                 iconElementRight={<FlatButton label="Logout" />} />
         <Drawer open={this.state.open}>
-          <div><img ref="img" className="logo" src="/logo.png"/></div>
+          <div className="logo-container"><img ref="img" className="logo" src="/logo.png"/></div>
           <MenuItem data-url="/root/principal/new" onTouchTap={this._handleRedirect.bind(this)}>New principal</MenuItem>
           <MenuItem data-url="/root/principal" onTouchTap={this._handleRedirect.bind(this)}>Overview</MenuItem>
         </Drawer>

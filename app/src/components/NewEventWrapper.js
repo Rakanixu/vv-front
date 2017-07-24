@@ -47,11 +47,10 @@ class NewEventWrapper extends Component {
 
   render() {
     const {finished, stepIndex, showComponent} = this.state;
-    const contentStyle = {margin: '0 16px'};
 
     return (
       <div style={{width: '100%', maxWidth: 1800, margin: 'auto'}}>
-        <Stepper activeStep={stepIndex} style={{width: '100%', margin: 'auto'}}>
+        <Stepper activeStep={stepIndex} style={{width: '100%', margin: 'auto', background: '#e4e4e4'}}>
           <Step><StepLabel>Create event</StepLabel></Step>
           <Step><StepLabel>Add previews</StepLabel></Step>
           <Step><StepLabel>Add admissions</StepLabel></Step>
@@ -61,26 +60,24 @@ class NewEventWrapper extends Component {
           <Step><StepLabel>Add auctions</StepLabel></Step>
           <Step><StepLabel>Add quizzes</StepLabel></Step>               
         </Stepper>
-        <div style={contentStyle}>
-          <div>
-            { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
-            { showComponent[1] ? <SliderImage onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
-              
+        <div>
+          { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
+          { showComponent[1] ? <SliderImage onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+            
 
 {/*               <div style={{marginTop: 12}}>
-                <FlatButton
-                  label="Back"
-                  disabled={stepIndex === 0}
-                  onTouchTap={this._handlePrev.bind(this)}
-                  style={{marginRight: 12}}
-                />
-                <RaisedButton
-                  label={stepIndex === 8 ? 'Finish' : 'Next'}
-                  primary={true}
-                  onTouchTap={this._handleNext.bind(this)}
-                />
-              </div> */}
-          </div>
+              <FlatButton
+                label="Back"
+                disabled={stepIndex === 0}
+                onTouchTap={this._handlePrev.bind(this)}
+                style={{marginRight: 12}}
+              />
+              <RaisedButton
+                label={stepIndex === 8 ? 'Finish' : 'Next'}
+                primary={true}
+                onTouchTap={this._handleNext.bind(this)}
+              />
+            </div> */}
         </div>
       </div>
     );
