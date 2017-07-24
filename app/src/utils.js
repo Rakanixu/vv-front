@@ -27,11 +27,21 @@ export function IsUser() {
 } 
 
 export function setBackground(url) {
-  document.querySelector('body').background = url;
+  if (url === undefined || url === '') {
+    url = config.defaultBackground;
+  }
+  if (document.querySelector('body')) {
+    document.querySelector('body').background = url;
+  }
 }
 
 export function setLogo(url) {
-  document.querySelector('#principalLogo').src = url;
+  if (url === undefined || url === '') {
+    url = config.defaultLogo;
+  }
+  if (document.querySelector('#principalLogo')) {
+    document.querySelector('#principalLogo').src = url;
+  }
 }
 
 export function dataURItoBlob(dataURI) {

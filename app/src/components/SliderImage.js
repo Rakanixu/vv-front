@@ -16,15 +16,19 @@ axios.defaults.withCredentials = true;
 const config = require('./../config.json');
 
 var styles = {
-  root: {
+   root: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-  },
+  }, 
   gridList: {
     display: 'flex',
     flexWrap: 'nowrap',
     overflowX: 'auto',
+  },
+  gridTile: {
+    cursor: 'pointer',
+    width: 240
   },
   titleStyle: {
     color: 'rgb(0, 188, 212)',
@@ -175,6 +179,7 @@ class SliderImage extends Component {
                     <GridTile
                       key={i}
                       data-url={img.url}
+                      style={styles.gridTile}
                       onTouchTap={this._handelImgSelect.bind(this)}
                       titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
                       <img src={config.baseURL + img.url} />
@@ -192,7 +197,7 @@ class SliderImage extends Component {
             <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleNewSliderImage.bind(this)} />
           </form>
 
-          <RaisedButton label="Continue" fullWidth={true} onTouchTap={this.props.onDone} />
+          <RaisedButton label="Continue" fullWidth={true} onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
         </div>  
       </div>
     );

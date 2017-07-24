@@ -47,9 +47,9 @@ class Manager extends Component {
       principal = res.data;
       utils.setBackground(config.baseURL + principal.background);
       utils.setLogo(config.baseURL + principal.logo);
-    }).catch(err => {
+    }).catch(function(err) {
       this._handleError(err);
-    });
+    }.bind(this));
   }
 
   _handleToggle = () => {
@@ -61,11 +61,31 @@ class Manager extends Component {
     this.setState({ open: false });
   }
 
+  _logout = (e) => {
+    localStorage.clear();
+    this.props.history.push('/login');
+  }
+
+  _handleError(err) {
+    if (!err) {
+      err = new Error('Invalid data');
+    }
+
+    this.setState({
+      error: err
+    });
+
+    setTimeout(function() {
+      this.setState({ error: null });
+    }.bind(this), 5000);
+  }
+
   render() {
     return (
       <div>
         <AppBar title="Manager" 
                 iconElementRight={<FlatButton label="Logout" />} 
+                onRightIconButtonTouchTap={this._logout}
                 onTouchTap={this._handleToggle}/>
         <Drawer open={this.state.open}>
           <div className="logo-container"><img id="principalLogo" className="logo" src="/logo.png"/></div>

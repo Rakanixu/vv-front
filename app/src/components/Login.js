@@ -7,6 +7,7 @@ import axios from 'axios';
 import './Login.css';
 
 const config = require('./../config.json');
+const utils = require('./../utils.js');
 const _ = require('lodash/core');
 const loginErr = new Error('Invalid email or password');
 
@@ -17,6 +18,11 @@ class Login extends Component {
     this.state = {
       error: null
     };
+  }
+
+  componentDidMount() {
+    utils.setBackground();
+    utils.setLogo();
   }
 
   _login() {
