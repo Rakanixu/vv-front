@@ -98,7 +98,12 @@ class Polls extends Component {
             <RaisedButton label="Save Poll" fullWidth={true} onTouchTap={this._handleNewPoll.bind(this)} />
           </form>
 
-          <RaisedButton label="Continue" fullWidth={true} onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+          <div>
+            <RaisedButton label="Continue" 
+                          className="event-wizard-continue-button" 
+                          primary={true} 
+                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+          </div>
         </div>  
       </div>
     );

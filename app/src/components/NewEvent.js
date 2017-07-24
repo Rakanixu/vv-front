@@ -176,8 +176,12 @@ class NewEvent extends Component {
             <div className="fit">
               <UploadPreview title="Event background" label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
             </div>
-
-            <RaisedButton label="Save & Continue" fullWidth={true} onTouchTap={this._handleNewEvent.bind(this)} />
+            <div>
+              <RaisedButton label="Save & Continue" 
+                            className="event-wizard-continue-button" 
+                            primary={true} 
+                            onTouchTap={this._handleNewEvent.bind(this)} />
+            </div>
           </form>
         </div>  
       </div>

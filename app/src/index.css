@@ -41,6 +41,12 @@ a.form-link {
   background-clip: content-box, padding-box;
 }
 
+.event-wizard-continue-button {
+  margin-top: 15px;
+  margin-right: 20px;
+  float: right;
+}
+
 @media (max-width: 600px) {
   form {
     padding-right: 5px;

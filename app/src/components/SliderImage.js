@@ -196,8 +196,10 @@ class SliderImage extends Component {
 
             <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleNewSliderImage.bind(this)} />
           </form>
-
-          <RaisedButton label="Continue" fullWidth={true} onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+          
+          <div>
+            <RaisedButton label="Continue" className="event-wizard-continue-button" primary={true} onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+          </div>
         </div>  
       </div>
     );
