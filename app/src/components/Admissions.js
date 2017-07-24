@@ -46,10 +46,6 @@ class Admissions extends Component {
   }
 
   _handleNewAdmission(e) {
-    setTimeout(function() {
-      this.setState({ error: null });
-    }.bind(this), 5000);
-
     this._createAdmission()
     .then(function(res) {
       var count = this.state.count;

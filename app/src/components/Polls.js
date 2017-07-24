@@ -39,10 +39,6 @@ class Polls extends Component {
   }
 
   _handleNewPoll(e) {
-    setTimeout(function() {
-      this.setState({ error: null });
-    }.bind(this), 5000);
-
     this._createPoll()
     .then(function(res) {
       var count = this.state.count;

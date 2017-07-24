@@ -8,6 +8,8 @@ import NewEvent from './NewEvent';
 import SliderImage from './SliderImage';
 import Admissions from './Admissions';
 import Polls from './Polls';
+import QuestionTopic from './QuestionTopic';
+import EventGuests from './EventGuests';
 import './NewEventWrapper.css';
 
 const config = require('./../config.json');
@@ -66,7 +68,9 @@ class NewEventWrapper extends Component {
           { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
           { showComponent[1] ? <SliderImage onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
           { showComponent[2] ? <Admissions onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
-          { showComponent[3] ? <Polls onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }   
+          { showComponent[3] ? <Polls onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[4] ? <QuestionTopic onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null } 
+          { showComponent[5] ? <EventGuests onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }   
 
 {/*               <div style={{marginTop: 12}}>
               <FlatButton

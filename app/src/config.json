@@ -29,5 +29,19 @@
     "default": {
       "id": 1
     }
-  }
+  },
+  "name_guest_media_type": [
+    {
+      "name": "Image",
+      "id": 1
+    },
+    {
+      "name": "YouTube Link",
+      "id": 2
+    },
+    {
+      "name": "Livestream",
+      "id": 3
+    }
+  ]
 }  
