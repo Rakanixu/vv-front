@@ -5,6 +5,7 @@ import Nav from'./Nav.js';
 import SliderImage from './SliderImage';
 import SliderImageList from './SliderImageList';
 import Admissions from './Admissions';
+import AdmissionsList from './AdmissionsList';
 import Polls from './Polls';
 import QuestionTopic from './QuestionTopic';
 import EventGuests from './EventGuests';
@@ -110,7 +111,7 @@ class EventTabs extends Component {
   render() {
     return (
       <div>
-        <Nav tabs={this.state.tabs} />
+        <Nav tabs={this.state.tabs} tabIndex={this.props.tabIndex}/>
         { this.state.show[0] ? 
           <div>
             <SliderImageList key={this.state.reloadSliderImageList} eventId={this.props.eventId}/>
@@ -119,7 +120,7 @@ class EventTabs extends Component {
           : null }
         { this.state.show[1] ? 
           <div>
-        {/*     <AdmissionsList key={this.state.reloadAdmissionsList} eventId={this.props.eventId}/> */}
+            <AdmissionsList key={this.state.reloadAdmissionsList} eventId={this.props.eventId}/>  
             <Admissions onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAdmissionsList')} eventId={this.props.eventId} noFit={true}/>
           </div>
           : null }

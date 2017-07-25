@@ -64,6 +64,8 @@ class Admissions extends Component {
         price: '',
         description: ''
       });
+
+      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);

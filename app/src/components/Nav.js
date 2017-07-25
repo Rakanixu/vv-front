@@ -9,7 +9,7 @@ class Nav extends React.Component {
   render() {
     return (
       <nav>
-        <Tabs>
+        <Tabs value={this.props.tabIndex}>
           {this.props.tabs.map((tab, i) => (
             <Tab key={i} onActive={tab.handleActive} label={tab.title} />
           ))}
