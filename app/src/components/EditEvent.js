@@ -35,11 +35,22 @@ class EditEvent extends Component {
       error: null,
       showPreviewImg: true,
       showEventBackground: true,
+      showTabs: false,
+      tabIndex: 0,
       url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       preview_img: {},
       event_background: {},
       event: {}
     };
+  }
+
+  componentWillMount() {
+    if (this.props.location.query) {
+      this.setState({
+        showTabs: this.props.location.query.showTabs,
+        tabIndex: this.props.location.query.index ? this.props.location.query.index : 0
+      });
+    }
   }
 
   componentDidMount() {
@@ -97,7 +108,7 @@ class EditEvent extends Component {
 
     this._editEvent()
     .then(function(res) {
-      this.props.onDone(res.data.id);
+      this.setState({ showTabs: true });
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -166,45 +177,48 @@ class EditEvent extends Component {
     return (
       <div className="container" style={styles.screenHeight}>
         <div className="inner-container">
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          <form className="newEventForm">
-            <TextField floatingLabelText="Event title" 
-                      data-val="title"
-                      value={this.state.event.title}
-                      onChange={this._handleTextFieldChange.bind(this)} 
-                      fullWidth={true} />
-            <TextField floatingLabelText="Notes"
-                      data-val="notes"
-                      value={this.state.event.notes}
-                      onChange={this._handleTextFieldChange.bind(this)} 
-                      fullWidth={true} />
-            <TextField floatingLabelText="Location"
-                      data-val="location"
-                      value={this.state.event.location}
-                      onChange={this._handleTextFieldChange.bind(this)} 
-                      fullWidth={true} />
-            <DatePicker hintText="Date" mode="landscape" value={this.state.event.date} onChange={this._handleDateChange.bind(this)}/>
-            <div className="checkbox">
-              <Checkbox ref="checkbox" checked={this.state.event.login_required} label="Login required?"/>
-            </div>
-            { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
-            <div className="fit">
-              <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>  
-            </div>
-            { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background} alt="preview"/> : null }
-            <div className="fit">
-              <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
-            </div>
+          { !this.state.showTabs ? 
             <div>
-              <RaisedButton label="Save & Continue" 
-                            className="event-wizard-continue-button" 
-                            primary={true} 
-                            onTouchTap={this._handleEditEvent.bind(this)} />
+              <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
+
+              <form className="newEventForm">
+                <TextField floatingLabelText="Event title" 
+                          data-val="title"
+                          value={this.state.event.title}
+                          onChange={this._handleTextFieldChange.bind(this)} 
+                          fullWidth={true} />
+                <TextField floatingLabelText="Notes"
+                          data-val="notes"
+                          value={this.state.event.notes}
+                          onChange={this._handleTextFieldChange.bind(this)} 
+                          fullWidth={true} />
+                <TextField floatingLabelText="Location"
+                          data-val="location"
+                          value={this.state.event.location}
+                          onChange={this._handleTextFieldChange.bind(this)} 
+                          fullWidth={true} />
+                <DatePicker hintText="Date" mode="landscape" value={this.state.event.date} onChange={this._handleDateChange.bind(this)}/>
+                <div className="checkbox">
+                  <Checkbox ref="checkbox" checked={this.state.event.login_required} label="Login required?"/>
+                </div>
+                { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
+                <div className="fit">
+                  <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>  
+                </div>
+                { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background} alt="preview"/> : null }
+                <div className="fit">
+                  <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
+                </div>
+                <div>
+                  <RaisedButton label="Save & Continue" 
+                                className="event-wizard-continue-button" 
+                                primary={true} 
+                                onTouchTap={this._handleEditEvent.bind(this)} />
+                </div>
+              </form>
             </div>
-          </form>
-          <EventTabs eventId={this.props.match.params.eventId}/>
+          : <EventTabs eventId={this.props.match.params.eventId} index={this.state.tabIndex}/> }
         </div>  
       </div>
     );

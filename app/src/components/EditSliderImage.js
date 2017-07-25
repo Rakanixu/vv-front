@@ -5,15 +5,17 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Checkbox from 'material-ui/Checkbox';
+import DatePicker from 'material-ui/DatePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import EventTabs from './EventTabs';
 import axios from 'axios';
-import './SliderImage.css';
+import './EditSliderImage.css';
 
 axios.defaults.withCredentials = true; 
 
 const config = require('./../config.json');
-
 var styles = {
    root: {
     display: 'flex',
@@ -41,85 +43,72 @@ var styles = {
   }
 };
 
-class SliderImage extends Component {
+class EditSliderImage extends Component {
   constructor(props) {
     super(props);
 
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
-
     this.state = {
       error: null,
-      count: 0,
-      openDialog: false,
-      img: {},
+      showImg: true,
       imgUrlFromGallery: '',
+      img: {},
+      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId + '/image/' + this.props.match.params.imageId,
+      image: {},
       media: []
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios.get(config.baseAPI_URL + '/media').then(res => {
       this.setState({ media: res.data });
     }).catch(err => {
       this._handleError(err);
     });
+
+    this._getImage();
+  }
+
+  _getImage() {
+    axios.get(this.state.url).then(function(res) {
+      this.setState({ 
+        image: res.data,
+        imgUrlFromGallery: res.data.img
+      });
+    }.bind(this))
+    .catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
   }
 
   _handleTextFieldChange(e) {
-    var state = {}
-    state[e.target.dataset.val] = e.target.value;
-    this.setState(state);
+    this.state.image[e.target.dataset.val] = e.target.value;
     this.setState({ error: null });
   }
 
   _onImgChange = (pictures) => {
-    this.setState({ img: pictures });
-  }
-
-  _handelImgSelect = (e) => {
-    this.setState({
-      imgUrlFromGallery: e.currentTarget.dataset.url
+    this.setState({ 
+      img: pictures,
+      showImg: false      
     });
-    this._handleDialogClose();
   }
 
-  _handleDialogOpen = () => {
-    this.setState({ openDialog: true });
-  };
-
-  _handleDialogClose = () => {
-    this.setState({openDialog: false});
-  };
-
-  _handleNewSliderImage(e) {
-    setTimeout(function() {
-      this.setState({ error: null });
-    }.bind(this), 5000);
-
-    this._createSliderImage()
+  _handleEditImage(e) {
+    this._editImage()
     .then(function(res) {
-      var count = this.state.count;
-      count++;
-
-      this.setState({
-        error: null,
-        img: {},
-        imgUrlFromGallery: '',
-        count: count,
-        title: '',
-        type: ''
+      this.props.history.push({
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        query: {
+          showTabs: true,
+          index: 0
+        }
       });
-
-      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);
     });
   }
 
-  _createSliderImage() {
+  _editImage() {
     var img;
     for (var i in this.state.img) {
       img = this.state.img[i];
@@ -130,16 +119,31 @@ class SliderImage extends Component {
       img = dataURItoBlob(img);
     } catch (err) {}
 
-    if (this.state.imgUrlFromGallery !== '' && this.state.imgUrlFromGallery!== undefined) {
+    if (!img) {
       img = this.state.imgUrlFromGallery;
     }
 
     var data = new FormData();
-    data.append('title', this.state.title);
-    data.append('type', this.state.type);
+    data.append('title', this.state.image.title);
+    data.append('type', this.state.image.type);
     data.append('img', img);
 
-    return axios.post(config.baseAPI_URL + '/event/' + this.props.eventId + '/image', data);
+    return axios.put(this.state.url, data);
+  }
+
+  _handleDialogOpen = () => {
+    this.setState({ openDialog: true });
+  }
+
+  _handleDialogClose = () => {
+    this.setState({openDialog: false});
+  }
+
+  _handelImgSelect = (e) => {
+    this.setState({
+      imgUrlFromGallery: e.currentTarget.dataset.url
+    });
+    this._handleDialogClose();
   }
 
   _handleError(err) {
@@ -158,18 +162,20 @@ class SliderImage extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
+      <div className="container" style={styles.screenHeight}>
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="newSliderImage">
+          <form className="editSliderImage">
             <TextField floatingLabelText="Title" 
                       data-val="title"
+                      value={this.state.image.title}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
             <TextField floatingLabelText="Type"
                       data-val="type"
+                      value={this.state.image.type}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
 
@@ -193,7 +199,7 @@ class SliderImage extends Component {
                 </GridList>
               </div>
             </Dialog>
-            { this.state.imgUrlFromGallery!== undefined && this.state.imgUrlFromGallery.length > 0 ?
+            { this.state.imgUrlFromGallery !== undefined && this.state.imgUrlFromGallery.length > 0 ?
               <img className="img-preview" src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
               : null }
             <RaisedButton label="Select image from gallery" fullWidth={true} onTouchTap={this._handleDialogOpen.bind(this)} />
@@ -201,16 +207,12 @@ class SliderImage extends Component {
               <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>  
             </div>
 
-            <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleNewSliderImage.bind(this)} />
+            <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleEditImage.bind(this)} />
           </form>
-          
-          <div>
-            <RaisedButton label="Continue" className="event-wizard-continue-button" primary={true} onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-          </div>
         </div>  
       </div>
     );
   }
 }
 
-export default withRouter(SliderImage);
+export default withRouter(EditSliderImage);

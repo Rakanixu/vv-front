@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import Nav from'./Nav.js';
 import SliderImage from './SliderImage';
+import SliderImageList from './SliderImageList';
 import Admissions from './Admissions';
 import Polls from './Polls';
 import QuestionTopic from './QuestionTopic';
@@ -51,6 +52,7 @@ class EventTabs extends Component {
         }
       ],
       show: [true, false, false, false, false, false, false],
+      reloadSliderImageList: new Date().getTime(),
       url: config.baseAPI_URL + '/event/' + this.props.eventId
     };
   }
@@ -58,9 +60,9 @@ class EventTabs extends Component {
   componentDidMount() {
     axios.get(this.state.url).then(res => {
       this.setState({ events: res.data });
-    }).catch(err => {
-      console.log('Error getting events', err);
-    });
+    }).catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
   }
 
   handleTabChange = (index) => {
@@ -76,14 +78,37 @@ class EventTabs extends Component {
   }
 
   onDone = () => {
+    this.props.history.push('/manager/event');
+  }
 
+  onSave = () => {
+    this.setState({ reloadSliderImageList: new Date().getTime() })
+  }
+
+  _handleError(err) {
+    if (!err) {
+      err = new Error('Invalid data');
+    }
+
+    this.setState({
+      error: err
+    });
+
+    setTimeout(function() {
+      this.setState({ error: null });
+    }.bind(this), 5000);
   }
 
   render() {
     return (
       <div>
         <Nav tabs={this.state.tabs} />
-        { this.state.show[0] ? <SliderImage onDone={this.onDone} eventId={this.props.eventId}/>: null }
+        { this.state.show[0] ? 
+          <div>
+            <SliderImageList key={this.state.reloadSliderImageList} eventId={this.props.eventId}/>
+            <SliderImage onDone={this.onDone} onSave={this.onSave} eventId={this.props.eventId} noFit={true}/>
+          </div>
+          : null }
         { this.state.show[1] ? <Admissions onDone={this.onDone} eventId={this.props.eventId}/> : null }
         { this.state.show[2] ? <Polls onDone={this.onDone} eventId={this.props.eventId}/> : null }
         { this.state.show[3] ? <QuestionTopic onDone={this.onDone} eventId={this.props.eventId}/> : null } 
