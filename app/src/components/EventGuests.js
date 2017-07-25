@@ -76,6 +76,8 @@ class EventGuests extends Component {
         description: '',
         main_media_file: ''
       });
+
+      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);
