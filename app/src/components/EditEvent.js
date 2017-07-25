@@ -108,7 +108,10 @@ class EditEvent extends Component {
 
     this._editEvent()
     .then(function(res) {
-      this.setState({ showTabs: true });
+      this.setState({ 
+        showTabs: true,
+        tabIndex: 0
+      });
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -218,7 +221,7 @@ class EditEvent extends Component {
                 </div>
               </form>
             </div>
-          : <EventTabs eventId={this.props.match.params.eventId} index={this.state.tabIndex}/> }
+          : <EventTabs eventId={this.props.match.params.eventId} tabIndex={this.state.tabIndex}/> }
         </div>  
       </div>
     );

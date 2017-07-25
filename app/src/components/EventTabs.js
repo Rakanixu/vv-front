@@ -20,6 +20,7 @@ class EventTabs extends Component {
   constructor(props) {
     super(props);
 
+    const time = new Date().getTime();
     this.state = {
       tabs: [
         {
@@ -52,9 +53,14 @@ class EventTabs extends Component {
         }
       ],
       show: [true, false, false, false, false, false, false],
-      reloadSliderImageList: new Date().getTime(),
+      reloadSliderImageList: time + 'A',
+      reloadAdmissionsList: time + 'B',
       url: config.baseAPI_URL + '/event/' + this.props.eventId
     };
+  }
+
+  componentWillMount() {
+    this.handleTabChange(this.props.tabIndex ? this.props.tabIndex : 0);
   }
 
   componentDidMount() {
@@ -81,8 +87,10 @@ class EventTabs extends Component {
     this.props.history.push('/manager/event');
   }
 
-  onSave = () => {
-    this.setState({ reloadSliderImageList: new Date().getTime() })
+  onSave = (key) => {
+    var state = {};
+    state[key] = new Date().getTime();
+    this.setState(state)
   }
 
   _handleError(err) {
@@ -106,15 +114,20 @@ class EventTabs extends Component {
         { this.state.show[0] ? 
           <div>
             <SliderImageList key={this.state.reloadSliderImageList} eventId={this.props.eventId}/>
-            <SliderImage onDone={this.onDone} onSave={this.onSave} eventId={this.props.eventId} noFit={true}/>
+            <SliderImage onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadSliderImageList')} eventId={this.props.eventId} noFit={true}/>
           </div>
           : null }
-        { this.state.show[1] ? <Admissions onDone={this.onDone} eventId={this.props.eventId}/> : null }
-        { this.state.show[2] ? <Polls onDone={this.onDone} eventId={this.props.eventId}/> : null }
-        { this.state.show[3] ? <QuestionTopic onDone={this.onDone} eventId={this.props.eventId}/> : null } 
-        { this.state.show[4] ? <EventGuests onDone={this.onDone} eventId={this.props.eventId}/> : null }
-        { this.state.show[5] ? <Auction onDone={this.onDone} eventId={this.props.eventId}/> : null }
-        { this.state.show[6] ? <Quiz onDone={this.onDone} eventId={this.props.eventId}/> : null }   
+        { this.state.show[1] ? 
+          <div>
+        {/*     <AdmissionsList key={this.state.reloadAdmissionsList} eventId={this.props.eventId}/> */}
+            <Admissions onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAdmissionsList')} eventId={this.props.eventId} noFit={true}/>
+          </div>
+          : null }
+        { this.state.show[2] ? <Polls onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }
+        { this.state.show[3] ? <QuestionTopic onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null } 
+        { this.state.show[4] ? <EventGuests onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }
+        { this.state.show[5] ? <Auction onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }
+        { this.state.show[6] ? <Quiz onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }   
       </div>
     );
   }

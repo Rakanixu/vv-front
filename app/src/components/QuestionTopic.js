@@ -23,6 +23,10 @@ var styles = {
 class QuestionTopic extends Component {
   constructor(props) {
     super(props);
+    
+    if (this.props.noFit) {
+      delete styles.screenHeight.height;
+    }
 
     this.state = {
       error: null,

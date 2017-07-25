@@ -24,6 +24,10 @@ class Polls extends Component {
   constructor(props) {
     super(props);
 
+    if (this.props.noFit) {
+      delete styles.screenHeight.height;
+    }
+
     this.state = {
       error: null,
       count: 0,
