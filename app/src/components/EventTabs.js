@@ -13,6 +13,7 @@ import QuestionTopicList from './QuestionTopicList';
 import EventGuestsList from './EventGuestList';
 import EventGuests from './EventGuests';
 import Auction from './Auction';
+import AuctionList from './AuctionList';
 import Quiz from './Auction';
 import './EventTabs.css';
 
@@ -62,6 +63,7 @@ class EventTabs extends Component {
       reloadPollsList: time + 'C',
       reloadQuestionTopicList: time + 'D',
       reloadEventGuestsList: time + 'E',
+      reloadAuctionList: time + 'F',
       url: config.baseAPI_URL + '/event/' + this.props.eventId
     };
   }
@@ -148,7 +150,12 @@ class EventTabs extends Component {
             <EventGuests onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadEventGuestsList')} eventId={this.props.eventId} noFit={true}/> 
           </div>
           : null }
-        { this.state.show[5] ? <Auction onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }
+        { this.state.show[5] ? 
+          <div>
+            <AuctionList key={this.state.reloadAuctionList} eventId={this.props.eventId}/>  
+            <Auction onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAuctionList')} eventId={this.props.eventId} noFit={true}/> 
+          </div>
+          : null }
         { this.state.show[6] ? <Quiz onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }   
       </div>
     );

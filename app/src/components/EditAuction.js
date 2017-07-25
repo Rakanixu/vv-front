@@ -1,88 +1,74 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { dataURItoBlob } from './../utils';
+import {GridList, GridTile} from 'material-ui/GridList';
+import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
-import './Auction.css';
+import './EditAuction.css';
 
 axios.defaults.withCredentials = true; 
 
 const config = require('./../config.json');
-
 var styles = {
-  fit: {
-    overflow: 'hidden',
-    maxHeight: 400
-  }, 
   screenHeight: {
     height: window.innerHeight - 250
   }
 };
 
-class Auction extends Component {
+class EditAuction extends Component {
   constructor(props) {
     super(props);
-    
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
-    
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
 
     this.state = {
       error: null,
-      count: 0,
-      url: config.baseAPI_URL + '/event/'
+      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId + '/auction/' + this.props.match.params.auctionId,
+      auction: {}
     };
   }
 
+  componentDidMount() {
+    this._getAuction();
+  }
+
+  _getAuction() {
+    axios.get(this.state.url).then(function(res) {
+      this.setState({ auction: res.data });
+    }.bind(this))
+    .catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
+  }
+
   _handleTextFieldChange(e) {
-    var state = {}
-    state[e.target.dataset.val] = e.target.value;
-    this.setState(state);
+    this.state.auction[e.target.dataset.val] = e.target.value;
     this.setState({ error: null });
   }
 
-  _handleNewAuction(e) {
-    setTimeout(function() {
-      this.setState({ error: null });
-    }.bind(this), 5000);
-
-    if (this.state.title === undefined || this.state.title === '') {
-      this._handleError();
-      return;
-    }
-
-    this._createAuction()
+  _handleEditAuction(e) {
+    this._editAuction()
     .then(function(res) {
-      var count = this.state.count;
-      count++;
-
-      this.setState({
-        error: null,
-        count: count,
-        name: '',
-        title: '',
-        description: ''
+      this.props.history.push({
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        query: {
+          showTabs: true,
+          index: 5
+        }
       });
-
-      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);
     });
   }
 
-  _createAuction() {
+  _editAuction() {
     var data = new FormData();
-    data.append('name', this.state.name);
-    data.append('title', this.state.title);
-    data.append('description', this.state.description);
+    data.append('name', this.state.auction.name);
+    data.append('description', this.state.auction.description);
 
-    return axios.post(this.state.url + this.props.eventId + '/auction', data);
+    return axios.put(this.state.url, data);
   }
 
   _handleError(err) {
@@ -101,37 +87,34 @@ class Auction extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
+      <div className="container" style={styles.screenHeight}>
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="newAuction">
+          <form className="editSliderImage">
             <TextField floatingLabelText="Name" 
                       data-val="name"
+                      value={this.state.auction.name}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />         
             <TextField floatingLabelText="Title" 
                       data-val="title"
+                      value={this.state.auction.title}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />            
             <TextField floatingLabelText="Description"
                       data-val="description"
+                      value={this.state.auction.description}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />     
 
-            <RaisedButton label="Save Auction" fullWidth={true} onTouchTap={this._handleNewAuction.bind(this)} />
+            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleEditAuction.bind(this)} />
           </form>
-          <div>
-            <RaisedButton label="Continue" 
-                          className="event-wizard-continue-button" 
-                          primary={true}
-                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-          </div>
         </div>  
       </div>
     );
   }
 }
 
-export default withRouter(Auction);
+export default withRouter(EditAuction);
