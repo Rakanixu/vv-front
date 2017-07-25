@@ -24,6 +24,10 @@ class Quiz extends Component {
   constructor(props) {
     super(props);
 
+    if (this.props.noFit) {
+      delete styles.screenHeight.height;
+    }
+
     this.state = {
       error: null,
       count: 0,
@@ -59,6 +63,8 @@ class Quiz extends Component {
         name: '',
         description: ''
       });
+
+      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);

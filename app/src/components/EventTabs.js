@@ -14,7 +14,8 @@ import EventGuestsList from './EventGuestList';
 import EventGuests from './EventGuests';
 import Auction from './Auction';
 import AuctionList from './AuctionList';
-import Quiz from './Auction';
+import Quiz from './Quiz';
+import QuizList from './QuizList';
 import './EventTabs.css';
 
 axios.defaults.withCredentials = true; 
@@ -64,6 +65,7 @@ class EventTabs extends Component {
       reloadQuestionTopicList: time + 'D',
       reloadEventGuestsList: time + 'E',
       reloadAuctionList: time + 'F',
+      reloadQuizList: time + 'G',
       url: config.baseAPI_URL + '/event/' + this.props.eventId
     };
   }
@@ -156,7 +158,12 @@ class EventTabs extends Component {
             <Auction onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAuctionList')} eventId={this.props.eventId} noFit={true}/> 
           </div>
           : null }
-        { this.state.show[6] ? <Quiz onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }   
+        { this.state.show[6] ? 
+          <div>
+            <QuizList key={this.state.reloadQuizList} eventId={this.props.eventId}/>  
+            <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.eventId} noFit={true}/> 
+          </div>
+          : null }   
       </div>
     );
   }
