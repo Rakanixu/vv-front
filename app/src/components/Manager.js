@@ -9,7 +9,7 @@ import Events from './Events';
 import NewEvent from './NewEvent';
 import NewEventWrapper from './NewEventWrapper';
 import EventsGridList from './EventsGridList';
-import Event from './Event';
+import EditEvent from './EditEvent';
 import Media from './Media';
 import NewMedia from './NewMedia';
 import DesignOptions from './DesignOptions';
@@ -102,7 +102,7 @@ class Manager extends Component {
             <Route exact path={`${this.props.match.path}`} component={EventsGridList} />
             <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
             <Route exact path={`${this.props.match.path}/event/new`} component={NewEventWrapper} />
-            <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={Event} />
+            <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={EditEvent} />
             <Route exact path={`${this.props.match.path}/media`} component={Media} />
             <Route exact path={`${this.props.match.path}/media/new`} component={NewMedia} />
             <Route exact path={`${this.props.match.path}/design_options`} component={DesignOptions} />

@@ -9,7 +9,7 @@ import DatePicker from 'material-ui/DatePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
-import './NewEvent.css';
+import './EditEvent.css';
 
 axios.defaults.withCredentials = true; 
 
@@ -23,18 +23,22 @@ var styles = {
     maxHeight: 400
   }, 
   screenHeight: {
-    height: window.innerHeight - 220
+    height: window.innerHeight - 180
   }
 };
 
-class NewEvent extends Component {
+class EditEvent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       error: null,
+      showPreviewImg: true,
+      showEventBackground: true,
+      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       preview_img: {},
-      event_background: {}
+      event_background: {},
+      event: {}
     };
   }
 
@@ -44,46 +48,54 @@ class NewEvent extends Component {
     } else {
       user = JSON.parse(localStorage.getItem('alantu-user'));
     }
+    this._getEvent();
+  }
+
+  _getEvent() {
+    axios.get(this.state.url).then(function(res) {
+      res.data.date = new Date(res.data.date);
+      this.setState({ event: res.data });
+    }.bind(this))
+    .catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
   }
 
   _handleTextFieldChange(e) {
-    var state = {}
-    state[e.target.dataset.val] = e.target.value;
-    this.setState(state);
+    this.state.event[e.target.dataset.val] = e.target.value;
     this.setState({ error: null });
   }
 
-  _handelPrimaryColorChange(color) {
-    this.state.primary_color = color;
-  }
-
-  _handelSecondaryColorChange(color) {
-    this.state.secondary_color = color;    
-  }
-
   _handleDateChange = (nil, date) => {
-    this.state.date = moment().utc(date).format();
+    this.state.event.date = date;
+    this.setState({ event: this.state.event });
   }
 
   _onPreviewImgChange = (pictures) => {
-    this.setState({ preview_img: pictures });
+    this.setState({ 
+      preview_img: pictures,
+      showPreviewImg: false      
+    });
   }
 
   _onEventBackgroundChange = (pictures) => {
-    this.setState({ event_background: pictures });
+    this.setState({ 
+      event_background: pictures,
+      showEventBackground: false
+    });
   }
 
-  _handleNewEvent(e) {
+  _handleEditEvent(e) {
     setTimeout(function() {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.title === undefined || this.state.title === "") {
+    if (this.state.event.title === undefined || this.state.event.title === "") {
       this._handleError();
       return;
     }
 
-    this._createEvent()
+    this._editEvent()
     .then(function(res) {
       this.props.onDone(res.data.id);
     }.bind(this))
@@ -92,7 +104,7 @@ class NewEvent extends Component {
     });
   }
 
-  _createEvent() {
+  _editEvent() {
     var preview_img, event_background;
     for (var i in this.state.preview_img) {
       preview_img = this.state.preview_img[i];
@@ -109,19 +121,23 @@ class NewEvent extends Component {
       event_background = dataURItoBlob(event_background);
     } catch (err) {}
 
-    if (!JSON.parse(localStorage.getItem('alantu-user'))) {
-      this._handleError(new Error('User cannot be retrieve'));
-      return;
+    if (!preview_img) {
+      preview_img = this.state.event.preview_img;
     }
 
-    var now = moment().utc(new Date).format();
+    if (!event_background) {
+      event_background = this.state.event.event_background;
+    }
+
+    var now = moment().utc(new Date()).format();
+    var date = new Date(this.state.event.date);
     var data = new FormData();
-    data.append('title', this.state.title);
-    data.append('notes', this.state.notes);
-    data.append('location', this.state.location);
-    data.append('created_at', now);
+    data.append('title', this.state.event.title);
+    data.append('notes', this.state.event.notes);
+    data.append('location', this.state.event.location);
+    data.append('created_at', this.state.event.created_at);
     data.append('updated_at', now);
-    data.append('date', this.state.date);
+    data.append('date', moment().utc(date).format());
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
@@ -129,7 +145,7 @@ class NewEvent extends Component {
     data.append('preview_img', preview_img);
     data.append('event_background', event_background);
 
-    return axios.post(config.baseAPI_URL + '/event', data);
+    return axios.put(this.state.url, data);
   }
 
   _handleError(err) {
@@ -156,31 +172,36 @@ class NewEvent extends Component {
           <form className="newEventForm">
             <TextField floatingLabelText="Event title" 
                       data-val="title"
+                      value={this.state.event.title}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
             <TextField floatingLabelText="Notes"
                       data-val="notes"
+                      value={this.state.event.notes}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
             <TextField floatingLabelText="Location"
                       data-val="location"
+                      value={this.state.event.location}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
-            <DatePicker hintText="Date" mode="landscape" autoOk={true} onChange={this._handleDateChange.bind(this)}/>
+            <DatePicker hintText="Date" mode="landscape" value={this.state.event.date} onChange={this._handleDateChange.bind(this)}/>
             <div className="checkbox">
-              <Checkbox ref="checkbox" label="Login required?"/>
+              <Checkbox ref="checkbox" checked={this.state.event.login_required} label="Login required?"/>
             </div>
+            { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img}/> : null }
             <div className="fit">
-              <UploadPreview title="Preview event image" label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>  
+              <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>  
             </div>
+            { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background}/> : null }
             <div className="fit">
-              <UploadPreview title="Event background" label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
+              <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
             </div>
             <div>
               <RaisedButton label="Save & Continue" 
                             className="event-wizard-continue-button" 
                             primary={true} 
-                            onTouchTap={this._handleNewEvent.bind(this)} />
+                            onTouchTap={this._handleEditEvent.bind(this)} />
             </div>
           </form>
         </div>  
@@ -189,4 +210,4 @@ class NewEvent extends Component {
   }
 }
 
-export default withRouter(NewEvent);
+export default withRouter(EditEvent);

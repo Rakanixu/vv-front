@@ -42,8 +42,7 @@ a.form-link {
 }
 
 .event-wizard-continue-button {
-  margin-top: 15px;
-  margin-right: 20px;
+  margin: 15px 20px 35px 0;
   float: right;
 }
 

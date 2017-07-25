@@ -55,7 +55,7 @@ class NewEventWrapper extends Component {
     const {finished, stepIndex, showComponent} = this.state;
 
     return (
-      <div style={{width: '100%', maxWidth: 1800, margin: 'auto'}}>
+      <div style={{width: '100%', margin: 'auto'}}>
         <Stepper activeStep={stepIndex} style={{width: '100%', margin: 'auto', background: '#e4e4e4'}}>
           <Step><StepLabel>Create event</StepLabel></Step>
           <Step><StepLabel>Add previews</StepLabel></Step>

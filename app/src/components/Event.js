@@ -60,15 +60,15 @@ class Event extends Component {
 
   render() {
     return (
-        <Card style={styles.fit}>
-          <CardMedia style={styles.fit} >
-            <img src={config.baseURL + this.state.event.event_background} style={styles.cover}/>
-          </CardMedia>
-          <CardTitle title={this.state.event.title} style={styles.cardTitle} />
-          <CardActions style={styles.cardActions}>
-            <RaisedButton style={styles.raisedButton} primary={true} label="Join Event" />
-          </CardActions>
-        </Card>
+      <Card style={styles.fit}>
+        <CardMedia style={styles.fit} >
+          <img src={config.baseURL + this.state.event.event_background} style={styles.cover}/>
+        </CardMedia>
+        <CardTitle title={this.state.event.title} style={styles.cardTitle} />
+        <CardActions style={styles.cardActions}>
+          <RaisedButton style={styles.raisedButton} primary={true} label="Join Event" />
+        </CardActions>
+      </Card>
     );
   }
 }
