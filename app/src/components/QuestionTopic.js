@@ -54,6 +54,8 @@ class QuestionTopic extends Component {
         topic: '',
         description: ''
       });
+
+      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);

@@ -9,6 +9,7 @@ import AdmissionsList from './AdmissionsList';
 import Polls from './Polls';
 import PollsList from './PollsList';
 import QuestionTopic from './QuestionTopic';
+import QuestionTopicList from './QuestionTopicList';
 import EventGuests from './EventGuests';
 import Auction from './Auction';
 import Quiz from './Auction';
@@ -58,6 +59,7 @@ class EventTabs extends Component {
       reloadSliderImageList: time + 'A',
       reloadAdmissionsList: time + 'B',
       reloadPollsList: time + 'C',
+      reloadQuestionTopicList: time + 'D',
       url: config.baseAPI_URL + '/event/' + this.props.eventId
     };
   }
@@ -132,7 +134,12 @@ class EventTabs extends Component {
             <Polls onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadPollsList')} eventId={this.props.eventId} noFit={true}/> 
           </div>
           : null }
-        { this.state.show[3] ? <QuestionTopic onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null } 
+        { this.state.show[3] ? 
+          <div>
+            <QuestionTopicList key={this.state.reloadQuestionTopicList} eventId={this.props.eventId}/>  
+            <QuestionTopic onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuestionTopicList')} eventId={this.props.eventId} noFit={true}/> 
+          </div>  
+          : null } 
         { this.state.show[4] ? <EventGuests onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }
         { this.state.show[5] ? <Auction onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }
         { this.state.show[6] ? <Quiz onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> : null }   
