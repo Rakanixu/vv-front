@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { dataURItoBlob } from './../utils';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -189,11 +188,11 @@ class EditEvent extends Component {
             <div className="checkbox">
               <Checkbox ref="checkbox" checked={this.state.event.login_required} label="Login required?"/>
             </div>
-            { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img}/> : null }
+            { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
             <div className="fit">
               <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>  
             </div>
-            { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background}/> : null }
+            { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background} alt="preview"/> : null }
             <div className="fit">
               <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
             </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { dataURItoBlob } from './../utils';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';

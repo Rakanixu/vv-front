@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
-import { move } from './../utils';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import NewEvent from './NewEvent';
 import SliderImage from './SliderImage';
 import Admissions from './Admissions';
@@ -14,13 +11,7 @@ import Auction from './Auction';
 import Quiz from './Auction';
 import './NewEventWrapper.css';
 
-const config = require('./../config.json');
-
 class NewEventWrapper extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     finished: false,
     stepIndex: 0,

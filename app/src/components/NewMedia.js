@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { dataURItoBlob } from './../utils';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
-import DatePicker from 'material-ui/DatePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
@@ -14,9 +10,6 @@ import './NewMedia.css';
 axios.defaults.withCredentials = true; 
 
 const config = require('./../config.json');
-const moment = require('moment');
-
-var user = {};
 var styles = {
   fit: {
     overflow: 'hidden',

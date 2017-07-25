@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
-import {GridList, GridTile} from 'material-ui/GridList'
+import { withRouter } from 'react-router-dom';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import RaisedButton from 'material-ui/RaisedButton';
-import Nav from './Nav';
-import NewMedia from './NewMedia';
 import MediaGridList from './MediaGridList';
 import './Media.css';
 
-const config = require('./../config.json');
-const moment = require('moment');
 const styles = {
   root: {
     flexWrap: 'wrap',
@@ -39,10 +33,6 @@ const styles = {
 };
 
 class Media extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   _handlePageChange = () => {
     this.props.history.push('/manager/media/new');
   }

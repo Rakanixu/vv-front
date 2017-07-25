@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
-import Nav from './Nav';
-import NewMedia from './NewMedia';
 import axios from 'axios';
 import './MediaGridList.css';
 
@@ -86,7 +82,7 @@ class MediaGridList extends Component {
           <Subheader>Media Images</Subheader>
           {this.state.images.map((media) => (
             <GridTile key={media.id}>
-              <img src={config.baseURL + media.url} />
+              <img src={config.baseURL + media.url} alt="gallery item"/>
               <RaisedButton className="delete" 
                             data-id={media.id}
                             onTouchTap={this._handleDelete.bind(this)}

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { dataURItoBlob } from './../utils';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
@@ -182,13 +181,13 @@ class SliderImage extends Component {
                       style={styles.gridTile}
                       onTouchTap={this._handelImgSelect.bind(this)}
                       titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                      <img src={config.baseURL + img.url} />
+                      <img src={config.baseURL + img.url} alt="gallery item"/>
                     </GridTile>
                   ))}
                 </GridList>
               </div>
             </Dialog>
-            <img src={config.baseURL + this.state.imgUrlFromGallery}/>
+            <img src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item"/>
             <RaisedButton label="Select image from gallery" fullWidth={true} onTouchTap={this._handleDialogOpen.bind(this)} />
             <div className="fit">
               <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>  

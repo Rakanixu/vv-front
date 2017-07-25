@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { dataURItoBlob } from './../utils';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -114,7 +113,7 @@ class NewEvent extends Component {
       return;
     }
 
-    var now = moment().utc(new Date).format();
+    var now = moment().utc(new Date()).format();
     var data = new FormData();
     data.append('title', this.state.title);
     data.append('notes', this.state.notes);
