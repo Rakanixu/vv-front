@@ -5,11 +5,8 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
-import DatePicker from 'material-ui/DatePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import EventTabs from './EventTabs';
 import axios from 'axios';
 import './EditSliderImage.css';
 
@@ -148,6 +145,13 @@ class EditAdmission extends Component {
     this._handleDialogClose();
   }
 
+  _onImgChange = (pictures) => {
+    this.setState({ 
+      icon: pictures,
+      showImg: false      
+    });
+  }
+
   _handleError(err) {
     if (!err) {
       err = new Error('Invalid data');
@@ -219,7 +223,7 @@ class EditAdmission extends Component {
               <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>  
             </div>
 
-            <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleEditAdmission.bind(this)} />
+            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleEditAdmission.bind(this)} />
           </form>
         </div>  
       </div>

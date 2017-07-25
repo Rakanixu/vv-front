@@ -54,6 +54,8 @@ class Polls extends Component {
         name: '',
         description: ''
       });
+
+      this.props.onSave();
     }.bind(this))
     .catch(err => {
       this._handleError(err);

@@ -207,7 +207,7 @@ class EditSliderImage extends Component {
               <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>  
             </div>
 
-            <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleEditImage.bind(this)} />
+            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleEditImage.bind(this)} />
           </form>
         </div>  
       </div>
