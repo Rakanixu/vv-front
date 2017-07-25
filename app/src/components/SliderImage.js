@@ -37,7 +37,7 @@ var styles = {
     maxHeight: 400
   }, 
   screenHeight: {
-    height: window.innerHeight - 220
+    height: window.innerHeight - 250
   }
 };
 

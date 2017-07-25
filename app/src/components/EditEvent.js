@@ -7,6 +7,7 @@ import Checkbox from 'material-ui/Checkbox';
 import DatePicker from 'material-ui/DatePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import EventTabs from './EventTabs';
 import axios from 'axios';
 import './EditEvent.css';
 
@@ -203,6 +204,7 @@ class EditEvent extends Component {
                             onTouchTap={this._handleEditEvent.bind(this)} />
             </div>
           </form>
+          <EventTabs eventId={this.props.match.params.eventId}/>
         </div>  
       </div>
     );
