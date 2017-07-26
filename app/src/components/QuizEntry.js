@@ -67,6 +67,12 @@ class QuizEntry extends Component {
     this.setState({
       quiz_id: val
     });
+
+    // Anti pattern to refesh view on edit and provide same behavior as when creating event
+    // TODO: sibling communication between components with props
+    if (!this.props.showNoEditListing) {
+      window.dispatchEvent(new CustomEvent('quizIdChanged', {'detail': val}));
+    }
   }
 
   _handleNewQuizEntry(e) {
@@ -87,7 +93,6 @@ class QuizEntry extends Component {
       this.setState({
         error: null,
         count: count,
-        quiz_id: null,
         question: '',
         answer_one: '',
         answer_two: '',
@@ -149,7 +154,7 @@ class QuizEntry extends Component {
                          value={this.state.quiz_id}
                          onChange={this._handleQuizChange}>
               {this.state.quizzes.map((quiz) => (
-                <MenuItem value={quiz.id} primaryText={quiz.name} />
+                <MenuItem key={quiz.id} value={quiz.id} primaryText={quiz.name} />
               ))}
             </SelectField>
             <TextField floatingLabelText="Question" 

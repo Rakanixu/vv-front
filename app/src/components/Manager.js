@@ -17,6 +17,7 @@ import EditEventGuest from './EditEventGuest';
 import EditPoll from './EditPoll';
 import EditAuction from './EditAuction';
 import EditQuiz from './EditQuiz';
+import EditQuizEntry from './EditQuizEntry';
 import Media from './Media';
 import NewMedia from './NewMedia';
 import DesignOptions from './DesignOptions';
@@ -120,6 +121,7 @@ class Manager extends Component {
             <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:eventGuestId`} component={EditEventGuest} />
             <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
             <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
+            <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
             <Route exact path={`${this.props.match.path}/event_location`} component={EventLocationList} />
             <Route exact path={`${this.props.match.path}/event_location/new`} component={NewEventLocation} />
             <Route exact path={`${this.props.match.path}/event_location/edit/:eventLocationId`} component={EditEventLocation} />

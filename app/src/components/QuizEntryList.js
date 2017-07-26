@@ -41,9 +41,16 @@ class QuizEntryList extends Component {
     };
   }
 
+  componentWillMount() {
+    window.addEventListener('quizIdChanged', function(e) {
+      this._getQuizEntries(e.detail);
+      this.setState({ quizId: e.detail });
+    }.bind(this));
+  }
+
   componentWillReceiveProps(nextProps) {
-    console.log(this.props.quizId, nextProps.quizId);
     if (nextProps.quizId && nextProps.quizId >= 0) {
+      this.setState({ quizId: nextProps.quizId });
       this._getQuizEntries(nextProps.quizId);
     }
   }
@@ -57,12 +64,12 @@ class QuizEntryList extends Component {
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/quiz/' + this.props.quizId + '/quiz_entry/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/quiz/' + this.state.quizId + '/quiz_entry/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {
-    axios.delete(this.state.url + this.props.quizId + '/quiz_entry' + e.currentTarget.parentNode.dataset.id).then(function(res) {
-      this._getQuizEntries();
+    axios.delete(this.state.url + this.state.quizId + '/quiz_entry/' + e.currentTarget.parentNode.dataset.id).then(function(res) {
+      this._getQuizEntries(this.state.quizId);
     }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));

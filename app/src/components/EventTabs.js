@@ -16,6 +16,8 @@ import Auction from './Auction';
 import AuctionList from './AuctionList';
 import Quiz from './Quiz';
 import QuizList from './QuizList';
+import QuizEntry from './QuizEntry';
+import QuizEntryList from './QuizEntryList';
 import './EventTabs.css';
 
 axios.defaults.withCredentials = true; 
@@ -56,9 +58,13 @@ class EventTabs extends Component {
         {
           handleActive: this.handleTabChange.bind(this, 6),
           title: 'Quizzes'
+        },
+        {
+          handleActive: this.handleTabChange.bind(this, 7),
+          title: 'Quiz Entries'
         }
       ],
-      show: [true, false, false, false, false, false, false],
+      show: [true, false, false, false, false, false, false, false],
       reloadSliderImageList: time + 'A',
       reloadAdmissionsList: time + 'B',
       reloadPollsList: time + 'C',
@@ -66,6 +72,7 @@ class EventTabs extends Component {
       reloadEventGuestsList: time + 'E',
       reloadAuctionList: time + 'F',
       reloadQuizList: time + 'G',
+      reloadQuizEntryList: time + 'F',
       url: config.baseAPI_URL + '/event/' + this.props.eventId
     };
   }
@@ -163,7 +170,13 @@ class EventTabs extends Component {
             <QuizList key={this.state.reloadQuizList} eventId={this.props.eventId}/>  
             <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.eventId} noFit={true}/> 
           </div>
-          : null }   
+          : null }
+        { this.state.show[7] ? 
+          <div>
+            <QuizEntryList key={this.state.reloadQuizEntryList} eventId={this.props.eventId}/>  
+            <QuizEntry onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizEntryList')} eventId={this.props.eventId} noFit={true}/> 
+          </div>
+          : null }     
       </div>
     );
   }
