@@ -61,7 +61,7 @@ class NewEvent extends Component {
   }
 
   _handleDateChange = (nil, date) => {
-    this.state.date = moment().utc(date).format();
+    this.state.date = moment(date).utc().format();
   }
 
   _onPreviewImgChange = (pictures) => {

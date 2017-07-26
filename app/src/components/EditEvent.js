@@ -151,7 +151,7 @@ class EditEvent extends Component {
     data.append('location', this.state.event.location);
     data.append('created_at', this.state.event.created_at);
     data.append('updated_at', now);
-    data.append('date', moment().utc(date).format());
+    data.append('date', moment(date).utc().format());
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
