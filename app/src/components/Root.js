@@ -5,7 +5,6 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
-import Nav from './Nav';
 import Principal from './Principal';
 import NewPrincipal from './NewPrincipal';
 import EditPrincipal from './EditPrincipal';

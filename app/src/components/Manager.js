@@ -5,8 +5,6 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
-import Events from './Events';
-import NewEvent from './NewEvent';
 import NewEventWrapper from './NewEventWrapper';
 import EventsGridList from './EventsGridList';
 import EditEvent from './EditEvent';
@@ -23,6 +21,7 @@ import NewMedia from './NewMedia';
 import Users from './Users';
 import NewUser from './NewUser';
 import EditUser from './EditUser';
+import Donations from './Donations';
 import DesignOptions from './DesignOptions';
 import EventLocationList from './EventLocationList';
 import NewEventLocation from './NewEventLocation';
@@ -102,7 +101,7 @@ class Manager extends Component {
                 onRightIconButtonTouchTap={this._logout}
                 onTouchTap={this._handleToggle}/>
         <Drawer open={this.state.open}>
-          <div className="logo-container"><img id="principalLogo" className="logo" src="/logo.png"/></div>
+          <div className="logo-container"><img id="principalLogo" className="logo" src="/logo.png" alt="logo"/></div>
           <MenuItem data-url="/manager/event" onTouchTap={this._handleRedirect.bind(this)}>Events overview</MenuItem>
           <MenuItem data-url="/manager/event/new" onTouchTap={this._handleRedirect.bind(this)}>New event</MenuItem>
           <MenuItem data-url="/manager/event_location" onTouchTap={this._handleRedirect.bind(this)}>Event locations</MenuItem>        
@@ -133,6 +132,7 @@ class Manager extends Component {
             <Route exact path={`${this.props.match.path}/users`} component={Users} />
             <Route exact path={`${this.props.match.path}/users/new`} component={NewUser} />
             <Route exact path={`${this.props.match.path}/users/edit/:userId`} component={EditUser} />
+            <Route exact path={`${this.props.match.path}/donations`} component={Donations} />
             <Route exact path={`${this.props.match.path}/design_options`} component={DesignOptions} />
           </Switch>
         </div>
