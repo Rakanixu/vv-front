@@ -12,27 +12,26 @@ import Quiz from './Quiz';
 import QuizEntry from './QuizEntry';
 import './NewEventWrapper.css';
 
-const steps = 8;
-
 class NewEventWrapper extends Component {
   state = {
     finished: false,
     stepIndex: 0,
-    showComponent: [true, false, false, false, false, false, false, false]
+    showComponent: [true, false, false, false, false, false, false, false, false]
   };
 
   _handleNext = (eventId) => {
     const {stepIndex, showComponent} = this.state;
+    const finished = stepIndex >= showComponent.length - 1;
     showComponent.move(stepIndex, stepIndex + 1);
 
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= steps,
+      finished: finished,
       eventId: eventId,
       showComponent: showComponent
     });
 
-    if (this.state.finished) {
+    if (finished) {
       this.props.history.push('/manager/event/edit/' + this.state.eventId);
     }
   };

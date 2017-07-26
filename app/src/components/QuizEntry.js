@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import QuizEntryList from './QuizEntryList';
 import axios from 'axios';
 import './QuizEntry.css';
 
@@ -31,7 +34,8 @@ class QuizEntry extends Component {
     this.state = {
       error: null,
       count: 0,
-      url: config.baseAPI_URL + '/event/' + this.props.eventId,
+      quizzesUrl: config.baseAPI_URL + '/event/' + this.props.eventId,
+      quizEntriesUrl: config.baseAPI_URL + '/quiz',
       quizzes: []
     };
   }
@@ -41,8 +45,12 @@ class QuizEntry extends Component {
   }
 
   _getQuizzes() {
-    axios.get(this.state.url + '/quiz').then(function(res) {
+    axios.get(this.state.quizzesUrl + '/quiz').then(function(res) {
       this.setState({ quizzes: res.data });
+
+      if (res.data.length <= 0) {
+        this.props.onDone.call(null, this.props.eventId);
+      }
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
@@ -55,12 +63,18 @@ class QuizEntry extends Component {
     this.setState({ error: null });
   }
 
+  _handleQuizChange = (e, index, val) => {
+    this.setState({
+      quiz_id: val
+    });
+  }
+
   _handleNewQuizEntry(e) {
     setTimeout(function() {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.name === undefined || this.state.name === '') {
+    if (this.state.question === undefined || this.state.question === '') {
       this._handleError();
       return;
     }
@@ -73,8 +87,13 @@ class QuizEntry extends Component {
       this.setState({
         error: null,
         count: count,
-        name: '',
-        description: ''
+        quiz_id: null,
+        question: '',
+        answer_one: '',
+        answer_two: '',
+        answer_three: '',
+        answer_four: '',
+        right_solution: ''
       });
 
       if (this.props.onSave) {
@@ -87,11 +106,16 @@ class QuizEntry extends Component {
   }
 
   _createQuizEntry() {
-    var data = new FormData();
-    data.append('name', this.state.name);
-    data.append('description', this.state.description);
+    var data = new URLSearchParams();
+    data.append('quiz_id', this.state.quiz_id);
+    data.append('question', this.state.question);
+    data.append('answer_one', this.state.answer_one);
+    data.append('answer_two', this.state.answer_two);
+    data.append('answer_three', this.state.answer_three);
+    data.append('answer_four', this.state.answer_four);
+    data.append('right_solution', this.state.right_solution);
 
-    return axios.post(this.state.url + this.props.eventId + '/QuizEntry', data);
+    return axios.post(this.state.quizEntriesUrl + '/' + this.state.quiz_id + '/quiz_entry', data);
   }
 
   _handleError(err) {
@@ -115,17 +139,45 @@ class QuizEntry extends Component {
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
+          { this.props.showNoEditListing ?
+            <QuizEntryList key={this.state.count} noEdit={true} quizId={this.state.quiz_id} eventId={this.props.eventId}/>
+            : null }          
+
           <form className="newQuizEntry">
-            <TextField floatingLabelText="Name" 
-                      data-val="name"
+              <SelectField floatingLabelText="Select Quiz"
+                         fullWidth={true}
+                         value={this.state.quiz_id}
+                         onChange={this._handleQuizChange}>
+              {this.state.quizzes.map((quiz) => (
+                <MenuItem value={quiz.id} primaryText={quiz.name} />
+              ))}
+            </SelectField>
+            <TextField floatingLabelText="Question" 
+                      data-val="question"
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />                
-            <TextField floatingLabelText="Description"
-                      data-val="description"
+            <TextField floatingLabelText="Answer one"
+                      data-val="answer_one"
+                      onChange={this._handleTextFieldChange.bind(this)} 
+                      fullWidth={true} />     
+            <TextField floatingLabelText="Answer two"
+                      data-val="answer_two"
+                      onChange={this._handleTextFieldChange.bind(this)} 
+                      fullWidth={true} />     
+            <TextField floatingLabelText="Answer three"
+                      data-val="answer_three"
+                      onChange={this._handleTextFieldChange.bind(this)} 
+                      fullWidth={true} />     
+            <TextField floatingLabelText="Answer four"
+                      data-val="answer_four"
+                      onChange={this._handleTextFieldChange.bind(this)} 
+                      fullWidth={true} />
+            <TextField floatingLabelText="Right solution"
+                      data-val="right_solution"
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />     
 
-            <RaisedButton label="Save QuizEntry" fullWidth={true} onTouchTap={this._handleNewQuizEntry.bind(this)} />
+            <RaisedButton label="Save Quiz Entry" fullWidth={true} onTouchTap={this._handleNewQuizEntry.bind(this)} />
           </form>
 
           <div>
