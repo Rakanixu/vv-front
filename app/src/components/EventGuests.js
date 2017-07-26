@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import EventGuestList from './EventGuestList';
 import axios from 'axios';
 import './EventGuests.css';
 
@@ -77,7 +78,9 @@ class EventGuests extends Component {
         main_media_file: ''
       });
 
-      this.props.onSave();
+      if (this.props.onSave) {
+        this.props.onSave();
+      }
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -129,6 +132,10 @@ class EventGuests extends Component {
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
+
+          { this.props.showNoEditListing ?
+            <EventGuestList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
+            : null }
 
           <form className="newEventGuest">
             <TextField floatingLabelText="Name" 

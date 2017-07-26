@@ -83,7 +83,9 @@ class QuestionTopicList extends Component {
             <TableRow>
               <TableHeaderColumn style={styles.alignLeft}>Topic</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Description</TableHeaderColumn>
+              { !this.props.noEdit ? 
               <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              : null }
               <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -92,7 +94,9 @@ class QuestionTopicList extends Component {
               <TableRow key={i} data-id={question_topic.id}>
                 <TableRowColumn style={styles.alignLeft}>{question_topic.topic}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{question_topic.description}</TableRowColumn>
+                { !this.props.noEdit ? 
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
+                : null }
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
               </TableRow>
             )}

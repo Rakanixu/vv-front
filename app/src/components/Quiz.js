@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import QuizList from './QuizList';
 import axios from 'axios';
 import './Quiz.css';
 
@@ -64,7 +65,9 @@ class Quiz extends Component {
         description: ''
       });
 
-      this.props.onSave();
+      if (this.props.onSave) {
+        this.props.onSave();
+      }
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -99,6 +102,10 @@ class Quiz extends Component {
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
+
+          { this.props.showNoEditListing ?
+            <QuizList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
+            : null }
 
           <form className="newQuiz">
             <TextField floatingLabelText="Name" 

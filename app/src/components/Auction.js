@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import AuctionList from './AuctionList';
 import axios from 'axios';
 import './Auction.css';
 
@@ -69,7 +70,9 @@ class Auction extends Component {
         description: ''
       });
 
-      this.props.onSave();
+      if (this.props.onSave) {
+        this.props.onSave();
+      }
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -105,6 +108,10 @@ class Auction extends Component {
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
+
+          { this.props.showNoEditListing ?
+            <AuctionList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
+            : null }
 
           <form className="newAuction">
             <TextField floatingLabelText="Name" 

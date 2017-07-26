@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import SliderImageList from './SliderImageList';
 import axios from 'axios';
 import './SliderImage.css';
 
@@ -112,7 +113,9 @@ class SliderImage extends Component {
         type: ''
       });
 
-      this.props.onSave();
+      if (this.props.onSave) {
+        this.props.onSave();
+      }
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -163,6 +166,10 @@ class SliderImage extends Component {
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
+          { this.props.showNoEditListing ?
+            <SliderImageList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
+            : null }
+                   
           <form className="newSliderImage">
             <TextField floatingLabelText="Title" 
                       data-val="title"

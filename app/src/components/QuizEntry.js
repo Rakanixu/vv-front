@@ -3,9 +3,8 @@ import { withRouter } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
-import PollsList from './PollsList';
 import axios from 'axios';
-import './Polls.css';
+import './QuizEntry.css';
 
 axios.defaults.withCredentials = true; 
 
@@ -21,7 +20,7 @@ var styles = {
   }
 };
 
-class Polls extends Component {
+class QuizEntry extends Component {
   constructor(props) {
     super(props);
 
@@ -32,8 +31,21 @@ class Polls extends Component {
     this.state = {
       error: null,
       count: 0,
-      url: config.baseAPI_URL + '/event/'
+      url: config.baseAPI_URL + '/event/' + this.props.eventId,
+      quizzes: []
     };
+  }
+
+  componentDidMount() {
+    this._getQuizzes();
+  }
+
+  _getQuizzes() {
+    axios.get(this.state.url + '/quiz').then(function(res) {
+      this.setState({ quizzes: res.data });
+    }.bind(this)).catch(err => {
+      this._handleError(err);
+    });
   }
 
   _handleTextFieldChange(e) {
@@ -43,8 +55,17 @@ class Polls extends Component {
     this.setState({ error: null });
   }
 
-  _handleNewPoll(e) {
-    this._createPoll()
+  _handleNewQuizEntry(e) {
+    setTimeout(function() {
+      this.setState({ error: null });
+    }.bind(this), 5000);
+
+    if (this.state.name === undefined || this.state.name === '') {
+      this._handleError();
+      return;
+    }
+
+    this._createQuizEntry()
     .then(function(res) {
       var count = this.state.count;
       count++;
@@ -65,12 +86,12 @@ class Polls extends Component {
     });
   }
 
-  _createPoll() {
+  _createQuizEntry() {
     var data = new FormData();
     data.append('name', this.state.name);
     data.append('description', this.state.description);
 
-    return axios.post(this.state.url + this.props.eventId + '/poll', data);
+    return axios.post(this.state.url + this.props.eventId + '/QuizEntry', data);
   }
 
   _handleError(err) {
@@ -94,27 +115,23 @@ class Polls extends Component {
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          { this.props.showNoEditListing ?
-            <PollsList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-
-          <form className="newAdmissions">
-            <TextField floatingLabelText="Poll name" 
+          <form className="newQuizEntry">
+            <TextField floatingLabelText="Name" 
                       data-val="name"
                       onChange={this._handleTextFieldChange.bind(this)} 
-                      fullWidth={true} />                  
+                      fullWidth={true} />                
             <TextField floatingLabelText="Description"
                       data-val="description"
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />     
 
-            <RaisedButton label="Save Poll" fullWidth={true} onTouchTap={this._handleNewPoll.bind(this)} />
+            <RaisedButton label="Save QuizEntry" fullWidth={true} onTouchTap={this._handleNewQuizEntry.bind(this)} />
           </form>
 
           <div>
-            <RaisedButton label="Continue" 
+            <RaisedButton label="Continue"  
                           className="event-wizard-continue-button" 
-                          primary={true} 
+                          primary={true}
                           onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
           </div>
         </div>  
@@ -123,4 +140,4 @@ class Polls extends Component {
   }
 }
 
-export default withRouter(Polls);
+export default withRouter(QuizEntry);

@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import AdmissionsList from './AdmissionsList';
 import axios from 'axios';
 import './Admissions.css';
 
@@ -65,7 +66,9 @@ class Admissions extends Component {
         description: ''
       });
 
-      this.props.onSave();
+      if (this.props.onSave) {
+        this.props.onSave();
+      }
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -113,6 +116,10 @@ class Admissions extends Component {
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
+
+          { this.props.showNoEditListing ?
+            <AdmissionsList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
+            : null }
 
           <form className="newAdmissions">
             <TextField floatingLabelText="Title" 

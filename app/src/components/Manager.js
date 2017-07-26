@@ -121,7 +121,7 @@ class Manager extends Component {
             <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
             <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
             <Route exact path={`${this.props.match.path}/event_location`} component={EventLocationList} />
-             <Route exact path={`${this.props.match.path}/event_location/new`} component={NewEventLocation} />
+            <Route exact path={`${this.props.match.path}/event_location/new`} component={NewEventLocation} />
             <Route exact path={`${this.props.match.path}/event_location/edit/:eventLocationId`} component={EditEventLocation} />
             <Route exact path={`${this.props.match.path}/media`} component={Media} />
             <Route exact path={`${this.props.match.path}/media/new`} component={NewMedia} />

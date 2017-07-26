@@ -85,7 +85,7 @@ class SliderImageList extends Component {
               <TableHeaderColumn style={styles.alignLeft}>Image</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Type</TableHeaderColumn>
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              { !this.props.noEdit ? <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn> : null }
               <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -97,7 +97,9 @@ class SliderImageList extends Component {
                   </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{image.title}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{image.type}</TableRowColumn>
+                { !this.props.noEdit ? 
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
+                : null }
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
               </TableRow>
             )}

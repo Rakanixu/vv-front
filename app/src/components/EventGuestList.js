@@ -85,7 +85,9 @@ class EventGuestList extends Component {
               <TableHeaderColumn style={styles.alignLeft}>Name</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Description</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Media type</TableHeaderColumn>
+              { !this.props.noEdit ? 
               <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              : null }
               <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -98,7 +100,9 @@ class EventGuestList extends Component {
                 <TableRowColumn style={styles.alignLeft}>{event_guest.name}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{event_guest.description}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{config.name_guest_media_type[event_guest.main_media_type_id - 1].name}</TableRowColumn>
+                { !this.props.noEdit ? 
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
+                : null }
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
               </TableRow>
             )}
