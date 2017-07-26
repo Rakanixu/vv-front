@@ -10,7 +10,7 @@ import './QuizEntryList.css';
 axios.defaults.withCredentials = true;
 
 const config = require('./../config.json');
-var styles = {
+const styles = {
   alignLeft: {
     textAlign: 'left'
   },

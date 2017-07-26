@@ -20,6 +20,9 @@ import EditQuiz from './EditQuiz';
 import EditQuizEntry from './EditQuizEntry';
 import Media from './Media';
 import NewMedia from './NewMedia';
+import Users from './Users';
+import NewUser from './NewUser';
+import EditUser from './EditUser';
 import DesignOptions from './DesignOptions';
 import EventLocationList from './EventLocationList';
 import NewEventLocation from './NewEventLocation';
@@ -127,6 +130,9 @@ class Manager extends Component {
             <Route exact path={`${this.props.match.path}/event_location/edit/:eventLocationId`} component={EditEventLocation} />
             <Route exact path={`${this.props.match.path}/media`} component={Media} />
             <Route exact path={`${this.props.match.path}/media/new`} component={NewMedia} />
+            <Route exact path={`${this.props.match.path}/users`} component={Users} />
+            <Route exact path={`${this.props.match.path}/users/new`} component={NewUser} />
+            <Route exact path={`${this.props.match.path}/users/edit/:userId`} component={EditUser} />
             <Route exact path={`${this.props.match.path}/design_options`} component={DesignOptions} />
           </Switch>
         </div>

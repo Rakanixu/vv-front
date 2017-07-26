@@ -10,7 +10,6 @@ import Login from './Login';
 import Register from './Register';
 import Root from './Root';
 import Manager from './Manager';
-import User from './User';
 import Footer from './Footer';
 import './App.css';
 
@@ -30,7 +29,6 @@ class App extends Component {
               <Route path='/register' component={Register} />
               <Route path='/root' component={Root} />
               <Route path='/manager' component={Manager} />
-              <Route path='/user' component={User} />
             </Switch>
             <Footer />
           </div>
