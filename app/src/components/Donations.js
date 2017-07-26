@@ -29,6 +29,7 @@ const styles = {
     cursor: 'pointer'
   }
 };
+var user = {};
 
 class Donations extends Component {
   constructor(props) {
@@ -37,17 +38,20 @@ class Donations extends Component {
     this.state = {
       tableHeight: window.innerHeight - 125,
       error: null,
-      url: config.baseAPI_URL + '/donation',
+      url: config.baseAPI_URL + '/principal/',
       donations: []
     };
   }
 
   componentWillMount() {
+    if (localStorage.getItem('alantu-user')) {
+      user = JSON.parse(localStorage.getItem('alantu-user'));
+    }
     this._getDonations();
   }
 
   _getDonations() {
-    axios.get(this.state.url).then(res => {
+    axios.get(this.state.url + user.principal_id + '/donation').then(res => {
       this.setState({ donations: res.data });
     }).catch(err => {
       this._handleError(err);
