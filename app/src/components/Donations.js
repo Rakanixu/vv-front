@@ -80,7 +80,8 @@ class Donations extends Component {
 
           <RaisedButton label="Export CSV" 
                         className="export-csv" 
-                        primary={true} 
+                        primary={true}
+                        fullWidth={true}
                         onTouchTap={this._handleExportCSV.bind(this)} />
 
           <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>

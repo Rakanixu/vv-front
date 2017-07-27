@@ -69,6 +69,12 @@ class Manager extends Component {
     this.setState({ open: !this.state.open });
   }
 
+  _handleClose = () => {
+    if (this.state.open) {
+      this.setState({ open: false });
+    }
+  }
+
   _handleRedirect(e) {
     this.props.history.push(e.currentTarget.dataset.url);
     this.setState({ open: false });
@@ -97,9 +103,11 @@ class Manager extends Component {
     return (
       <div>
         <AppBar title="Manager" 
+                className="app-bar"
                 iconElementRight={<FlatButton label="Logout" />} 
                 onRightIconButtonTouchTap={this._logout}
-                onTouchTap={this._handleToggle}/>
+                onLeftIconButtonTouchTap={this._handleToggle}
+                onTouchTap={this._handleClose}/>
         <Drawer open={this.state.open}>
           <div className="logo-container"><img id="principalLogo" className="logo" src="/logo.png" alt="logo"/></div>
           <MenuItem data-url="/manager/event" onTouchTap={this._handleRedirect.bind(this)}>Events overview</MenuItem>

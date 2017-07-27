@@ -115,9 +115,7 @@ class Principal extends Component {
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {this.state.principals.map((principal, i) =>
-              
               <TableRow key={i} data-id={principal.id}>
-                
                 <TableRowColumn style={styles.alignLeft}>{principal.name}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{principal.domain}</TableRowColumn>
                 <TableRowColumn ref={'uc' + i} key={i} style={styles.alignLeft}>{principal.userCount}</TableRowColumn>

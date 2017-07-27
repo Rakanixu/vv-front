@@ -8,6 +8,7 @@ import axios from 'axios';
 import './Register.css';
 
 const config = require('./../config.json');
+const moment = require('moment');
 const _ = require('lodash/core');
 
 class Register extends Component {
@@ -22,6 +23,7 @@ class Register extends Component {
   _createPrincipal() {
     var principalParams = new URLSearchParams();
     principalParams.append('name', this.state.username);
+    principalParams.append('created_at', moment().utc(new Date()).format());
 
     return axios.post(config.baseAPI_URL + '/principal', principalParams);
   }

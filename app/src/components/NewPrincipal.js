@@ -10,6 +10,7 @@ import axios from 'axios';
 import './NewPrincipal.css';
 
 const config = require('./../config.json');
+const moment = require('moment');
 var styles = {
   fit: {
     overflow: 'hidden',
@@ -98,6 +99,7 @@ class NewPrincipal extends Component {
     data.append('secondary_color', this.state.secondary_color);
     data.append('tags', this.state.tags);
     data.append('description', this.state.description);
+    data.append('created_at', moment().utc(new Date()).format());
     data.append('background', background, 'background');
     data.append('logo', logo, 'logo');
 
