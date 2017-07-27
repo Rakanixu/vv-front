@@ -11,6 +11,10 @@
   margin-right: auto;
 }
 
+form {
+  margin-bottom: 30px;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 20px;

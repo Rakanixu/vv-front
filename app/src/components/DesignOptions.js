@@ -32,6 +32,8 @@ class DesignOptions extends Component {
       colorPickerUpdater2: 'initialcolorPickerUpdater2',
       background: {},
       logo: {},
+      showBackground: true,
+      showLogo: true,
       url: config.baseAPI_URL + '/principal',
       principal: {}
     };
@@ -60,13 +62,13 @@ class DesignOptions extends Component {
 
   _handleEditPrincipal() {
     var background, logo;
-    for (var i in this.state.principal.background) {
-      background = this.state.principal.background[i];
+    for (var i in this.state.background) {
+      background = this.state.background[i];
       break;
     }
 
-    for (var i in this.state.principal.logo) {
-      logo = this.state.principal.logo[i];
+    for (var i in this.state.logo) {
+      logo = this.state.logo[i];
       break;
     }
 
@@ -74,6 +76,14 @@ class DesignOptions extends Component {
       background = dataURItoBlob(background);
       logo = dataURItoBlob(logo);
     } catch (err) {}
+
+    if (!background) {
+      background = this.state.principal.background;
+    }
+
+    if (!logo) {
+      logo = this.state.principal.logo;
+    }
     
     var data = new FormData();
     data.append('name', this.state.principal.name);
@@ -83,6 +93,7 @@ class DesignOptions extends Component {
     data.append('secondary_color', this.state.principal.secondary_color);
     data.append('tags', this.state.principal.tags);
     data.append('description', this.state.principal.description);
+    data.append('created_at', this.state.principal.created_at);
     data.append('background', background);
     data.append('logo', logo);
     
@@ -96,11 +107,17 @@ class DesignOptions extends Component {
   }
 
   _onBackgroundChange = (pictures) => {
-    this.state.principal.background = pictures;
+    this.setState({ 
+      background: pictures,
+      showBackground: false      
+    });
   }
 
   _onLogoChange = (pictures) => {
-    this.state.principal.logo = pictures;
+    this.setState({ 
+      logo: pictures,
+      showLogo: false      
+    });
   }  
 
   _handleTextFieldChange(e) {
@@ -162,13 +179,15 @@ class DesignOptions extends Component {
                       value={this.state.principal.tags}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
+            { this.state.showBackground ? <img className="preview-img" src={config.baseURL + this.state.principal.background} alt="preview background"/> : null }          
             <div className="fit">
               <UploadPreview title="Background" label="Add" onChange={this._onBackgroundChange} style={styles.fit}/>  
             </div>
+            { this.state.showLogo ? <img className="preview-img" src={config.baseURL + this.state.principal.logo} alt="preview logo"/> : null } 
             <div className="fit">
               <UploadPreview title="Logo" label="Add" onChange={this._onLogoChange} style={styles.fit}/>  
             </div>
-
+            
             <RaisedButton label="Update" fullWidth={true} onTouchTap={this._handleEditPrincipal.bind(this)} />
           </form>
         </div>  

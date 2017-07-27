@@ -54,7 +54,8 @@ class EditEventLocation extends Component {
   }
 
   _handleDateChange = (nil, date) => {
-    this.state.event_location.opening_hours = moment(date).utc().format();
+    this.state.event_location.opening_hours = date;
+    this.setState({ event_location: this.state.event_location });
   }
 
   _handleEditEventLocation(e) {
@@ -81,7 +82,7 @@ class EditEventLocation extends Component {
   }
 
   _editEventLocation() {
-    console.log(this.state.event_location.opening_hours);
+    console.log(this.state.event_location.opening_hours, moment(this.state.event_location.opening_hours).utc().format());
     var data = new URLSearchParams();
     data.append('principal_id', user.principal_id);
     data.append('title', this.state.event_location.title);
@@ -89,9 +90,9 @@ class EditEventLocation extends Component {
     data.append('street', this.state.event_location.street);
     data.append('city', this.state.event_location.city);
     data.append('zip', this.state.event_location.zip);
-    data.append('opening_hours', this.state.event_location.opening_hours);
+    data.append('opening_hours', moment(this.state.event_location.opening_hours).utc().format());
 
-    return axios.post(config.baseAPI_URL + '/event_location', data);
+    return axios.put(this.state.url, data);
   }
 
   _handleError(err) {

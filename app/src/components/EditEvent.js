@@ -82,6 +82,11 @@ class EditEvent extends Component {
     this.setState({ event: this.state.event });
   }
 
+  _handleLoginRequired = (e, checked) => {
+    this.state.event.login_required = !this.state.event.login_required;
+    this.setState({ event: this.state.event });
+  }
+
   _onPreviewImgChange = (pictures) => {
     this.setState({ 
       preview_img: pictures,
@@ -201,9 +206,15 @@ class EditEvent extends Component {
                           value={this.state.event.location}
                           onChange={this._handleTextFieldChange.bind(this)} 
                           fullWidth={true} />
-                <DatePicker hintText="Date" mode="landscape" value={this.state.event.date} onChange={this._handleDateChange.bind(this)}/>
+                <DatePicker hintText="Date" 
+                          mode="landscape" 
+                          value={this.state.event.date} 
+                          onChange={this._handleDateChange.bind(this)}/>
                 <div className="checkbox">
-                  <Checkbox ref="checkbox" checked={this.state.event.login_required} label="Login required?"/>
+                  <Checkbox ref="checkbox" 
+                          checked={this.state.event.login_required} 
+                          onCheck={this._handleLoginRequired}
+                          label="Login required?"/>
                 </div>
                 { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
                 <div className="fit">
