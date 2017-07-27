@@ -82,7 +82,6 @@ class EditEventLocation extends Component {
   }
 
   _editEventLocation() {
-    console.log(this.state.event_location.opening_hours, moment(this.state.event_location.opening_hours).utc().format());
     var data = new URLSearchParams();
     data.append('principal_id', user.principal_id);
     data.append('title', this.state.event_location.title);
