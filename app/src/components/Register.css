@@ -6,10 +6,17 @@ form.registerForm {
   padding: 25px;
 }
 
-.verticalMargin {
-  margin-top: 25px;
+.checkbox-container {
+  margin: 25px;
+  display: inline-flex;
 }
 
-.leftMargin {
-  margin-left: 25px;
+.checkbox-container div {
+  width: auto !important;
+}
+
+.checkbox-container span {
+  font-size: 1.25em; 
+  margin-left: 35px;
+  line-height: 30px;
 }

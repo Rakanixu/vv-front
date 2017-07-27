@@ -19,13 +19,17 @@ form {
   font-size: 90%;
 }
 
+a {
+  color: rgb(0, 188, 212);
+}
+
 a.form-link {
+  font-size: 1.6em;
   color: white;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   top: 35px;
-  font-size: 1.25em;
 }
 
 .delete button {

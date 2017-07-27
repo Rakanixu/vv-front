@@ -31,7 +31,7 @@ class Register extends Component {
   _createUser(res) {
     var principal = res.data;
     var userParams = new URLSearchParams();
-    var date = new Date().toISOString().split('T')[0];
+    var date = moment(new Date()).utc().format();
     userParams.append('principal_id', principal.id);
     userParams.append('role_id', config.roles.manager.id);
     userParams.append('email', this.state.email);
@@ -104,10 +104,12 @@ class Register extends Component {
                      data-val="passwordConfirmation" 
                      onChange={this._handleTextFieldChange.bind(this)} 
                      fullWidth={true} />
-          <div className="verticalMargin leftMargin">
-            <Checkbox ref="checkbox" label={(
-              "I accept the <a to='/terms'>Terms</a>  and Data Protection Policy of vVents LLC"
-            )}/>
+          <div className="checkbox-container">
+            <Checkbox ref="checkbox"/>
+            <span>I accept the 
+              <a href='/terms'>Terms</a>  and 
+              <a href='/privacy_policy'>Data Protection Policy</a> of vVents LLC
+            </span>
           </div>
           <div className="verticalMargin">
             <RaisedButton label="Register" fullWidth={true} onTouchTap={this._handleRegister.bind(this)} />

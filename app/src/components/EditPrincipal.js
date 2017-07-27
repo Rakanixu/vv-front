@@ -26,6 +26,8 @@ class EditPrincipal extends Component {
 
     this.state = {
       error: null,
+      colorPickerUpdater1: 'initialcolorPickerUpdater1',
+      colorPickerUpdater2: 'initialcolorPickerUpdater2',
       background: {},
       logo: {},
       showBackground: true,
@@ -41,7 +43,11 @@ class EditPrincipal extends Component {
 
   _getPricipal() {
     axios.get(this.state.url + '/' + this.props.match.params.principalId).then(res => {
-      this.setState({ principal: res.data });
+      this.setState({ 
+        principal: res.data,
+        colorPickerUpdater1: new Date().getTime() + 'A',
+        colorPickerUpdater2: new Date().getTime() + 'B',
+      });
     }).catch(err => {
       this._handleError(err);
     });
@@ -154,11 +160,15 @@ class EditPrincipal extends Component {
                       value={this.state.principal.design}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
-            <ColorPicker floatingLabelText="Primary color"
-                      value={this.state.principal.primary_color}
+            <ColorPicker key={this.state.colorPickerUpdater1}
+                      ref="colorPickerPrimary"
+                      floatingLabelText="Primary color"
+                      defaultValue={this.state.principal.primary_color}
                       onChange={this._handelPrimaryColorChange.bind(this)} />
-            <ColorPicker floatingLabelText="Secondary color"
-                      value={this.state.principal.secondary_color}
+            <ColorPicker key={this.state.colorPickerUpdater2}
+                      ref="colorPickerSecondary"
+                      floatingLabelText="Secondary color"
+                      defaultValue={this.state.principal.secondary_color}
                       onChange={this._handelSecondaryColorChange.bind(this)} />    
             <TextField floatingLabelText="Description"
                       data-val="description"
