@@ -1,6 +1,8 @@
 {
   "baseURL": "http://localhost:9000",
   "baseAPI_URL": "http://localhost:9000/api/v1",
+  "defaultLogo": "/logo.svg",
+  "defaultBackground": "/background.png",
   "roles": {
     "root": {
       "name": "root",
@@ -27,5 +29,19 @@
     "default": {
       "id": 1
     }
-  }
+  },
+  "name_guest_media_type": [
+    {
+      "name": "Image",
+      "id": 1
+    },
+    {
+      "name": "YouTube Link",
+      "id": 2
+    },
+    {
+      "name": "Livestream",
+      "id": 3
+    }
+  ]
 }  

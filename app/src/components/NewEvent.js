@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { dataURItoBlob } from './../utils';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,7 +22,7 @@ var styles = {
     maxHeight: 400
   }, 
   screenHeight: {
-    height: window.innerHeight - 180
+    height: window.innerHeight - 250
   }
 };
 
@@ -62,7 +61,7 @@ class NewEvent extends Component {
   }
 
   _handleDateChange = (nil, date) => {
-    this.state.date = moment().utc(date).format();
+    this.state.date = moment(date).utc().format();
   }
 
   _onPreviewImgChange = (pictures) => {
@@ -85,7 +84,7 @@ class NewEvent extends Component {
 
     this._createEvent()
     .then(function(res) {
-      this.props.onDone();
+      this.props.onDone(res.data.id);
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -114,18 +113,26 @@ class NewEvent extends Component {
       return;
     }
 
-    var now = moment().utc(new Date).format();
+    var now = moment().utc(new Date()).format();
     var data = new FormData();
     data.append('title', this.state.title);
     data.append('notes', this.state.notes);
     data.append('location', this.state.location);
     data.append('created_at', now);
     data.append('updated_at', now);
+    data.append('deleted_at', '1970-01-01T00:00:00.000Z');
     data.append('date', this.state.date);
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
     data.append('event_type_id', config.event_types.default.id);
+    data.append('latitude', 0);
+    data.append('longitude', 0);
+    data.append('chat_highlight', false);
+    data.append('chat_with_user_image', false);
+    data.append('pose_question', false);
+    data.append('chat_shown_status_bar', false);
+    data.append('stage_moment_webcam', false);
     data.append('preview_img', preview_img);
     data.append('event_background', event_background);
 
@@ -166,7 +173,7 @@ class NewEvent extends Component {
                       data-val="location"
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
-            <DatePicker hintText="Date" mode="landscape" onChange={this._handleDateChange.bind(this)}/>
+            <DatePicker hintText="Date" mode="landscape" autoOk={true} onChange={this._handleDateChange.bind(this)}/>
             <div className="checkbox">
               <Checkbox ref="checkbox" label="Login required?"/>
             </div>
@@ -176,8 +183,12 @@ class NewEvent extends Component {
             <div className="fit">
               <UploadPreview title="Event background" label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>  
             </div>
-
-            <RaisedButton label="Save & Continue" fullWidth={true} onTouchTap={this._handleNewEvent.bind(this)} />
+            <div>
+              <RaisedButton label="Save & Continue" 
+                            className="event-wizard-continue-button" 
+                            primary={true} 
+                            onTouchTap={this._handleNewEvent.bind(this)} />
+            </div>
           </form>
         </div>  
       </div>

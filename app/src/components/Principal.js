@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
@@ -11,7 +10,7 @@ import './Principal.css';
 axios.defaults.withCredentials = true;
 
 const config = require('./../config.json');
-var styles = {
+const styles = {
   alignLeft: {
     textAlign: 'left'
   },
@@ -116,9 +115,7 @@ class Principal extends Component {
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {this.state.principals.map((principal, i) =>
-              
               <TableRow key={i} data-id={principal.id}>
-                
                 <TableRowColumn style={styles.alignLeft}>{principal.name}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{principal.domain}</TableRowColumn>
                 <TableRowColumn ref={'uc' + i} key={i} style={styles.alignLeft}>{principal.userCount}</TableRowColumn>

@@ -5,7 +5,6 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
-import Nav from './Nav';
 import Principal from './Principal';
 import NewPrincipal from './NewPrincipal';
 import EditPrincipal from './EditPrincipal';
@@ -36,6 +35,12 @@ class Root extends Component {
     this.setState({ open: !this.state.open });
   }
 
+  _handleClose = () => {
+    if (this.state.open) {
+      this.setState({ open: false });
+    }
+  }
+
   _logout = (e) => {
     localStorage.clear();
     this.props.history.push('/login');
@@ -50,11 +55,13 @@ class Root extends Component {
     return (
       <div>
         <AppBar title="Principals" 
-                onTouchTap={this._handleToggle}
+                className="app-bar"
+                iconElementRight={<FlatButton label="Logout" />} 
                 onRightIconButtonTouchTap={this._logout}
-                iconElementRight={<FlatButton label="Logout" />} />
+                onLeftIconButtonTouchTap={this._handleToggle}
+                onTouchTap={this._handleClose}/>
         <Drawer open={this.state.open}>
-          <div><img ref="img" className="logo" src="/logo.png"/></div>
+          <div className="logo-container"><img ref="img" className="logo" src="/logo.png"/></div>
           <MenuItem data-url="/root/principal/new" onTouchTap={this._handleRedirect.bind(this)}>New principal</MenuItem>
           <MenuItem data-url="/root/principal" onTouchTap={this._handleRedirect.bind(this)}>Overview</MenuItem>
         </Drawer>

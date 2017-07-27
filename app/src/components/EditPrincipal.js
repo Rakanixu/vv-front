@@ -26,8 +26,12 @@ class EditPrincipal extends Component {
 
     this.state = {
       error: null,
+      colorPickerUpdater1: 'initialcolorPickerUpdater1',
+      colorPickerUpdater2: 'initialcolorPickerUpdater2',
       background: {},
       logo: {},
+      showBackground: true,
+      showLogo: true,
       url: config.baseAPI_URL + '/principal',
       principal: {}
     };
@@ -39,7 +43,11 @@ class EditPrincipal extends Component {
 
   _getPricipal() {
     axios.get(this.state.url + '/' + this.props.match.params.principalId).then(res => {
-      this.setState({ principal: res.data });
+      this.setState({ 
+        principal: res.data,
+        colorPickerUpdater1: new Date().getTime() + 'A',
+        colorPickerUpdater2: new Date().getTime() + 'B',
+      });
     }).catch(err => {
       this._handleError(err);
     });
@@ -47,13 +55,13 @@ class EditPrincipal extends Component {
 
   _handleEditPrincipal() {
     var background, logo;
-    for (var i in this.state.principal.background) {
-      background = this.state.principal.background[i];
+    for (var i in this.state.background) {
+      background = this.state.background[i];
       break;
     }
 
-    for (var i in this.state.principal.logo) {
-      logo = this.state.principal.logo[i];
+    for (var i in this.state.logo) {
+      logo = this.state.logo[i];
       break;
     }
 
@@ -61,6 +69,14 @@ class EditPrincipal extends Component {
       background = dataURItoBlob(background);
       logo = dataURItoBlob(logo);
     } catch (err) {}
+
+    if (!background) {
+      background = this.state.principal.background;
+    }
+
+    if (!logo) {
+      logo = this.state.principal.logo;
+    }
     
     var data = new FormData();
     data.append('name', this.state.principal.name);
@@ -70,24 +86,29 @@ class EditPrincipal extends Component {
     data.append('secondary_color', this.state.principal.secondary_color);
     data.append('tags', this.state.principal.tags);
     data.append('description', this.state.principal.description);
+    data.append('created_at', this.state.principal.created_at);
     data.append('background', background);
     data.append('logo', logo);
-
-    console.log(data);
     
     axios.put(config.baseAPI_URL + '/principal/' + this.props.match.params.principalId, data).then(function(res) {
-
-    }).catch(function(err) {
+      this.props.history.push('/root/principal');
+    }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));
   }
 
   _onBackgroundChange = (pictures) => {
-    this.state.principal.background = pictures;
+    this.setState({ 
+      background: pictures,
+      showBackground: false      
+    });
   }
 
   _onLogoChange = (pictures) => {
-    this.state.principal.logo = pictures;
+    this.setState({ 
+      logo: pictures,
+      showLogo: false      
+    });
   }  
 
   _handleTextFieldChange(e) {
@@ -139,11 +160,15 @@ class EditPrincipal extends Component {
                       value={this.state.principal.design}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
-            <ColorPicker floatingLabelText="Primary color"
-                      value={this.state.principal.primary_color}
+            <ColorPicker key={this.state.colorPickerUpdater1}
+                      ref="colorPickerPrimary"
+                      floatingLabelText="Primary color"
+                      defaultValue={this.state.principal.primary_color}
                       onChange={this._handelPrimaryColorChange.bind(this)} />
-            <ColorPicker floatingLabelText="Secondary color"
-                      value={this.state.principal.secondary_color}
+            <ColorPicker key={this.state.colorPickerUpdater2}
+                      ref="colorPickerSecondary"
+                      floatingLabelText="Secondary color"
+                      defaultValue={this.state.principal.secondary_color}
                       onChange={this._handelSecondaryColorChange.bind(this)} />    
             <TextField floatingLabelText="Description"
                       data-val="description"
@@ -155,9 +180,11 @@ class EditPrincipal extends Component {
                       value={this.state.principal.tags}
                       onChange={this._handleTextFieldChange.bind(this)} 
                       fullWidth={true} />
+            { this.state.showBackground ? <img className="preview-img" src={config.baseURL + this.state.principal.background} alt="preview background"/> : null }          
             <div className="fit">
               <UploadPreview title="Background" label="Add" onChange={this._onBackgroundChange} style={styles.fit}/>  
             </div>
+            { this.state.showLogo ? <img className="preview-img" src={config.baseURL + this.state.principal.logo} alt="preview logo"/> : null }
             <div className="fit">
               <UploadPreview title="Logo" label="Add" onChange={this._onLogoChange} style={styles.fit}/>  
             </div>

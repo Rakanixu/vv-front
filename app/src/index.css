@@ -8,17 +8,28 @@ body {
   margin: 0;
   padding: 0;
   font-family: Roboto, Arial;
+  font-size: 80%;
   height: 100%;
   background-color: #e4e4e4;
 }
 
+form {
+  padding-right: 15px;
+  padding-left: 15px;
+  font-size: 90%;
+}
+
+a {
+  color: rgb(0, 188, 212);
+}
+
 a.form-link {
+  font-size: 1.6em;
   color: white;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   top: 35px;
-  font-size: 1.25em;
 }
 
 .delete button {
@@ -27,4 +38,27 @@ a.form-link {
 
 .edit button {
   background-color: #00a65a !important;
+}
+
+.inner-container {
+  background-color: #e4e4e4;
+  border-radius: 3px; 
+  margin: 20px;
+  background-clip: content-box, padding-box;
+}
+
+.event-wizard-continue-button {
+  margin: 15px 20px 35px 0;
+  float: right;
+}
+
+@media (max-width: 600px) {
+  form {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .inner-container {
+    margin: 5px;
+  }
 }

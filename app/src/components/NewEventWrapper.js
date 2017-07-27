@@ -1,34 +1,39 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
-import { move } from './../utils';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import NewEvent from './NewEvent';
+import SliderImage from './SliderImage';
+import Admissions from './Admissions';
+import Polls from './Polls';
+import QuestionTopic from './QuestionTopic';
+import EventGuests from './EventGuests';
+import Auction from './Auction';
+import Quiz from './Quiz';
+import QuizEntry from './QuizEntry';
 import './NewEventWrapper.css';
 
-const config = require('./../config.json');
-
 class NewEventWrapper extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     finished: false,
     stepIndex: 0,
-    showComponent: [true, false, false, false, false, false, false, false]
+    showComponent: [true, false, false, false, false, false, false, false, false]
   };
 
-  _handleNext = () => {
+  _handleNext = (eventId) => {
     const {stepIndex, showComponent} = this.state;
+    const finished = stepIndex >= showComponent.length - 1;
     showComponent.move(stepIndex, stepIndex + 1);
 
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= 8,
+      finished: finished,
+      eventId: eventId,
       showComponent: showComponent
     });
+
+    if (finished) {
+      this.props.history.push('/manager/event/edit/' + this.state.eventId);
+    }
   };
 
   _handlePrev = () => {
@@ -45,11 +50,10 @@ class NewEventWrapper extends Component {
 
   render() {
     const {finished, stepIndex, showComponent} = this.state;
-    const contentStyle = {margin: '0 16px'};
 
     return (
-      <div style={{width: '100%', maxWidth: 1800, margin: 'auto'}}>
-        <Stepper activeStep={stepIndex}>
+      <div style={{width: '100%', margin: 'auto'}}>
+        <Stepper activeStep={stepIndex} style={{width: '100%', margin: 'auto', background: '#e4e4e4'}}>
           <Step><StepLabel>Create event</StepLabel></Step>
           <Step><StepLabel>Add previews</StepLabel></Step>
           <Step><StepLabel>Add admissions</StepLabel></Step>
@@ -57,27 +61,19 @@ class NewEventWrapper extends Component {
           <Step><StepLabel>Add question topics</StepLabel></Step>
           <Step><StepLabel>Add event guests</StepLabel></Step>
           <Step><StepLabel>Add auctions</StepLabel></Step>
-          <Step><StepLabel>Add quizzes</StepLabel></Step>               
+          <Step><StepLabel>Add quizzes</StepLabel></Step>
+          <Step><StepLabel>Add quiz entries</StepLabel></Step>
         </Stepper>
-        <div style={contentStyle}>
-          <div>
-            { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
-              
-
-{/*               <div style={{marginTop: 12}}>
-                <FlatButton
-                  label="Back"
-                  disabled={stepIndex === 0}
-                  onTouchTap={this._handlePrev.bind(this)}
-                  style={{marginRight: 12}}
-                />
-                <RaisedButton
-                  label={stepIndex === 8 ? 'Finish' : 'Next'}
-                  primary={true}
-                  onTouchTap={this._handleNext.bind(this)}
-                />
-              </div> */}
-          </div>
+        <div>
+          { showComponent[0] ? <NewEvent onDone={this._handleNext.bind(this)} /> : null }
+          { showComponent[1] ? <SliderImage showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[2] ? <Admissions showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[3] ? <Polls showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[4] ? <QuestionTopic showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null } 
+          { showComponent[5] ? <EventGuests showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[6] ? <Auction showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[7] ? <Quiz showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }
+          { showComponent[8] ? <QuizEntry showNoEditListing={true} onDone={this._handleNext.bind(this)} eventId={this.state.eventId}/> : null }   
         </div>
       </div>
     );
