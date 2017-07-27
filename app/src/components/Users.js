@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import RaisedButton from 'material-ui/RaisedButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -11,6 +12,7 @@ import './Users.css';
 
 axios.defaults.withCredentials = true;
 
+const utils = require('./../utils.js');
 const config = require('./../config.json');
 const styles = {
   root: {
@@ -85,6 +87,10 @@ class Users extends Component {
     }.bind(this));
   }
 
+  _handleExportCSV() {
+    utils.exportToCsv('users.csv', this.state.users);
+  }
+
   _handleError(err) {
     this.setState({ error: err });
     setTimeout(function() {
@@ -98,6 +104,11 @@ class Users extends Component {
         <div style={styles.root}>
           <ErrorReporting open={this.state.error !== null}
             error={this.state.error} />
+
+          <RaisedButton label="Export CSV" 
+                        className="export-csv" 
+                        primary={true} 
+                        onTouchTap={this._handleExportCSV.bind(this)} />
 
           <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

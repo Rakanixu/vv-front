@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import RaisedButton from 'material-ui/RaisedButton';
 import Delete from 'material-ui/svg-icons/action/delete';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
@@ -9,6 +10,7 @@ import './Donations.css';
 
 axios.defaults.withCredentials = true;
 
+const utils = require('./../utils.js');
 const config = require('./../config.json');
 const styles = {
   root: {
@@ -58,6 +60,10 @@ class Donations extends Component {
     });
   }
 
+  _handleExportCSV() {
+    utils.exportToCsv('donations.csv', this.state.donations);
+  }
+
   _handleError(err) {
     this.setState({ error: err });
     setTimeout(function() {
@@ -71,6 +77,11 @@ class Donations extends Component {
         <div style={styles.root}>
           <ErrorReporting open={this.state.error !== null}
             error={this.state.error} />
+
+          <RaisedButton label="Export CSV" 
+                        className="export-csv" 
+                        primary={true} 
+                        onTouchTap={this._handleExportCSV.bind(this)} />
 
           <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
