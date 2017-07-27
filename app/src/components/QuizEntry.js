@@ -48,7 +48,7 @@ class QuizEntry extends Component {
     axios.get(this.state.quizzesUrl + '/quiz').then(function(res) {
       this.setState({ quizzes: res.data });
 
-      if (res.data.length <= 0) {
+      if (res.data.length <= 0 && this.props.showNoEditListing) {
         this.props.onDone.call(null, this.props.eventId);
       }
     }.bind(this)).catch(err => {

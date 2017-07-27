@@ -120,11 +120,19 @@ class NewEvent extends Component {
     data.append('location', this.state.location);
     data.append('created_at', now);
     data.append('updated_at', now);
+    data.append('deleted_at', '1970-01-01T00:00:00.000Z');
     data.append('date', this.state.date);
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
     data.append('event_type_id', config.event_types.default.id);
+    data.append('latitude', 0);
+    data.append('longitude', 0);
+    data.append('chat_highlight', false);
+    data.append('chat_with_user_image', false);
+    data.append('pose_question', false);
+    data.append('chat_shown_status_bar', false);
+    data.append('stage_moment_webcam', false);
     data.append('preview_img', preview_img);
     data.append('event_background', event_background);
 

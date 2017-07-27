@@ -18,6 +18,7 @@ import Quiz from './Quiz';
 import QuizList from './QuizList';
 import QuizEntry from './QuizEntry';
 import QuizEntryList from './QuizEntryList';
+import ActivitySettings from './ActivitySettings';
 import './EventTabs.css';
 
 axios.defaults.withCredentials = true; 
@@ -62,9 +63,13 @@ class EventTabs extends Component {
         {
           handleActive: this.handleTabChange.bind(this, 7),
           title: 'Quiz Entries'
+        },
+        {
+          handleActive: this.handleTabChange.bind(this, 8),
+          title: 'Activity Settings'
         }
       ],
-      show: [true, false, false, false, false, false, false, false],
+      show: [true, false, false, false, false, false, false, false, false],
       reloadSliderImageList: time + 'A',
       reloadAdmissionsList: time + 'B',
       reloadPollsList: time + 'C',
@@ -175,6 +180,11 @@ class EventTabs extends Component {
           <div>
             <QuizEntryList key={this.state.reloadQuizEntryList} eventId={this.props.eventId}/>  
             <QuizEntry onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizEntryList')} eventId={this.props.eventId} noFit={true}/> 
+          </div>
+          : null }     
+        { this.state.show[8] ? 
+          <div>
+            <ActivitySettings onDone={this.onDone} eventId={this.props.eventId} noFit={true}/> 
           </div>
           : null }     
       </div>
