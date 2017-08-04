@@ -9,7 +9,7 @@ var imgURL, cardStyle, cardMediaStyle;
 class Box extends Component {
   constructor(props) {
     super(props);
-    
+
     imgURL = config.baseURL + this.props.background;
     cardMediaStyle = {
       minHeight: 250,
@@ -29,7 +29,7 @@ class Box extends Component {
     return (
       <Card style={cardStyle} onTouchTap={this.redirect.bind(this)}>
         <CardMedia style={cardMediaStyle} overlay={<CardTitle title={this.props.title} subtitle={this.props.date} />}>
-          <img src={imgURL} />
+          <img src={imgURL} alt=''/>
         </CardMedia>
       </Card>
     );

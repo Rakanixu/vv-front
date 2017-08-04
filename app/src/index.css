@@ -10,7 +10,7 @@ body {
   font-family: Roboto, Arial;
   font-size: 80%;
   height: 100%;
-  background-color: #e4e4e4;
+  background-color: #efefef;
 }
 
 form {
@@ -20,7 +20,16 @@ form {
 }
 
 a {
-  color: rgb(0, 188, 212);
+  color: #ff4081;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.m-b-15 {
+  margin-bottom: 15px
 }
 
 a.form-link {
@@ -42,7 +51,7 @@ a.form-link {
 
 .inner-container {
   background-color: #e4e4e4;
-  border-radius: 3px; 
+  border-radius: 3px;
   margin: 20px;
   background-clip: content-box, padding-box;
 }
@@ -61,4 +70,12 @@ a.form-link {
   .inner-container {
     margin: 5px;
   }
+}
+
+h1 {
+    border-bottom: 3px solid #d3d9e2;
+    font-weight: normal;
+    color: #3a4c5e;
+    padding-bottom: 25px;
+    margin-bottom: 40px;
 }
