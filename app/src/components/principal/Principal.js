@@ -55,7 +55,7 @@ class Principal extends Component {
   }
 
   _getUsersByPrincipal(principalId, i) {
-    axios.get(this.state.url + '/' + principalId + '/user').then(function(res) {
+    axios.get(this.state.url + '/' + principalId + '/user_count').then(function(res) {
       this.state.principals[i].userCount = res.data[0].count;
       this.setState({
         principals: this.state.principals
@@ -66,7 +66,7 @@ class Principal extends Component {
   }
 
   _getEventsByPrincipal(principalId, i) {
-    axios.get(this.state.url + '/' + principalId + '/event').then(res => {
+    axios.get(this.state.url + '/' + principalId + '/event_count').then(res => {
       this.state.principals[i].eventCount = res.data[0].count;
       this.setState({
         principals: this.state.principals
