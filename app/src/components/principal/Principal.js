@@ -88,6 +88,10 @@ class Principal extends Component {
     }.bind(this));
   }
 
+  _showManagers(e) {
+    this.props.history.push('/root/principal/' + e.currentTarget.parentNode.dataset.id + '/manager');
+  }
+
   _handleError(err) {
     this.setState({ error: err });
     setTimeout(function() {
@@ -119,11 +123,11 @@ class Principal extends Component {
           <TableBody displayRowCheckbox={false}>
             {this.state.principals.map((principal, i) =>
               <TableRow key={i} data-id={principal.id}>
-                <TableRowColumn style={styles.alignLeft}>{principal.name}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{principal.domain}</TableRowColumn>
-                <TableRowColumn ref={'uc' + i} key={i} style={styles.alignLeft}>{principal.userCount}</TableRowColumn>
-                <TableRowColumn ref={'ec' + i} key={i} style={styles.alignLeft}>{principal.eventCount}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{new Date(principal.created_at).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft} onTouchTap={this._showManagers.bind(this)}>{principal.name}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft} onTouchTap={this._showManagers.bind(this)}>{principal.domain}</TableRowColumn>
+                <TableRowColumn ref={'uc' + i} key={i} style={styles.alignLeft} onTouchTap={this._showManagers.bind(this)}>{principal.userCount}</TableRowColumn>
+                <TableRowColumn ref={'ec' + i} key={i} style={styles.alignLeft} onTouchTap={this._showManagers.bind(this)}>{principal.eventCount}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft} onTouchTap={this._showManagers.bind(this)}>{new Date(principal.created_at).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
               </TableRow>

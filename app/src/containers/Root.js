@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Principal from '../components/principal/Principal';
 import NewPrincipal from '../components/principal/NewPrincipal';
 import EditPrincipal from '../components/principal/EditPrincipal';
+import PrincipalManagers from '../components/principal/PrincipalManagers';
 import ThemeDefault from '../theme-default';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import Assessment from 'material-ui/svg-icons/action/assessment';
@@ -30,8 +31,6 @@ const data = {
     { text: 'Login Page', icon: <PermIdentity />, link: '/login' }
   ],
 }
-
-
 
 class Root extends Component {
   constructor(props) {
@@ -98,6 +97,7 @@ class Root extends Component {
               <Route exact path={`${this.props.match.path}/principal`} component={Principal} />
               <Route exact path={`${this.props.match.path}/principal/new`} component={NewPrincipal} />
               <Route exact path={`${this.props.match.path}/principal/edit/:principalId`} component={EditPrincipal} />
+              <Route exact path={`${this.props.match.path}/principal/:principalId/manager`} component={PrincipalManagers} />
             </Switch>
           </div>
         </div>
