@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { grey500, white, blue700, blue500 } from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ThemeDefault from '../theme-default';
+import Paper from 'material-ui/Paper';
 import ErrorReporting from 'material-ui-error-reporting';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
@@ -10,6 +14,38 @@ import './Register.css';
 const config = require('./../config.json');
 const moment = require('moment');
 const _ = require('lodash/core');
+const styles = {
+  paper: {
+    padding: 20,
+    overflow: 'auto'
+  },
+  alignCenter: {
+    textAlign: 'center'
+  },
+  link: {
+    color: blue500
+  },
+  login: {
+    color: blue700,
+    fontWeight: 900
+  },
+  logo: {
+    width: '28%',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundImage: 'url("/background-register.jpg")',
+    backgroundSize: '100% 100%',
+    backgroundRepeat: 'no-repeat'
+  } 
+};
 
 class Register extends Component {
   constructor(props) {
@@ -85,39 +121,46 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
-        <ErrorReporting open={this.state.error !== null}
-                        error={this.state.error} />
-        <form className="registerForm">
-          <TextField floatingLabelText="Username"
-                     data-val="username"
-                     onChange={this._handleTextFieldChange.bind(this)}
-                     fullWidth={true} />
-          <TextField floatingLabelText="Email"
-                     data-val="email"
-                     onChange={this._handleTextFieldChange.bind(this)}
-                     fullWidth={true} />
-          <TextField floatingLabelText="Password"
-                     data-val="password"
-                     onChange={this._handleTextFieldChange.bind(this)}
-                     fullWidth={true} />
-          <TextField floatingLabelText="Password confirmation"
-                     data-val="passwordConfirmation"
-                     onChange={this._handleTextFieldChange.bind(this)}
-                     fullWidth={true} />
-          <div className="checkbox-container">
-            <Checkbox ref="checkbox"/>
-            <span>I accept the
-              <a href='/terms'>Terms</a>  and
-              <a href='/privacy_policy'>Data Protection Policy</a> of vVents LLC
-            </span>
+      <MuiThemeProvider muiTheme={ThemeDefault}>
+        <div style={styles.background}>
+          <ErrorReporting open={this.state.error !== null}
+                          error={this.state.error} />
+          <div className="register-container">                
+            <Paper style={styles.paper}>
+              <form>
+                <img style={styles.logo} src="/logo.png" alt="logo"/>
+                <TextField floatingLabelText="Username"
+                          data-val="username"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+                <TextField floatingLabelText="Email"
+                          data-val="email"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+                <TextField floatingLabelText="Password"
+                          data-val="password"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+                <TextField floatingLabelText="Password confirmation"
+                          data-val="passwordConfirmation"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+                <div className="checkbox-container">
+                  <Checkbox ref="checkbox"/>
+                  <span>I accept the
+                    <a style={styles.link} href='/terms'> Terms</a> and
+                    <a style={styles.link} href='/privacy_policy'> Data Protection Policy</a> of vVents LLC
+                  </span>
+                </div>
+                <div style={styles.alignCenter}>
+                  <RaisedButton label="Register" primary={true} onTouchTap={this._handleRegister.bind(this)} />
+                  <p>Already have an account? <a style={styles.login} href="/login">Sign in</a></p>
+                </div>
+              </form>
+            </Paper>
           </div>
-          <div className="verticalMargin">
-            <RaisedButton label="Register" fullWidth={true} onTouchTap={this._handleRegister.bind(this)} />
-          </div>
-          <a className="form-link" href="/login">Do you already have an account?</a>
-        </form>
-      </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

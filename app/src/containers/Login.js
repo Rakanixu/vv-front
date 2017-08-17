@@ -3,10 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
-import { grey500, white } from 'material-ui/styles/colors';
+import { grey500, white, blue700, blue500 } from 'material-ui/styles/colors';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
 import ErrorReporting from 'material-ui-error-reporting';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
@@ -38,9 +37,6 @@ const styles = {
     textAlign: 'center',
     padding: 10
   },
-  flatButton: {
-    color: grey500
-  },
   checkRemember: {
     style: {
       float: 'left',
@@ -56,8 +52,25 @@ const styles = {
       fill: grey500
     }
   },
+  forgotPassword: {
+    display: 'block',
+    marginTop: 10,
+    color: grey500
+  },
+  signUp: {
+    color: blue700,
+    fontWeight: 900
+  },
   loginBtn: {
-    float: 'right'
+    marginTop: 35,
+    marginBottom: 20,
+    color: blue500
+  },
+  alignCenter: {
+    textAlign: 'center'
+  },
+  alignRight: {
+    textAlign: 'right'
   },
   btn: {
     background: '#4f81e9',
@@ -76,6 +89,22 @@ const styles = {
   btnSpan: {
     marginLeft: 5
   },
+  logo: {
+    width: '28%',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundImage: 'url("/background-login.jpg")',
+    backgroundSize: '100% 100%',
+    backgroundRepeat: 'no-repeat'
+  } 
 };
 
 class Login extends Component {
@@ -160,14 +189,14 @@ class Login extends Component {
 
     return (
       <MuiThemeProvider muiTheme={ThemeDefault}>
-        <div>
+        <div style={styles.background}>
           <div style={styles.loginContainer}>
-
             <Paper style={styles.paper}>
               <ErrorReporting open={this.state.error !== null}
                   error={this.state.error} />
               <form>
-                <TextField floatingLabelText="Username"
+                <img style={styles.logo} src="/logo.png" alt="logo"/>
+                <TextField floatingLabelText="Email or username"
                   data-val="email"
                   onChange={this._handleTextFieldChange.bind(this)}
                   fullWidth={true} />
@@ -175,39 +204,27 @@ class Login extends Component {
                   data-val="password"
                   onChange={this._handleTextFieldChange.bind(this)}
                   fullWidth={true} />
-                <div>
-                  <Checkbox
+                <div style={styles.alignRight}>  
+                  <a style={styles.forgotPassword} href="/forgot_password">Forgot password?</a>
+                </div>
+                <div style={styles.alignCenter}>
+                  {/* <Checkbox
                     label="Remember me"
                     style={styles.checkRemember.style}
                     labelStyle={styles.checkRemember.labelStyle}
                     iconStyle={styles.checkRemember.iconStyle}
-                  />
+                  /> */}
 
                   <RaisedButton label="Login"
                     onTouchTap={this._handleLogin.bind(this)}
                     primary={true}
                     style={styles.loginBtn} />
+
+                  <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>  
                 </div>
               </form>
             </Paper>
-
-            <div style={styles.buttonsDiv}>
-              <FlatButton
-                label="Register"
-                href="/register"
-                style={styles.flatButton}
-                icon={<PersonAdd />}
-              />
-
-              <FlatButton
-                label="Forgot Password?"
-                href="/forgot"
-                style={styles.flatButton}
-                icon={<Help />}
-              />
-            </div>
-
-            <div style={styles.buttonsDiv}>
+            {/* <div style={styles.buttonsDiv}>
               <Link to="/" style={{ ...styles.btn, ...styles.btnFacebook }}>
                 <i className="fa fa-facebook fa-lg" />
                 <span style={styles.btnSpan}>Log in with Facebook</span>
@@ -216,7 +233,7 @@ class Login extends Component {
                 <i className="fa fa-google-plus fa-lg" />
                 <span style={styles.btnSpan}>Log in with Google</span>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </MuiThemeProvider>

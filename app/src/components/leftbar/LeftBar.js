@@ -11,15 +11,19 @@ const LeftBar = (props) => {
   let { navDrawerOpen } = props;
 
   const styles = {
-    logo: {
-      cursor: 'pointer',
-      fontSize: 22,
-      color: typography.textFullWhite,
-      lineHeight: `${spacing.desktopKeylineIncrement}px`,
-      fontWeight: typography.fontWeightLight,
-      backgroundColor: customgrey,
-      paddingLeft: 40,
+    logoContainer: {
       height: 56,
+      overflow: 'hidden',
+
+    },
+    logo: {
+      width: 110,
+      marginTop: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block',
+      height: 32,
+      padding: 0
     },
     menuItem: {
       color: bartextcolor,
@@ -31,8 +35,8 @@ const LeftBar = (props) => {
     <Drawer
       docked={true}
       open={navDrawerOpen}>
-        <div style={styles.logo}>
-          Alantu
+        <div style={styles.logoContainer}>
+          <img style={styles.logo} src="/logo-white.png" alt="logo"/>
         </div>
         <div>
           {props.menus.map((menu, index) =>
