@@ -14,6 +14,7 @@ import ThemeDefault from '../theme-default';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import Assessment from 'material-ui/svg-icons/action/assessment';
 import GridOn from 'material-ui/svg-icons/image/grid-on';
+import ImageExposurePlus1 from 'material-ui/svg-icons/image/exposure-plus-1';
 import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Web from 'material-ui/svg-icons/av/web';
 
@@ -22,9 +23,10 @@ const utils = require('../utils.js');
 
 const data = {
   menus: [
-    { text: 'Overview', icon: <Assessment />, link: '/dashboard' },
+    { text: 'Overview', icon: <Assessment />, link: '/root/principal' },
     { text: 'Pass events', icon: <Web />, link: '/form' },
-    { text: 'Table Page', icon: <GridOn />, link: '/table' },
+    { text: 'Table Page', icon: <GridOn />, link: '/root/principal' },
+    { text: 'New Principal', icon: <ImageExposurePlus1 />, link: '/root/principal/new' },
     { text: 'Login Page', icon: <PermIdentity />, link: '/login' }
   ],
 }

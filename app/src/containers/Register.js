@@ -24,6 +24,7 @@ class Register extends Component {
     var principalParams = new URLSearchParams();
     principalParams.append('name', this.state.username);
     principalParams.append('created_at', moment().utc(new Date()).format());
+    principalParams.append('enabled', true);
 
     return axios.post(config.baseAPI_URL + '/principal', principalParams);
   }

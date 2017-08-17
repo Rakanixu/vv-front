@@ -100,6 +100,7 @@ class NewPrincipal extends Component {
     data.append('tags', this.state.tags);
     data.append('description', this.state.description);
     data.append('created_at', moment().utc(new Date()).format());
+    data.append('enabled', true);
     data.append('background', background, 'background');
     data.append('logo', logo, 'logo');
 

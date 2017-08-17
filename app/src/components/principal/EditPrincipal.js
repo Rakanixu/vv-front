@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ColorPicker from 'material-ui-color-picker';
+import Toggle from 'material-ui/Toggle';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
 import './EditPrincipal.css';
@@ -17,6 +18,10 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 150
+  },
+  toggle: {
+    marginTop: 24,
+    fontSize: '1.4em'
   }
 };
 
@@ -87,6 +92,7 @@ class EditPrincipal extends Component {
     data.append('tags', this.state.principal.tags);
     data.append('description', this.state.principal.description);
     data.append('created_at', this.state.principal.created_at);
+    data.append('enabled', this.state.principal.enabled);
     data.append('background', background);
     data.append('logo', logo);
 
@@ -122,6 +128,11 @@ class EditPrincipal extends Component {
 
   _handelSecondaryColorChange(color) {
     this.state.principal.secondary_color = color;
+  }
+
+  _onToggleChange(e, checked) {
+    this.state.principal[e.currentTarget.dataset.value] = checked;
+    this.setState({ principal: this.state.principal });
   }
 
   _handleError(err) {
@@ -180,6 +191,12 @@ class EditPrincipal extends Component {
                       value={this.state.principal.tags}
                       onChange={this._handleTextFieldChange.bind(this)}
                       fullWidth={true} />
+            <Toggle label="Account enabled"
+                      toggled={this.state.principal.enabled}
+                      data-value="enabled"
+                      onToggle={this._onToggleChange.bind(this)}
+                      style={styles.toggle}/>
+
             { this.state.showBackground ? <img className="preview-img" src={config.baseURL + this.state.principal.background} alt="preview background"/> : null }
             <div className="fit">
               <UploadPreview title="Background" label="Add" onChange={this._onBackgroundChange} style={styles.fit}/>
