@@ -20,15 +20,13 @@ import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Web from 'material-ui/svg-icons/av/web';
 
 const utils = require('../utils.js');
-
 const data = {
   menus: [
     { text: 'Overview', icon: <Assessment />, link: '/root/principal' },
-    // { text: 'Pass events', icon: <Web />, link: '/form' },
     { text: 'Table Page', icon: <GridOn />, link: '/root/principal' },
     { text: 'New Principal', icon: <PermIdentity />, link: '/root/principal/new' }
-  ],
-}
+  ]
+};
 
 class Root extends Component {
   constructor(props) {
@@ -79,10 +77,10 @@ class Root extends Component {
       <MuiThemeProvider muiTheme={ThemeDefault}>
         <div>
           <Header styles={styles.header}
-            handleChangeRequestNavDrawer={this._handleToggle.bind(this)} />s
+                  handleChangeRequestNavDrawer={this._handleToggle.bind(this)} />
           <LeftBar navDrawerOpen={this.state.open}
-            menus={data.menus}
-            username="User" />
+                  menus={data.menus}
+                  username="User" />
           <div style={styles.container}>
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={Principal} />

@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
+import { spacing, typography } from 'material-ui/styles';
+import { white, grey600, grey900 } from 'material-ui/styles/colors';
+import { customgrey, bartextcolor } from '../theme-colors';
+import { Link } from 'react-router-dom';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
 import NewEventWrapper from '../components/event/NewEventWrapper';
 import EventsGridList from '../components/event/EventsGridList';
 import EditEvent from '../components/event/EditEvent';
@@ -32,6 +38,25 @@ import './Manager.css';
 const config = require('./../config.json');
 const utils = require('./../utils.js');
 var user, principal = {};
+const styles = {
+  menuItem: {
+    color: bartextcolor,
+    fontSize: 14
+  },
+  logoContainer: {
+    height: 56,
+    overflow: 'hidden',
+  },
+  logo: {
+    width: 110,
+    marginTop: 15,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'block',
+    height: 32,
+    padding: 0
+  }
+};
 
 class Manager extends Component {
   constructor(props) {
@@ -58,8 +83,6 @@ class Manager extends Component {
   _getPrincipal = (id) => {
     axios.get(this.state.url + '/' + id).then(res => {
       principal = res.data;
-      utils.setBackground(config.baseURL + principal.background);
-      utils.setLogo(config.baseURL + principal.logo);
     }).catch(function(err) {
       this._handleError(err);
     }.bind(this));
@@ -104,19 +127,54 @@ class Manager extends Component {
       <div>
         <AppBar title="Manager"
                 className="app-bar"
-                iconElementRight={<FlatButton label="Logout" />}
+                iconElementRight={
+                  <IconMenu color={grey900}
+                            iconButtonElement={<IconButton><Avatar className="avatar">R</Avatar></IconButton>}>
+                    <MenuItem primaryText="Sign out" containerElement={<Link to="/login"/>}/>
+                  </IconMenu>
+                }
                 onRightIconButtonTouchTap={this._logout}
                 onLeftIconButtonTouchTap={this._handleToggle}
                 onTouchTap={this._handleClose}/>
-        <Drawer open={this.state.open}>
-          <div className="logo-container"><img id="principalLogo" className="logo" src="/logo.png" alt="logo"/></div>
-          <MenuItem data-url="/manager/event" onTouchTap={this._handleRedirect.bind(this)}>Events overview</MenuItem>
-          <MenuItem data-url="/manager/event/new" onTouchTap={this._handleRedirect.bind(this)}>New event</MenuItem>
-          <MenuItem data-url="/manager/event_location" onTouchTap={this._handleRedirect.bind(this)}>Event locations</MenuItem>
-          <MenuItem data-url="/manager/donations" onTouchTap={this._handleRedirect.bind(this)}>Donations</MenuItem>
-          <MenuItem data-url="/manager/users" onTouchTap={this._handleRedirect.bind(this)}>Users</MenuItem>
-          <MenuItem data-url="/manager/media" onTouchTap={this._handleRedirect.bind(this)}>Media</MenuItem>
-          <MenuItem data-url="/manager/design_options" onTouchTap={this._handleRedirect.bind(this)}>Design options</MenuItem>
+        <Drawer className="drawer" open={this.state.open} >
+          <div style={styles.logoContainer}>
+            <img style={styles.logo} src="/logo-white.png" alt="logo"/>
+          </div>
+          <MenuItem style={styles.menuItem}
+                    primaryText="Events overview"
+                    leftIcon=""
+                    data-url="/manager/event"
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
+          <MenuItem style={styles.menuItem}
+                    primaryText="New event"
+                    leftIcon=""
+                    data-url="/manager/event/new" 
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
+          <MenuItem style={styles.menuItem}
+                    primaryText="Event locations"
+                    leftIcon=""
+                    data-url="/manager/event_location" 
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
+          <MenuItem style={styles.menuItem}
+                    primaryText="Donations"
+                    leftIcon=""
+                    data-url="/manager/donations" 
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
+          <MenuItem style={styles.menuItem}
+                    primaryText="Users"
+                    leftIcon=""
+                    data-url="/manager/users" 
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
+          <MenuItem style={styles.menuItem}
+                    primaryText="Media"
+                    leftIcon=""
+                    data-url="/manager/media" 
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
+          <MenuItem style={styles.menuItem}
+                    primaryText="Design options"
+                    leftIcon=""
+                    data-url="/manager/design_options" 
+                    onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
         </Drawer>
         <div className="manager-container">
           <Switch>

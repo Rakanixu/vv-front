@@ -38,9 +38,9 @@ class Header extends React.Component {
               style={{...styles, ...style.appBar}}
               showMenuIconButton={false}
               iconElementLeft={
-                  <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
-                    <Menu color={grey900} />
-                  </IconButton>
+                <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
+                  <Menu color={grey900} />
+                </IconButton>
               }
               iconElementRight={
                 <div style={style.iconsRightContainer}>
@@ -58,8 +58,7 @@ class Header extends React.Component {
                   <IconMenu color={grey900}
                             iconButtonElement={<IconButton><Avatar>R</Avatar></IconButton>}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                  >
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
                     <MenuItem primaryText="Sign out" containerElement={<Link to="/login"/>}/>
                   </IconMenu>
                 </div>

@@ -31,22 +31,23 @@ const LeftBar = (props) => {
   };
 
   return (
-    <Drawer docked={true}
-            open={navDrawerOpen}>
-      <div style={styles.logoContainer}>
-        <img style={styles.logo} src="/logo-white.png" alt="logo"/>
-      </div>
-      <div>
-        {props.menus.map((menu, index) =>
-          <MenuItem
-            key={index}
-            style={styles.menuItem}
-            primaryText={menu.text}
-            leftIcon={menu.icon}
-            containerElement={<Link to={menu.link}/>}
-          />
-        )}
-      </div>
+    <Drawer
+      docked={true}
+      open={navDrawerOpen}>
+        <div style={styles.logoContainer}>
+          <img style={styles.logo} src="/logo-white.png" alt="logo"/>
+        </div>
+        <div>
+          {props.menus.map((menu, index) =>
+            <MenuItem
+              key={index}
+              style={styles.menuItem}
+              primaryText={menu.text}
+              leftIcon={menu.icon}
+              containerElement={<Link to={menu.link}/>}
+            />
+          )}
+        </div>
     </Drawer>
   );
 };
