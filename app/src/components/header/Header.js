@@ -6,6 +6,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Menu from 'material-ui/svg-icons/navigation/menu';
+import Avatar from 'material-ui/Avatar';
 import ViewModule from 'material-ui/svg-icons/action/view-module';
 import {grey900} from 'material-ui/styles/colors';
 import SearchBox from './SearchBox';
@@ -26,7 +27,8 @@ class Header extends React.Component {
         marginLeft: 10
       },
       iconsRightContainer: {
-        marginLeft: 20
+        marginLeft: 20,
+        marginTop: -8
       }
     };
 
@@ -42,7 +44,7 @@ class Header extends React.Component {
               }
               iconElementRight={
                 <div style={style.iconsRightContainer}>
-                  <IconMenu color={grey900}
+                  {/* <IconMenu color={grey900}
                             iconButtonElement={
                               <IconButton><ViewModule color={grey900}/></IconButton>
                             }
@@ -52,11 +54,9 @@ class Header extends React.Component {
                     <MenuItem key={1} primaryText="Application 1"/>
                     <MenuItem key={2} primaryText="Application 2"/>
                     <MenuItem key={3} primaryText="Application 3"/>
-                  </IconMenu>
+                  </IconMenu> */}
                   <IconMenu color={grey900}
-                            iconButtonElement={
-                              <IconButton><MoreVertIcon color={grey900}/></IconButton>
-                            }
+                            iconButtonElement={<IconButton><Avatar>R</Avatar></IconButton>}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                   >

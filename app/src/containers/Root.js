@@ -19,16 +19,14 @@ import ImageExposurePlus1 from 'material-ui/svg-icons/image/exposure-plus-1';
 import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Web from 'material-ui/svg-icons/av/web';
 
-
 const utils = require('../utils.js');
 
 const data = {
   menus: [
     { text: 'Overview', icon: <Assessment />, link: '/root/principal' },
-    { text: 'Pass events', icon: <Web />, link: '/form' },
+    // { text: 'Pass events', icon: <Web />, link: '/form' },
     { text: 'Table Page', icon: <GridOn />, link: '/root/principal' },
-    { text: 'New Principal', icon: <ImageExposurePlus1 />, link: '/root/principal/new' },
-    { text: 'Login Page', icon: <PermIdentity />, link: '/login' }
+    { text: 'New Principal', icon: <PermIdentity />, link: '/root/principal/new' }
   ],
 }
 
@@ -42,12 +40,6 @@ class Root extends Component {
   componentWillMount() {
     if (!utils.IsRoot()) {
       this.props.history.push('/');
-    }
-  }
-
-  componentDidMount() {
-    if (JSON.parse(localStorage.getItem('alantu-user'))) {
-      //this.refs.img.src = JSON.parse(localStorage.getItem('alantu-user')).avatar;
     }
   }
 
@@ -72,13 +64,13 @@ class Root extends Component {
   }
 
   render() {
-    const paddingLeftDrawerOpen = 340;
+    const paddingLeftDrawerOpen = 300;
     const styles = {
       header: {
         paddingLeft: this.state.open ? paddingLeftDrawerOpen : 0
       },
       container: {
-        margin: '120px 20px 20px 15px',
+        margin: '90px 20px 20px 15px',
         paddingLeft: this.state.open && this.props.width !== SMALL ? paddingLeftDrawerOpen : 0
       }
     };
@@ -87,7 +79,7 @@ class Root extends Component {
       <MuiThemeProvider muiTheme={ThemeDefault}>
         <div>
           <Header styles={styles.header}
-            handleChangeRequestNavDrawer={this._handleToggle.bind(this)} />
+            handleChangeRequestNavDrawer={this._handleToggle.bind(this)} />s
           <LeftBar navDrawerOpen={this.state.open}
             menus={data.menus}
             username="User" />

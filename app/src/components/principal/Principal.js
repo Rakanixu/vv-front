@@ -116,8 +116,8 @@ class Principal extends Component {
               <TableHeaderColumn style={styles.alignLeft}>Users</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Events</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Created at</TableHeaderColumn>
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
