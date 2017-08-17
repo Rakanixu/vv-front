@@ -15,7 +15,7 @@ const moment = require('moment');
 const styles = {
   root: {
     padding: 50,
-    paddingTop: 0
+    paddingTop: 20
   },
   gridList: {
     maxWidth: 1800,
