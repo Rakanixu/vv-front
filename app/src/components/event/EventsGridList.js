@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import {GridList, GridTile} from 'material-ui/GridList';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
@@ -17,16 +14,12 @@ const config = require('../../config.json');
 const moment = require('moment');
 const styles = {
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflowX: 'hidden'
+    padding: 50,
+    paddingTop: 0
   },
   gridList: {
     maxWidth: 1800,
-    height: window.innerHeight - 200,
     overflowY: 'auto',
-    padding: 50,
     paddingTop: 10,
     cols: (window.innerWidth > 1000) ? 2 : 1
   },
@@ -106,8 +99,14 @@ class EventsGridList extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
+        <div className="title">
+          <h1>Overview Events</h1>
+          <div className="new-event">
+            <RaisedButton label="New Event" primary={true} onTouchTap={this._handlePageChange.bind(this)} />
+          </div>
+        </div>
+
         <GridList ref="grid" cellHeight={320} cols={styles.gridList.cols} style={styles.gridList}>
-          <Subheader>Events</Subheader>
           {this.state.events.map((event) => (
             <GridTile key={event.id}
                       title={event.title}
@@ -128,9 +127,6 @@ class EventsGridList extends Component {
             </GridTile>
           ))}
         </GridList>
-        <FloatingActionButton style={styles.paperFab} onTouchTap={this._handlePageChange.bind(this)}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
     )
   }
