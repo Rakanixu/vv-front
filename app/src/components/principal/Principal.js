@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
+import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import ErrorReporting from 'material-ui-error-reporting';
 import './Principal.css';
@@ -92,6 +93,10 @@ class Principal extends Component {
     this.props.history.push('/root/principal/' + e.currentTarget.parentNode.dataset.id + '/manager');
   }
 
+  _newPrincipal(e) {
+    this.props.history.push('/root/principal/new');
+  }
+
   _handleError(err) {
     this.setState({ error: err });
     setTimeout(function() {
@@ -105,8 +110,11 @@ class Principal extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <div class="title">
+        <div className="title">
           <h1>Principals</h1>
+          <div className="new-principal">
+            <RaisedButton label="New pricipal" primary={true} onTouchTap={this._newPrincipal.bind(this)} />
+          </div>
         </div>
         <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

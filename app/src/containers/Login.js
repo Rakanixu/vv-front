@@ -33,25 +33,6 @@ const styles = {
     padding: 20,
     overflow: 'auto'
   },
-  buttonsDiv: {
-    textAlign: 'center',
-    padding: 10
-  },
-  checkRemember: {
-    style: {
-      float: 'left',
-      maxWidth: 180,
-      paddingTop: 5
-    },
-    labelStyle: {
-      color: grey500
-    },
-    iconStyle: {
-      color: grey500,
-      borderColor: grey500,
-      fill: grey500
-    }
-  },
   forgotPassword: {
     display: 'block',
     marginTop: 10,
@@ -79,15 +60,6 @@ const styles = {
     borderRadius: 2,
     margin: 2,
     fontSize: 13
-  },
-  btnFacebook: {
-    background: '#4f81e9'
-  },
-  btnGoogle: {
-    background: '#e14441'
-  },
-  btnSpan: {
-    marginLeft: 5
   },
   logo: {
     width: '28%',
@@ -208,32 +180,14 @@ class Login extends Component {
                   <a style={styles.forgotPassword} href="/forgot_password">Forgot password?</a>
                 </div>
                 <div style={styles.alignCenter}>
-                  {/* <Checkbox
-                    label="Remember me"
-                    style={styles.checkRemember.style}
-                    labelStyle={styles.checkRemember.labelStyle}
-                    iconStyle={styles.checkRemember.iconStyle}
-                  /> */}
-
                   <RaisedButton label="Login"
                     onTouchTap={this._handleLogin.bind(this)}
                     primary={true}
                     style={styles.loginBtn} />
-
                   <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>  
                 </div>
               </form>
             </Paper>
-            {/* <div style={styles.buttonsDiv}>
-              <Link to="/" style={{ ...styles.btn, ...styles.btnFacebook }}>
-                <i className="fa fa-facebook fa-lg" />
-                <span style={styles.btnSpan}>Log in with Facebook</span>
-              </Link>
-              <Link to="/" style={{ ...styles.btn, ...styles.btnGoogle }}>
-                <i className="fa fa-google-plus fa-lg" />
-                <span style={styles.btnSpan}>Log in with Google</span>
-              </Link>
-            </div> */}
           </div>
         </div>
       </MuiThemeProvider>

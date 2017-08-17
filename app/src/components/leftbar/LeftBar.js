@@ -14,7 +14,6 @@ const LeftBar = (props) => {
     logoContainer: {
       height: 56,
       overflow: 'hidden',
-
     },
     logo: {
       width: 110,
