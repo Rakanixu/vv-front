@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
@@ -20,6 +21,23 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 250
+  },
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -112,46 +130,60 @@ class Admissions extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
-        <div className="inner-container">
+      <div>
+        <div className="container" key={this.state.count}>
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
           { this.props.showNoEditListing ?
             <AdmissionsList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
             : null }
+        </div>    
 
-          <form className="newAdmissions">
-            <TextField floatingLabelText="Title"
-                      data-val="title"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Subtitle"
-                      data-val="subtitle"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Price"
-                      data-val="price"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-
-            <div className="fit">
-              <UploadPreview title="Icon" label="Add" onChange={this._onIconChange} style={styles.fit}/>
-            </div>
-
-            <RaisedButton label="Save Admission" fullWidth={true} onTouchTap={this._handleNewAdmission.bind(this)} />
-          </form>
-
-          <div>
-            <RaisedButton label="Continue"
-                          className="event-wizard-continue-button"
-                          primary={true}
-                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+        <div className={this.props.showNoEditListing ? "container new-admission-container" : "new-admission-container" } >
+          <div className="title">
+            <h1>New Admission</h1>
           </div>
+
+          <form className="new-admission-form">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Title"
+                        data-val="title"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Subtitle"
+                        data-val="subtitle"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Price"
+                        data-val="price"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+
+              <div className="overflow">
+                <RaisedButton label="Save Admission"
+                            className="right margin-top-medium margin-left-medium" 
+                            primary={true}
+                            onTouchTap={this._handleNewAdmission.bind(this)} />
+              </div>
+              <div className="overflow">
+                <RaisedButton label="Continue"
+                              className="right margin-top-medium"
+                              primary={true}
+                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+              </div>       
+            </Paper>          
+
+            <Paper style={styles.paperRight}>
+              <div className="fit">
+                <UploadPreview title="Icon" label="Add" onChange={this._onIconChange} style={styles.fit}/>
+              </div>
+            </Paper>
+          </form>
         </div>
       </div>
     );

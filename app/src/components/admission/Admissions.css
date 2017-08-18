@@ -11,6 +11,19 @@
   margin-right: auto;
 }
 
+.new-admission-container {
+  padding-top: 25px;
+  background-color: #efefef;
+}
+
+.new-admission-form {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 .fit {
   overflow: hidden;
   width: 100%;
