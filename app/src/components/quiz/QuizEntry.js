@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import Paper from 'material-ui/Paper';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
@@ -20,6 +21,11 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 250
+  },
+  paper: {
+    padding: 20,
+    overflow: 'auto',
+    height: 'min-content'
   }
 };
 
@@ -139,58 +145,70 @@ class QuizEntry extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
-        <div className="inner-container">
+      <div>
+        <div className="container" key={this.state.count}>
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
           { this.props.showNoEditListing ?
             <QuizEntryList key={this.state.count} noEdit={true} quizId={this.state.quiz_id} eventId={this.props.eventId}/>
             : null }
+        </div>    
 
-          <form className="newQuizEntry">
+        <div className={this.props.showNoEditListing ? "container new-quiz-entry-container" : "new-quiz-entry-container" } >
+          <div className="title">
+            <h1>New Quiz Entry</h1>
+          </div>
+
+          <form className="new-quiz-entry-form">
+            <Paper style={styles.paper}>  
               <SelectField floatingLabelText="Select Quiz"
                          fullWidth={true}
                          value={this.state.quiz_id}
                          onChange={this._handleQuizChange}>
-              {this.state.quizzes.map((quiz) => (
-                <MenuItem key={quiz.id} value={quiz.id} primaryText={quiz.name} />
-              ))}
-            </SelectField>
-            <TextField floatingLabelText="Question"
-                      data-val="question"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Answer one"
-                      data-val="answer_one"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Answer two"
-                      data-val="answer_two"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Answer three"
-                      data-val="answer_three"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Answer four"
-                      data-val="answer_four"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Right solution"
-                      data-val="right_solution"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+                {this.state.quizzes.map((quiz) => (
+                  <MenuItem key={quiz.id} value={quiz.id} primaryText={quiz.name} />
+                ))}
+              </SelectField>
+              <TextField floatingLabelText="Question"
+                        data-val="question"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Answer one"
+                        data-val="answer_one"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Answer two"
+                        data-val="answer_two"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Answer three"
+                        data-val="answer_three"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Answer four"
+                        data-val="answer_four"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Right solution"
+                        data-val="right_solution"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <RaisedButton label="Save Quiz Entry" fullWidth={true} onTouchTap={this._handleNewQuizEntry.bind(this)} />
+              <div className="overtflow">
+                <RaisedButton label="Continue"
+                              className="right margin-top-medium margin-left-medium"
+                              primary={true}
+                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+              </div>
+              <div className="overtflow">
+                <RaisedButton label="Save Quiz Entry"                               
+                              className="right margin-top-medium margin-left-medium"
+                              primary={true} 
+                              onTouchTap={this._handleNewQuizEntry.bind(this)} />
+              </div>
+            </Paper>
           </form>
-
-          <div>
-            <RaisedButton label="Continue"
-                          className="event-wizard-continue-button"
-                          primary={true}
-                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-          </div>
         </div>
       </div>
     );
