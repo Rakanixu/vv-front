@@ -73,37 +73,43 @@ class Donations extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div style={styles.root}>
           <ErrorReporting open={this.state.error !== null}
             error={this.state.error} />
 
-          <RaisedButton label="Export CSV"
-                        className="export-csv"
-                        primary={true}
-                        fullWidth={true}
-                        onTouchTap={this._handleExportCSV.bind(this)} />
+          <div>
+            <div className="title">
+              <h1>Donations</h1>
+              <div className="export-csv-container">
+                <RaisedButton label="Export CSV"
+                            className="export-csv"
+                            primary={true}
+                            onTouchTap={this._handleExportCSV.bind(this)} />
+              </div>
+            </div>  
 
-          <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn style={styles.alignLeft}>Amount</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Donor</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Source</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Donated at</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {this.state.donations.map((donation, i) =>
-                <TableRow key={i} data-id={donation.id}>
-                  <TableRowColumn style={styles.alignLeft}>{donation.amount}</TableRowColumn>
-                  <TableRowColumn style={styles.alignLeft}>{donation.firstname + donation.lastname}</TableRowColumn>
-                  <TableRowColumn style={styles.alignLeft}>{donation.source}</TableRowColumn>
-                  <TableRowColumn style={styles.alignLeft}>{new Date(donation.recurring_end).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
+            <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
+              <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                <TableRow>
+                  <TableHeaderColumn style={styles.alignLeft}>Amount</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Donor</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Source</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Donated at</TableHeaderColumn>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false}>
+                {this.state.donations.map((donation, i) =>
+                  <TableRow key={i} data-id={donation.id}>
+                    <TableRowColumn style={styles.alignLeft}>{donation.amount}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{donation.firstname + donation.lastname}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{donation.source}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{new Date(donation.recurring_end).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>  
         </div>
       </div>
     )
