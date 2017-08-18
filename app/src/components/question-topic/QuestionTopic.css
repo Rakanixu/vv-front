@@ -11,6 +11,13 @@
   margin-right: auto;
 }
 
+.new-question-topic-container {
+  padding: 0;
+  margin: 0;
+  padding-top: 25px;
+  background-color: #efefef;
+}
+
 .fit {
   overflow: hidden;
   width: 100%;

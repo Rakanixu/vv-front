@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -22,6 +23,11 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 250
+  },
+  paper: {
+    padding: 20,
+    overflow: 'auto',
+    height: 'min-content'
   }
 };
 
@@ -128,53 +134,65 @@ class EventGuests extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
-        <div className="inner-container">
+      <div>
+        <div className="container" key={this.state.count}>
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
           { this.props.showNoEditListing ?
             <EventGuestList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
             : null }
+        </div>
+
+        <div className={this.props.showNoEditListing ? "container new-admission-container" : "new-admission-container" } >
+          <div className="title">
+            <h1>New Event Guest</h1>
+          </div>
 
           <form className="newEventGuest">
-            <TextField floatingLabelText="Name"
-                      data-val="name"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+            <Paper style={styles.paper}>
+              <TextField floatingLabelText="Name"
+                        data-val="name"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <SelectField floatingLabelText="Media type"
-                         fullWidth={true}
-                         value={this.state.main_media_type_id}
-                         onChange={this._handleMediaTypeChange}>
-              {config.name_guest_media_type.map((type) => (
-                <MenuItem value={type.id} primaryText={type.name} />
-              ))}
-            </SelectField>
-            { this.state.main_media_type_id === 1 ?
-              <div className="fit">
-                <UploadPreview title="Media" label="Add" onChange={this._onMainMediaChange} style={styles.fit}/>
+              <SelectField floatingLabelText="Media type"
+                          fullWidth={true}
+                          value={this.state.main_media_type_id}
+                          onChange={this._handleMediaTypeChange}>
+                {config.name_guest_media_type.map((type) => (
+                  <MenuItem value={type.id} primaryText={type.name} />
+                ))}
+              </SelectField>
+              { this.state.main_media_type_id === 1 ?
+                <div className="fit">
+                  <UploadPreview title="Media" label="Add" onChange={this._onMainMediaChange} style={styles.fit}/>
+                </div>
+                :
+                <TextField floatingLabelText="Media URL"
+                          data-val="main_media_url"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+              }
+              <div className="overflow">
+                <RaisedButton label="Save Guest"
+                              primary={true}
+                              className="right margin-top-medium margin-left-medium" 
+                              onTouchTap={this._handleNewEventGuest.bind(this)} />
+              </div>                
+
+              <div className="overflow">
+                <RaisedButton label="Continue"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
               </div>
-              :
-              <TextField floatingLabelText="Media URL"
-                         data-val="main_media_url"
-                         onChange={this._handleTextFieldChange.bind(this)}
-                         fullWidth={true} />
-            }
-
-            <RaisedButton label="Save Guest" fullWidth={true} onTouchTap={this._handleNewEventGuest.bind(this)} />
+            </Paper>  
           </form>
-
-          <div>
-            <RaisedButton label="Continue"
-                          className="event-wizard-continue-button"
-                          primary={true}
-                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-          </div>
         </div>
       </div>
     );

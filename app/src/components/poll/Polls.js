@@ -24,7 +24,7 @@ var styles = {
     padding: 20,
     overflow: 'auto',
     height: 'min-content'
-  },
+  }
 };
 
 class Polls extends Component {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
@@ -18,6 +19,11 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 250
+  },
+  paper: {
+    padding: 20,
+    overflow: 'auto',
+    height: 'min-content'
   }
 };
 
@@ -89,35 +95,47 @@ class QuestionTopic extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
-        <div className="inner-container">
+      <div>
+        <div className="container" key={this.state.count}>
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
           { this.props.showNoEditListing ?
             <QuestionTopicList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
             : null }
+        </div>    
 
-          <form className="newQuestionTopic">
-            <TextField floatingLabelText="Question topic"
-                      data-val="topic"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-
-            <RaisedButton label="Save Question Topic" fullWidth={true} onTouchTap={this._handleNewQuestionTopic.bind(this)} />
-          </form>
-
-          <div>
-            <RaisedButton label="Continue"
-                          className="event-wizard-continue-button"
-                          primary={true}
-                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+        <div className={this.props.showNoEditListing ? "container new-question-topic-container" : "new-question-topic-container" } >
+          <div className="title">
+            <h1>New Question Topic</h1>
           </div>
-        </div>
+
+          <form className="new-question-topic-form">
+            <Paper style={styles.paper}>
+              <TextField floatingLabelText="Question topic"
+                        data-val="topic"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+
+              <div className="overflow">
+                <RaisedButton label="Save Question Topic"
+                              primary={true}
+                              className="right margin-top-medium margin-left-medium" 
+                              onTouchTap={this._handleNewQuestionTopic.bind(this)} />
+              </div>              
+              <div className="overflow">
+                <RaisedButton label="Continue"
+                              primary={true}
+                              className="right margin-top-medium margin-left-medium" 
+                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+              </div>               
+            </Paper>
+          </form>
+        </div>  
       </div>
     );
   }
