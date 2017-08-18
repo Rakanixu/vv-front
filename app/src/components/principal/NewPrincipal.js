@@ -161,7 +161,10 @@ class NewPrincipal extends Component {
               <UploadPreview title="Logo" label="Add" onChange={this._onLogoChange} style={styles.fit}/>
             </div>
 
-            <RaisedButton label="Save principal" className="right margin-bottom-medium" primary={true} onTouchTap={this._handleNewPrincipal.bind(this)} />
+            <RaisedButton label="Save principal" 
+                          className="right margin-bottom-medium" 
+                          primary={true} 
+                          onTouchTap={this._handleNewPrincipal.bind(this)} />
           </form>
         </div>
       </div>

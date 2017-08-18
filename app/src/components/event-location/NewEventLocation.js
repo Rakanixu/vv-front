@@ -99,7 +99,7 @@ class NewEventLocation extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
@@ -124,9 +124,16 @@ class NewEventLocation extends Component {
                       data-val="zip"
                       onChange={this._handleTextFieldChange.bind(this)}
                       fullWidth={true} />
-            <DatePicker hintText="Date" mode="landscape" autoOk={true} onChange={this._handleDateChange.bind(this)}/>
+            <DatePicker hintText="Date" 
+                      mode="landscape" 
+                      fullWidth={true}
+                      autoOk={true} 
+                      onChange={this._handleDateChange.bind(this)}/>
 
-            <RaisedButton label="Save Event Location" fullWidth={true} onTouchTap={this._handleNewEventLocation.bind(this)} />
+            <RaisedButton label="Save Event Location" 
+                          className="right margin-bottom-medium margin-top-medium"
+                          primary={true}
+                          onTouchTap={this._handleNewEventLocation.bind(this)} />
           </form>
         </div>
       </div>

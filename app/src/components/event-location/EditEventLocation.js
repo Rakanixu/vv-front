@@ -110,7 +110,7 @@ class EditEventLocation extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
@@ -143,10 +143,12 @@ class EditEventLocation extends Component {
             <DatePicker hintText="Date"
                       mode="landscape"
                       autoOk={true}
+                      fullWidth={true}
                       value={this.state.event_location.opening_hours}
                       onChange={this._handleDateChange.bind(this)}/>
             <RaisedButton label="Save Event Location"
-                      fullWidth={true}
+                      className="right margin-bottom-medium margin-top-medium"
+                      primary={true}
                       onTouchTap={this._handleEditEventLocation.bind(this)} />
           </form>
         </div>

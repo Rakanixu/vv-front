@@ -87,41 +87,45 @@ class EventLocationList extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <div className="title">
-          <h1>Event Locations</h1>
-          <div className="new-event-location">
-            <RaisedButton label="New Event Location" primary={true} onTouchTap={this._handlePageChange.bind(this)} />
-          </div>
-        </div>  
+        <div>
+          <div className="title">
+            <h1>Event Locations</h1>
+            <div className="new-event-location">
+              <RaisedButton label="New Event Location" primary={true} onTouchTap={this._handlePageChange.bind(this)} />
+            </div>
+          </div>  
 
-        <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Remark</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Street</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>City</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>ZIP</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Date</TableHeaderColumn>
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {this.state.event_locations.map((event_location, i) =>
-              <TableRow key={i} data-id={event_location.id}>
-                <TableRowColumn style={styles.alignLeft}>{event_location.title}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{event_location.remark}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{event_location.street}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{event_location.city}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{event_location.zip}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{new Date(event_location.opening_hours).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
-                <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
-                <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
+          <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
+            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+              <TableRow>
+                <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft}>Remark</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft}>Street</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft}>City</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft}>ZIP</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft}>Date</TableHeaderColumn>
+                <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
+                <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              {this.state.event_locations.map((event_location, i) =>
+                <TableRow key={i} data-id={event_location.id}>
+                  <TableRowColumn style={styles.alignLeft}>{event_location.title}</TableRowColumn>
+                  <TableRowColumn style={styles.alignLeft}>{event_location.remark}</TableRowColumn>
+                  <TableRowColumn style={styles.alignLeft}>{event_location.street}</TableRowColumn>
+                  <TableRowColumn style={styles.alignLeft}>{event_location.city}</TableRowColumn>
+                  <TableRowColumn style={styles.alignLeft}>{event_location.zip}</TableRowColumn>
+                  <TableRowColumn style={styles.alignLeft}>
+                    {new Date(event_location.opening_hours).toJSON().slice(0,10).replace(/-/g,'/')}
+                  </TableRowColumn>
+                  <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
+                  <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>  
       </div>
     );
   }

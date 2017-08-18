@@ -49,6 +49,10 @@ a.form-link {
   margin-bottom: 25px;
 }
 
+.margin-top-medium {
+  margin-top: 25px;
+}
+
 .delete button {
   background-color: #dd4b39 !important;
 }
