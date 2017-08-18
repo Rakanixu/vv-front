@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import MediaGridList from './MediaGridList';
+import RaisedButton from 'material-ui/RaisedButton';
 import './Media.css';
 
 const styles = {
@@ -39,13 +38,19 @@ class Media extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div style={styles.root}>
+          <div className="title">
+            <h1>Medias</h1>
+            <div className="actions-container">
+              <RaisedButton label="Add Media"
+                            primary={true}
+                            onTouchTap={this._handlePageChange.bind(this)} />
+            </div>
+          </div>  
+
           <MediaGridList/>
         </div>
-        <FloatingActionButton style={styles.paperFab} onTouchTap={this._handlePageChange.bind(this)}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
     )
   }

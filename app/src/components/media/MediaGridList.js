@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import {GridList, GridTile} from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
@@ -13,10 +12,6 @@ const config = require('../../config.json');
 const styles = {
   gridList: {
     maxWidth: 1800,
-    height: window.innerHeight - 240,
-    overflowY: 'auto',
-    padding: 50,
-    paddingTop: 10,
     margin: 0,
     cols: (window.innerWidth > 1000) ? 2 : 1
   },
@@ -79,7 +74,6 @@ class MediaGridList extends Component {
           error={this.state.error} />
 
         <GridList ref="grid" cellHeight={320} cols={styles.gridList.cols} style={styles.gridList}>
-          <Subheader>Media Images</Subheader>
           {this.state.images.map((media) => (
             <GridTile key={media.id}>
               <img src={config.baseURL + media.url} alt="gallery item"/>

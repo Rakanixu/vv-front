@@ -1,0 +1,14 @@
+.container {
+  padding: 40px;
+}
+
+.title {
+  position: relative;
+}
+
+.actions-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-flex;
+}

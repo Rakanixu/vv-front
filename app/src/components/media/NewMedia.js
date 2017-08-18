@@ -14,9 +14,6 @@ var styles = {
   fit: {
     overflow: 'hidden',
     maxHeight: 400
-  },
-  screenHeight: {
-    height: window.innerHeight - 180
   }
 };
 
@@ -86,7 +83,7 @@ class NewMedia extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
@@ -96,7 +93,10 @@ class NewMedia extends Component {
               <UploadPreview title="Image" label="Add" onChange={this._onMediaChange} style={styles.fit}/>
             </div>
 
-            <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleNewMedia.bind(this)} />
+            <RaisedButton label="Save"
+                          className="right margin-bottom-medium" 
+                          primary={true}
+                          onTouchTap={this._handleNewMedia.bind(this)} />
           </form>
         </div>
       </div>
