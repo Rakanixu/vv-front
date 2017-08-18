@@ -120,7 +120,7 @@ class NewUser extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
@@ -152,10 +152,13 @@ class NewUser extends Component {
           </SelectField>
 
             <div className="fit">
-              <UploadPreview title="avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
+              <UploadPreview title="Avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
             </div>
 
-            <RaisedButton label="Save User" fullWidth={true} onTouchTap={this._handleNewUser.bind(this)} />
+            <RaisedButton label="Save User"                           
+                          className="right margin-bottom-medium" 
+                          primary={true}  
+                          onTouchTap={this._handleNewUser.bind(this)} />
           </form>
         </div>
       </div>

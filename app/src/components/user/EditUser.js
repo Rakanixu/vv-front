@@ -158,7 +158,7 @@ class EditUser extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
@@ -198,7 +198,10 @@ class EditUser extends Component {
               <UploadPreview title="User avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
             </div>
 
-            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleEditUser.bind(this)} />
+            <RaisedButton label="Edit"                           
+                          className="right margin-bottom-medium" 
+                          primary={true}
+                          onTouchTap={this._handleEditUser.bind(this)} />
           </form>
         </div>
       </div>

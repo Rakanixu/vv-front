@@ -1,0 +1,19 @@
+.container {
+  padding: 40px !important;
+}
+
+.title {
+  position: relative;
+}
+
+.actions-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-flex;
+}
+
+.separator {
+  display: inline-block;
+  width: 25px;
+}

@@ -4,8 +4,6 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import RaisedButton from 'material-ui/RaisedButton';
 import Delete from 'material-ui/svg-icons/action/delete';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
 import './Users.css';
@@ -100,46 +98,52 @@ class Users extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div style={styles.root}>
           <ErrorReporting open={this.state.error !== null}
-            error={this.state.error} />
+                          error={this.state.error} />
 
-          <RaisedButton label="Export CSV"
-                        className="export-csv"
-                        primary={true}
-                        fullWidth={true}
-                        onTouchTap={this._handleExportCSV.bind(this)} />
+          <div>
+            <div className="title">
+              <h1>Users</h1>
+              <div className="actions-container">
+                <RaisedButton label="New User"
+                              primary={true}
+                              onTouchTap={this._handlePageChange.bind(this)} />
+                <span className="separator"></span>
+                <RaisedButton label="Export CSV"
+                              className="export-csv"
+                              primary={true}
+                              onTouchTap={this._handleExportCSV.bind(this)} />
+              </div>
+            </div>  
 
-          <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn style={styles.alignLeft}>Username</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Email</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Role</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Create at</TableHeaderColumn>
-                <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
-                <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false}>
-              {this.state.users.map((user, i) =>
-                <TableRow key={i} data-id={user.id}>
-                  <TableRowColumn style={styles.alignLeft}>{user.username}</TableRowColumn>
-                  <TableRowColumn style={styles.alignLeft}>{user.email}</TableRowColumn>
-                  <TableRowColumn style={styles.alignLeft}>{this._getRoleNameById(user.role_id)}</TableRowColumn>
-                  <TableRowColumn style={styles.alignLeft}>{new Date(user.created_at).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
-                  <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
-                  <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
+            <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
+              <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                <TableRow>
+                  <TableHeaderColumn style={styles.alignLeft}>Username</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Email</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Role</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Create at</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false}>
+                {this.state.users.map((user, i) =>
+                  <TableRow key={i} data-id={user.id}>
+                    <TableRowColumn style={styles.alignLeft}>{user.username}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{user.email}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{this._getRoleNameById(user.role_id)}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{new Date(user.created_at).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
+                    <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
+                    <TableRowColumn style={styles.narrowCenter} onTouchTap={this._delete.bind(this)}><Delete/></TableRowColumn>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>  
         </div>
-
-        <FloatingActionButton style={styles.paperFab} onTouchTap={this._handlePageChange.bind(this)}>
-          <ContentAdd />
-        </FloatingActionButton>
       </div>
     )
   }
