@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
@@ -15,10 +16,24 @@ var user = {};
 var styles = {
   fit: {
     overflow: 'hidden',
-    maxHeight: 400
+    maxHeight: 250
   },
-  screenHeight: {
-    height: window.innerHeight - 220
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '66%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '33%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -98,8 +113,6 @@ class DesignOptions extends Component {
     data.append('logo', logo);
 
     axios.put(config.baseAPI_URL + '/principal/' + user.principal_id, data).then(function(res) {
-      utils.setBackground(config.baseURL + res.data.background);
-      utils.setLogo(config.baseURL + res.data.logo);
       this.props.history.push('/manager');
     }.bind(this)).catch(function(err) {
       this._handleError(err);
@@ -153,42 +166,52 @@ class DesignOptions extends Component {
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
-          <form className="newPrincipalForm">
-            <TextField floatingLabelText="Title"
-                      data-val="name"
-                      value={this.state.principal.name}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <ColorPicker key={this.state.colorPickerUpdater1}
-                      ref="colorPickerPrimary"
-                      floatingLabelText="Primary color"
-                      defaultValue={this.state.principal.primary_color}
-                      onChange={this._handelPrimaryColorChange.bind(this)} />
-            <ColorPicker key={this.state.colorPickerUpdater2}
-                      ref="colorPickerSecondary"
-                      floatingLabelText="Secondary color"
-                      defaultValue={this.state.principal.secondary_color}
-                      onChange={this._handelSecondaryColorChange.bind(this)} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      value={this.state.principal.description}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Tags"
-                      data-val="tags"
-                      value={this.state.principal.tags}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            { this.state.showBackground ? <img className="preview-img" src={config.baseURL + this.state.principal.background} alt="preview background"/> : null }
-            <div className="fit">
-              <UploadPreview title="Background" label="Add" onChange={this._onBackgroundChange} style={styles.fit}/>
-            </div>
-            { this.state.showLogo ? <img className="preview-img" src={config.baseURL + this.state.principal.logo} alt="preview logo"/> : null }
-            <div className="fit">
-              <UploadPreview title="Logo" label="Add" onChange={this._onLogoChange} style={styles.fit}/>
-            </div>
+          <form className="design-options">
+            <Paper style={styles.paperRight}>
+              <TextField floatingLabelText="Title"
+                        data-val="name"
+                        value={this.state.principal.name}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <ColorPicker key={this.state.colorPickerUpdater1}
+                        ref="colorPickerPrimary"
+                        fullWidth={true}
+                        floatingLabelText="Primary color"
+                        defaultValue={this.state.principal.primary_color}
+                        onChange={this._handelPrimaryColorChange.bind(this)} />
+              <ColorPicker key={this.state.colorPickerUpdater2}
+                        ref="colorPickerSecondary"
+                        fullWidth={true}
+                        floatingLabelText="Secondary color"
+                        defaultValue={this.state.principal.secondary_color}
+                        onChange={this._handelSecondaryColorChange.bind(this)} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        value={this.state.principal.description}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Tags"
+                        data-val="tags"
+                        value={this.state.principal.tags}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <RaisedButton label="Update" fullWidth={true} onTouchTap={this._handleEditPrincipal.bind(this)} />
+              <RaisedButton label="Update"
+                            className="right margin-top-medium margin-bottom-medium" 
+                            primary={true}
+                            onTouchTap={this._handleEditPrincipal.bind(this)} />          
+            </Paper>
+
+            <Paper style={styles.paperLeft}>          
+              { this.state.showBackground ? <img className="preview-img" src={config.baseURL + this.state.principal.background} alt="preview background"/> : null }
+              <div className="fit">
+                <UploadPreview title="Background" label="Add" onChange={this._onBackgroundChange} style={styles.fit}/>
+              </div>
+              { this.state.showLogo ? <img className="preview-img" src={config.baseURL + this.state.principal.logo} alt="preview logo"/> : null }
+              <div className="fit">
+                <UploadPreview title="Logo" label="Add" onChange={this._onLogoChange} style={styles.fit}/>
+              </div>
+            </Paper>
           </form>
         </div>
       </div>
