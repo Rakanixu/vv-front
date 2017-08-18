@@ -136,6 +136,8 @@ class NewEvent extends Component {
     data.append('created_at', now);
     data.append('updated_at', now);
     data.append('deleted_at', '1970-01-01T00:00:00.000Z');
+    data.append('started_at', '1970-01-01T00:00:00.000Z');
+    data.append('ended_at', '1970-01-01T00:00:00.000Z');
     data.append('date', this.state.date);
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
