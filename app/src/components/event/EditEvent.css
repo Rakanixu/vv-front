@@ -23,6 +23,14 @@
   margin-bottom: 20px;
 }
 
+.edit-event-form {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .preview-img {
   margin-bottom: -50px;
 }

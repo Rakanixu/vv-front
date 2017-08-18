@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
@@ -19,10 +20,24 @@ var user = {};
 var styles = {
   fit: {
     overflow: 'hidden',
-    maxHeight: 400
+    maxHeight: 250
   },
-  screenHeight: {
-    height: window.innerHeight - 250
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '66%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '33%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -155,40 +170,49 @@ class NewEvent extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="newEventForm">
-            <TextField floatingLabelText="Event title"
-                      data-val="title"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Notes"
-                      data-val="notes"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Location"
-                      data-val="location"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <DatePicker hintText="Date" mode="landscape" autoOk={true} onChange={this._handleDateChange.bind(this)}/>
-            <div className="checkbox">
-              <Checkbox ref="checkbox" label="Login required?"/>
-            </div>
-            <div className="fit">
-              <UploadPreview title="Preview event image" label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>
-            </div>
-            <div className="fit">
-              <UploadPreview title="Event background" label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>
-            </div>
-            <div>
-              <RaisedButton label="Save & Continue"
-                            className="event-wizard-continue-button"
-                            primary={true}
-                            onTouchTap={this._handleNewEvent.bind(this)} />
-            </div>
+          <form className="new-event-form">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Event title"
+                        data-val="title"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Notes"
+                        data-val="notes"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Location"
+                        data-val="location"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <DatePicker hintText="Date"
+                        fullWidth="true"
+                        mode="landscape" 
+                        autoOk={true} 
+                        onChange={this._handleDateChange.bind(this)}/>
+              <div className="checkbox">
+                <Checkbox ref="checkbox" label="Login required?"/>
+              </div>
+              <div>
+                <RaisedButton label="Save & Continue"
+                              className="event-wizard-continue-button"
+                              primary={true}
+                              onTouchTap={this._handleNewEvent.bind(this)} />
+              </div>
+            </Paper>
+
+            <Paper style={styles.paperRight}>
+              <div className="fit">
+                <UploadPreview title="Preview event image" label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>
+              </div>
+              <div className="fit">
+                <UploadPreview title="Event background" label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>
+              </div>
+            </Paper>  
           </form>
         </div>
       </div>

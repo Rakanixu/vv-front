@@ -53,7 +53,7 @@ class NewEventWrapper extends Component {
 
     return (
       <div style={{width: '100%', margin: 'auto'}}>
-        <Stepper activeStep={stepIndex} style={{width: '100%', margin: 'auto', background: '#e4e4e4'}}>
+        <Stepper className="stepper" activeStep={stepIndex} style={{width: '100%', margin: 'auto', background: '#e4e4e4'}}>
           <Step><StepLabel>Create event</StepLabel></Step>
           <Step><StepLabel>Add previews</StepLabel></Step>
           <Step><StepLabel>Add admissions</StepLabel></Step>

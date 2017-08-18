@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
@@ -20,10 +21,24 @@ var user = {};
 var styles = {
   fit: {
     overflow: 'hidden',
-    maxHeight: 400
+    maxHeight: 250
   },
-  screenHeight: {
-    height: window.innerHeight - 180
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '66%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '33%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -183,53 +198,60 @@ class EditEvent extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           { !this.state.showTabs ?
             <div>
               <ErrorReporting open={this.state.error !== null}
                         error={this.state.error} />
 
-              <form className="newEventForm">
-                <TextField floatingLabelText="Event title"
-                          data-val="title"
-                          value={this.state.event.title}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Notes"
-                          data-val="notes"
-                          value={this.state.event.notes}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Location"
-                          data-val="location"
-                          value={this.state.event.location}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <DatePicker hintText="Date"
-                          mode="landscape"
-                          value={this.state.event.date}
-                          onChange={this._handleDateChange.bind(this)}/>
-                <div className="checkbox">
-                  <Checkbox ref="checkbox"
-                          checked={this.state.event.login_required}
-                          onCheck={this._handleLoginRequired}
-                          label="Login required?"/>
-                </div>
-                { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
-                <div className="fit">
-                  <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>
-                </div>
-                { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background} alt="preview"/> : null }
-                <div className="fit">
-                  <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>
-                </div>
-                <div>
-                  <RaisedButton label="Save & Continue"
-                                className="event-wizard-continue-button"
-                                primary={true}
-                                onTouchTap={this._handleEditEvent.bind(this)} />
-                </div>
+              <form className="edit-event-form">
+                <Paper style={styles.paperLeft}>
+                  <TextField floatingLabelText="Event title"
+                            data-val="title"
+                            value={this.state.event.title}
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <TextField floatingLabelText="Notes"
+                            data-val="notes"
+                            value={this.state.event.notes}
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <TextField floatingLabelText="Location"
+                            data-val="location"
+                            value={this.state.event.location}
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <DatePicker hintText="Date"
+                            mode="landscape"
+                            fullWidth={true}
+                            value={this.state.event.date}
+                            onChange={this._handleDateChange.bind(this)}/>
+                  <div className="checkbox">
+                    <Checkbox ref="checkbox"
+                            checked={this.state.event.login_required}
+                            onCheck={this._handleLoginRequired}
+                            label="Login required?"/>
+                  </div>
+
+                  <div>
+                    <RaisedButton label="Save & Continue"
+                                  className="event-wizard-continue-button"
+                                  primary={true}
+                                  onTouchTap={this._handleEditEvent.bind(this)} />
+                  </div>
+                </Paper>
+
+                <Paper style={styles.paperRight}>
+                  { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
+                  <div className="fit">
+                    <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>
+                  </div>
+                  { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background} alt="preview"/> : null }
+                  <div className="fit">
+                    <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>
+                  </div>
+                </Paper>
               </form>
             </div>
           : <EventTabs eventId={this.props.match.params.eventId} tabIndex={this.state.tabIndex}/> }

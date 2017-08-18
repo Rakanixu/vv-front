@@ -202,12 +202,18 @@ class EditSliderImage extends Component {
             { this.state.imgUrlFromGallery !== undefined && this.state.imgUrlFromGallery.length > 0 ?
               <img className="img-preview" src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
               : null }
-            <RaisedButton label="Select image from gallery" fullWidth={true} onTouchTap={this._handleDialogOpen.bind(this)} />
+            <RaisedButton label="Select image from gallery"
+                          className="right margin-bottom-medium" 
+                          primary={true}  
+                          onTouchTap={this._handleDialogOpen.bind(this)} />
             <div className="fit">
               <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>
             </div>
 
-            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleEditImage.bind(this)} />
+            <RaisedButton label="Edit" 
+                          className="right margin-bottom-medium" 
+                          primary={true}
+                          onTouchTap={this._handleEditImage.bind(this)} />
           </form>
         </div>
       </div>
