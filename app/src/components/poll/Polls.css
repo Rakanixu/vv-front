@@ -3,12 +3,9 @@
   padding-top: 0; 
 }
 
-.inner-container {
-  height: calc(100% - 50px);
-  overflow:auto;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+.new-poll-form {
+  padding: 0;
+  margin: 0;
 }
 
 .fit {

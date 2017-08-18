@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
@@ -18,7 +19,12 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 250
-  }
+  },
+  paper: {
+    padding: 20,
+    overflow: 'auto',
+    height: 'min-content'
+  },
 };
 
 class Polls extends Component {
@@ -89,35 +95,47 @@ class Polls extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
-        <div className="inner-container">
+      <div>
+        <div className="container" key={this.state.count}>
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
           { this.props.showNoEditListing ?
             <PollsList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
             : null }
+        </div>    
 
-          <form className="newAdmissions">
-            <TextField floatingLabelText="Poll name"
-                      data-val="name"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-
-            <RaisedButton label="Save Poll" fullWidth={true} onTouchTap={this._handleNewPoll.bind(this)} />
-          </form>
-
-          <div>
-            <RaisedButton label="Continue"
-                          className="event-wizard-continue-button"
-                          primary={true}
-                          onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+        <div className={this.props.showNoEditListing ? "container new-admission-container" : "new-admission-container" } >
+          <div className="title">
+            <h1>New Poll</h1>
           </div>
-        </div>
+
+          <form className="new-poll-form">
+            <Paper style={styles.paper}>
+              <TextField floatingLabelText="Poll name"
+                        data-val="name"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+
+              <div className="overflow">
+                <RaisedButton label="Save Poll"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleNewPoll.bind(this)} />
+              </div>                
+              <div className="overflow">
+                <RaisedButton label="Continue"
+                              className="right margin-top-medium margin-left-medium"
+                              primary={true}
+                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+              </div>
+            </Paper>
+          </form>
+        </div>  
       </div>
     );
   }
