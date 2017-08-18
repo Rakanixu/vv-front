@@ -132,7 +132,7 @@ class EventTabs extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{overflow:'hidden'}}>
         <Nav tabs={this.state.tabs} tabIndex={this.props.tabIndex}/>
         { this.state.show[0] ?
           <div>

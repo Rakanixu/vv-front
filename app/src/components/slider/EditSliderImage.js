@@ -162,60 +162,58 @@ class EditSliderImage extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
-        <div className="inner-container">
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
+      <div className="container">
+        <ErrorReporting open={this.state.error !== null}
+                  error={this.state.error} />
 
-          <form className="editSliderImage">
-            <TextField floatingLabelText="Title"
-                      data-val="title"
-                      value={this.state.image.title}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Type"
-                      data-val="type"
-                      value={this.state.image.type}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+        <form className="editSliderImage">
+          <TextField floatingLabelText="Title"
+                    data-val="title"
+                    value={this.state.image.title}
+                    onChange={this._handleTextFieldChange.bind(this)}
+                    fullWidth={true} />
+          <TextField floatingLabelText="Type"
+                    data-val="type"
+                    value={this.state.image.type}
+                    onChange={this._handleTextFieldChange.bind(this)}
+                    fullWidth={true} />
 
-            <Dialog title="Gallery"
-                    modal={false}
-                    open={this.state.openDialog}
-                    onRequestClose={this._handleDialogClose}
-                    autoScrollBodyContent={true}>
-              <div style={styles.root}>
-                <GridList style={styles.gridList} cols={2.2}>
-                  {this.state.media.map((img, i) => (
-                    <GridTile
-                      key={i}
-                      data-url={img.url}
-                      style={styles.gridTile}
-                      onTouchTap={this._handelImgSelect.bind(this)}
-                      titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                      <img src={config.baseURL + img.url} alt="gallery item"/>
-                    </GridTile>
-                  ))}
-                </GridList>
-              </div>
-            </Dialog>
-            { this.state.imgUrlFromGallery !== undefined && this.state.imgUrlFromGallery.length > 0 ?
-              <img className="img-preview" src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
-              : null }
-            <RaisedButton label="Select image from gallery"
-                          className="right margin-bottom-medium" 
-                          primary={true}  
-                          onTouchTap={this._handleDialogOpen.bind(this)} />
-            <div className="fit">
-              <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>
+          <Dialog title="Gallery"
+                  modal={false}
+                  open={this.state.openDialog}
+                  onRequestClose={this._handleDialogClose}
+                  autoScrollBodyContent={true}>
+            <div style={styles.root}>
+              <GridList style={styles.gridList} cols={2.2}>
+                {this.state.media.map((img, i) => (
+                  <GridTile
+                    key={i}
+                    data-url={img.url}
+                    style={styles.gridTile}
+                    onTouchTap={this._handelImgSelect.bind(this)}
+                    titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+                    <img src={config.baseURL + img.url} alt="gallery item"/>
+                  </GridTile>
+                ))}
+              </GridList>
             </div>
+          </Dialog>
+          { this.state.imgUrlFromGallery !== undefined && this.state.imgUrlFromGallery.length > 0 ?
+            <img className="img-preview" src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
+            : null }
+          <RaisedButton label="Select image from gallery"
+                        className="right margin-bottom-medium" 
+                        primary={true}  
+                        onTouchTap={this._handleDialogOpen.bind(this)} />
+          <div className="fit">
+            <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>
+          </div>
 
-            <RaisedButton label="Edit" 
-                          className="right margin-bottom-medium" 
-                          primary={true}
-                          onTouchTap={this._handleEditImage.bind(this)} />
-          </form>
-        </div>
+          <RaisedButton label="Edit" 
+                        className="right margin-bottom-medium" 
+                        primary={true}
+                        onTouchTap={this._handleEditImage.bind(this)} />
+        </form>
       </div>
     );
   }

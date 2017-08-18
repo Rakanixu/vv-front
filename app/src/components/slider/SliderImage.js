@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
@@ -39,6 +40,23 @@ var styles = {
   },
   screenHeight: {
     height: window.innerHeight - 250
+  },
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -68,6 +86,13 @@ class SliderImage extends Component {
     });
   }
 
+  _handleOnClickUpload(e) {
+    this.refs.galleryPreview.style.display = 'none';
+    this.refs.uploadPreview.style.display = 'block';
+    // hack
+    document.querySelector('.fit input[type="file"]').click();
+  }
+
   _handleTextFieldChange(e) {
     var state = {}
     state[e.target.dataset.val] = e.target.value;
@@ -87,6 +112,8 @@ class SliderImage extends Component {
   }
 
   _handleDialogOpen = () => {
+    this.refs.uploadPreview.style.display = 'none';
+    this.refs.galleryPreview.style.display = 'block';
     this.setState({ openDialog: true });
   };
 
@@ -161,24 +188,46 @@ class SliderImage extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
-        <div className="inner-container">
+      <div>
+        <div className="container" key={this.state.count} >
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
           { this.props.showNoEditListing ?
             <SliderImageList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
             : null }
+        </div>  
 
-          <form className="newSliderImage">
-            <TextField floatingLabelText="Title"
-                      data-val="title"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Type"
-                      data-val="type"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+        <div className={this.props.showNoEditListing ? "container new-image-container" : "new-image-container" } >
+          <div className="title">
+            <h1>New Slider Image</h1>
+          </div>  
+
+          <form className="new-slider-image">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Title"
+                        data-val="title"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Type"
+                        data-val="type"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+
+              <div className="overflow">
+                <RaisedButton label="Save" 
+                              className="right margin-top-medium" 
+                              primary={true}
+                              onTouchTap={this._handleNewSliderImage.bind(this)} />
+              </div>
+
+              <div className="overflow">
+                <RaisedButton label="Continue" 
+                              className="right margin-top-medium" 
+                              primary={true} 
+                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
+              </div>          
+            </Paper>            
 
             <Dialog title="Gallery"
                     modal={false}
@@ -200,21 +249,32 @@ class SliderImage extends Component {
                 </GridList>
               </div>
             </Dialog>
-            { this.state.imgUrlFromGallery!== undefined && this.state.imgUrlFromGallery.length > 0 ?
-              <img className="img-preview" src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
-              : null }
-            <RaisedButton label="Select image from gallery" fullWidth={true} onTouchTap={this._handleDialogOpen.bind(this)} />
-            <div className="fit">
-              <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>
-            </div>
 
-            <RaisedButton label="Save" fullWidth={true} onTouchTap={this._handleNewSliderImage.bind(this)} />
+            <Paper style={styles.paperRight}>
+              <div ref="galleryPreview">
+              { this.state.imgUrlFromGallery!== undefined && this.state.imgUrlFromGallery.length > 0 ?
+                <img src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
+                : null }
+              </div>  
+
+              <div className="fit hidelabel" ref="uploadPreview" style={{display: 'none'}}>
+                <UploadPreview label="Add" onChange={this._onImgChange} style={styles.fit}/>
+              </div>  
+
+              <div className="overflow">
+                <RaisedButton label="Select image from gallery"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleDialogOpen.bind(this)} />
+
+                <RaisedButton label="Select Image from local storage"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleOnClickUpload.bind(this)} />
+              </div>
+            </Paper>  
           </form>
-
-          <div>
-            <RaisedButton label="Continue" className="event-wizard-continue-button" primary={true} onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-          </div>
-        </div>
+        </div>  
       </div>
     );
   }

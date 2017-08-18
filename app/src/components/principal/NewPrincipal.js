@@ -126,7 +126,7 @@ class NewPrincipal extends Component {
       <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
+                          error={this.state.error} />
           <form className="newPrincipalForm">
             <TextField floatingLabelText="Name"
                       data-val="name"
