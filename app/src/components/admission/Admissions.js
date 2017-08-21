@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import { GridList, GridTile } from 'material-ui/GridList';
+import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -15,12 +17,26 @@ axios.defaults.withCredentials = true;
 const config = require('../../config.json');
 
 var styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto',
+  },
+  gridTile: {
+    cursor: 'pointer',
+    width: 240
+  },
+  titleStyle: {
+    color: 'rgb(0, 188, 212)',
+  },
   fit: {
     overflow: 'hidden',
     maxHeight: 400
-  },
-  screenHeight: {
-    height: window.innerHeight - 250
   },
   paperLeft: {
     padding: 20,
@@ -45,16 +61,21 @@ class Admissions extends Component {
   constructor(props) {
     super(props);
 
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
-
     this.state = {
       error: null,
       count: 0,
       icon: {},
-      url: config.baseAPI_URL + '/event/'
+      url: config.baseAPI_URL + '/event/',
+      media: []
     };
+  }
+
+  componentWillMount() {
+    axios.get(config.baseAPI_URL + '/media').then(res => {
+      this.setState({ media: res.data });
+    }).catch(err => {
+      this._handleError(err);
+    });
   }
 
   _handleTextFieldChange(e) {
@@ -62,6 +83,28 @@ class Admissions extends Component {
     state[e.target.dataset.val] = e.target.value;
     this.setState(state);
     this.setState({ error: null });
+  }
+
+  _handleOnClickUpload(e) {
+    this.refs.galleryPreview.style.display = 'none';
+    this.refs.uploadPreview.style.display = 'block';
+    // hack
+    document.querySelector('.fit input[type="file"]').click();
+  }
+
+  _handleDialogOpen = () => {
+    this.setState({ openDialog: true });
+  }
+
+  _handleDialogClose = () => {
+    this.setState({openDialog: false});
+  }
+
+  _handelImgSelect = (e) => {
+    this.setState({
+      iconUrlFromGallery: e.currentTarget.dataset.url
+    });
+    this._handleDialogClose();
   }
 
   _onIconChange = (pictures) => {
@@ -103,6 +146,10 @@ class Admissions extends Component {
     try {
       icon = dataURItoBlob(icon);
     } catch (err) {}
+
+    if (!icon) {
+      icon = this.state.iconUrlFromGallery;
+    }
 
     var data = new FormData();
     data.append('title', this.state.title);
@@ -179,10 +226,49 @@ class Admissions extends Component {
             </Paper>          
 
             <Paper style={styles.paperRight}>
-              <div className="fit">
-                <UploadPreview title="Icon" label="Add" onChange={this._onIconChange} style={styles.fit}/>
+              <div ref="galleryPreview">
+                { this.state.iconUrlFromGallery!== undefined && this.state.iconUrlFromGallery.length > 0 ?
+                  <img src={config.baseURL + this.state.iconUrlFromGallery} alt="gallery item" />
+                  : null }
+              </div>  
+
+              <div className="fit hidelabel" ref="uploadPreview" style={{display: 'none'}}>
+                <UploadPreview label="Add" onChange={this._onIconChange} style={styles.fit}/>
+              </div>  
+
+              <div className="overflow">
+                <RaisedButton label="Select image from gallery"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleDialogOpen.bind(this)} />
+
+                <RaisedButton label="Select Image from local storage"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleOnClickUpload.bind(this)} />
               </div>
             </Paper>
+
+            <Dialog title="Gallery"
+                    modal={false}
+                    open={this.state.openDialog}
+                    onRequestClose={this._handleDialogClose}
+                    autoScrollBodyContent={true}>
+              <div style={styles.root}>
+                <GridList style={styles.gridList} cols={2.2}>
+                  {this.state.media.map((img, i) => (
+                    <GridTile
+                      key={i}
+                      data-url={img.url}
+                      style={styles.gridTile}
+                      onTouchTap={this._handelImgSelect.bind(this)}
+                      titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+                      <img src={config.baseURL + img.url} alt="gallery item"/>
+                    </GridTile>
+                  ))}
+                </GridList>
+              </div>
+            </Dialog>     
           </form>
         </div>
       </div>
