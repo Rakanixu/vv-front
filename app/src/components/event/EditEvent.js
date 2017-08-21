@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import { GridList, GridTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
+import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
@@ -19,6 +21,18 @@ const moment = require('moment');
 
 var user = {};
 var styles = {
+  gridList: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflowX: 'auto',
+  },
+  gridTile: {
+    cursor: 'pointer',
+    width: 240
+  },
+  titleStyle: {
+    color: 'rgb(0, 188, 212)',
+  },
   fit: {
     overflow: 'hidden',
     maxHeight: 250
@@ -48,6 +62,7 @@ class EditEvent extends Component {
 
     this.state = {
       error: null,
+      openDialog: false,
       showPreviewImg: true,
       showEventBackground: true,
       showTabs: false,
@@ -55,7 +70,8 @@ class EditEvent extends Component {
       url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       preview_img: {},
       event_background: {},
-      event: {}
+      event: {},
+      media: []
     };
   }
 
@@ -66,6 +82,12 @@ class EditEvent extends Component {
         tabIndex: this.props.location.query.index ? this.props.location.query.index : 0
       });
     }
+
+    axios.get(config.baseAPI_URL + '/media').then(res => {
+      this.setState({ media: res.data });
+    }).catch(err => {
+      this._handleError(err);
+    });
   }
 
   componentDidMount() {
@@ -77,10 +99,33 @@ class EditEvent extends Component {
     this._getEvent();
   }
 
+  _handleDialogOpen = (e) => {
+    if (e.currentTarget.dataset.target === 'previewImgUrlFromGallery') {
+      this.refs.uploadPreviewImg.style.display = 'none';
+      this.refs.galleryPreviewImg.style.display = 'block';
+    } else if (e.currentTarget.dataset.target === 'eventBackgroundUrlFromGallery') {
+      this.refs.uploadEventBackground.style.display = 'none';
+      this.refs.galleryEventBackground.style.display = 'block';
+    }
+    
+    this.setState({ 
+      imgTarget: e.currentTarget.dataset.target,
+      openDialog: true 
+    });
+  };
+
+  _handleDialogClose = () => {
+    this.setState({openDialog: false});
+  };
+
   _getEvent() {
     axios.get(this.state.url).then(function(res) {
       res.data.date = new Date(res.data.date);
-      this.setState({ event: res.data });
+      this.setState({ 
+        event: res.data,
+        eventBackgroundUrlFromGallery: res.data.event_background,
+        previewImgUrlFromGallery: res.data.preview_img
+      });
     }.bind(this))
     .catch(function(err) {
       this._handleError(err);
@@ -90,6 +135,28 @@ class EditEvent extends Component {
   _handleTextFieldChange(e) {
     this.state.event[e.target.dataset.val] = e.target.value;
     this.setState({ error: null });
+  }
+
+  _handleOnClickUploadPreviewImg(e) {
+    this.refs.galleryPreviewImg.style.display = 'none';
+    this.refs.uploadPreviewImg.style.display = 'block';
+    // hack
+    document.querySelector('.fit.preview-img input[type="file"]').click();
+  }
+
+  _handleOnClickUploadEventBackground(e) {
+    this.refs.galleryEventBackground.style.display = 'none';
+    this.refs.uploadEventBackground.style.display = 'block';
+    // hack
+    document.querySelector('.fit.event-background input[type="file"]').click();
+  }
+
+  _handelImgSelect = (e) => {
+    let obj = {}
+    obj[this.state.imgTarget] = e.currentTarget.dataset.url;
+
+    this.setState(obj);
+    this._handleDialogClose();
   }
 
   _handleDateChange = (nil, date) => {
@@ -156,11 +223,11 @@ class EditEvent extends Component {
     } catch (err) {}
 
     if (!preview_img) {
-      preview_img = this.state.event.preview_img;
+      preview_img = this.state.previewImgUrlFromGallery || this.state.event.preview_img;
     }
 
     if (!event_background) {
-      event_background = this.state.event.event_background;
+      event_background = this.state.eventBackgroundUrlFromGallery || this.state.event.event_background;
     }
 
     var now = moment().utc(new Date()).format();
@@ -243,15 +310,71 @@ class EditEvent extends Component {
                 </Paper>
 
                 <Paper style={styles.paperRight}>
-                  { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.event.preview_img} alt="preview"/> : null }
-                  <div className="fit">
-                    <UploadPreview title="Preview event image" label="Select new file" onChange={this._onPreviewImgChange} style={styles.fit}/>
+                  <label className="load-img-label">Preview Image</label>
+                  <div ref="galleryPreviewImg" className="margin-bottom-medium">
+                  { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.previewImgUrlFromGallery} alt="preview"/> : null }
+                  </div>  
+
+                  <div className="fit hidelabel preview-img" ref="uploadPreviewImg" style={{display: 'none'}}>
+                    <UploadPreview label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>
+                  </div>  
+
+                  <div className="overflow">
+                    <RaisedButton label="Select image from gallery"
+                                  className="right margin-top-medium margin-left-medium" 
+                                  primary={true}
+                                  data-target="previewImgUrlFromGallery"
+                                  onTouchTap={this._handleDialogOpen.bind(this)} />
+
+                    <RaisedButton label="Select Image from local storage"
+                                  className="right margin-top-medium margin-left-medium" 
+                                  primary={true}
+                                  onTouchTap={this._handleOnClickUploadPreviewImg.bind(this)} />
                   </div>
-                  { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.event.event_background} alt="preview"/> : null }
-                  <div className="fit">
-                    <UploadPreview title="Event background" label="Select new file" onChange={this._onEventBackgroundChange} style={styles.fit}/>
+
+                  <label className="load-img-label margin-top-medium block">Background Image</label>
+                  <div ref="galleryEventBackground" className="margin-bottom-medium">
+                  { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="preview"/> : null }
+                  </div>  
+
+                  <div className="fit hidelabel event-background" ref="uploadEventBackground" style={{display: 'none'}}>
+                    <UploadPreview label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>
+                  </div>  
+
+                  <div className="overflow">
+                    <RaisedButton label="Select image from gallery"
+                                  className="right margin-top-medium margin-left-medium" 
+                                  primary={true}
+                                  data-target="eventBackgroundUrlFromGallery"
+                                  onTouchTap={this._handleDialogOpen.bind(this)} />
+
+                    <RaisedButton label="Select Image from local storage"
+                                  className="right margin-top-medium margin-left-medium" 
+                                  primary={true}
+                                  onTouchTap={this._handleOnClickUploadEventBackground.bind(this)} />
                   </div>
-                </Paper>
+                </Paper>  
+
+                <Dialog title="Gallery"
+                        modal={false}
+                        open={this.state.openDialog}
+                        onRequestClose={this._handleDialogClose}
+                        autoScrollBodyContent={true}>
+                  <div style={styles.root}>
+                    <GridList style={styles.gridList} cols={2.2}>
+                      {this.state.media.map((img, i) => (
+                        <GridTile
+                          key={i}
+                          data-url={img.url}
+                          style={styles.gridTile}
+                          onTouchTap={this._handelImgSelect.bind(this)}
+                          titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+                          <img src={config.baseURL + img.url} alt="gallery item"/>
+                        </GridTile>
+                      ))}
+                    </GridList>
+                  </div>
+                </Dialog>
               </form>
             </div>
           : <EventTabs eventId={this.props.match.params.eventId} tabIndex={this.state.tabIndex}/> }

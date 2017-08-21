@@ -31,8 +31,8 @@
   padding: 0;
 }
 
-.preview-img {
-  margin-bottom: -50px;
+.load-img-label {
+  font-size: 1.25em;
 }
 
 @media (max-width: 600px) {
