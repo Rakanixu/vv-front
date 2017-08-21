@@ -93,14 +93,14 @@ class QuizEntryList extends Component {
             <TableRow>
               <TableHeaderColumn style={styles.alignLeft}>Question</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Answer one</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Answer two</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Answer three</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Answer four</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Right solution</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Answer two</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Answer three</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Answer four</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Right solution</TableHeaderColumn>
               { !this.props.noEdit ?
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>

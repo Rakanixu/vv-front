@@ -83,11 +83,11 @@ class AuctionList extends Component {
             <TableRow>
               <TableHeaderColumn style={styles.alignLeft}>Name</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Description</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
               { !this.props.noEdit ?
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>

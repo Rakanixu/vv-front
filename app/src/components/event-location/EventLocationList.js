@@ -99,11 +99,11 @@ class EventLocationList extends Component {
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Remark</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Street</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>City</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>ZIP</TableHeaderColumn>
-                <TableHeaderColumn style={styles.alignLeft}>Date</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Remark</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Street</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">City</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">ZIP</TableHeaderColumn>
+                <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Date</TableHeaderColumn>
                 <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
                 <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               </TableRow>

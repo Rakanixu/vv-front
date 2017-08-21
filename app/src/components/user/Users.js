@@ -122,11 +122,11 @@ class Users extends Component {
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
                   <TableHeaderColumn style={styles.alignLeft}>Username</TableHeaderColumn>
-                  <TableHeaderColumn style={styles.alignLeft}>Email</TableHeaderColumn>
-                  <TableHeaderColumn style={styles.alignLeft}>Role</TableHeaderColumn>
-                  <TableHeaderColumn style={styles.alignLeft}>Create at</TableHeaderColumn>
-                  <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
-                  <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Email</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Role</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Create at</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
+                  <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false}>

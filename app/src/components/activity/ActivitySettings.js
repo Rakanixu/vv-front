@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 
-var styles = {
+const styles = {
   fit: {
     overflow: 'hidden',
     maxHeight: 400

@@ -14,7 +14,9 @@ var styles = {
   alignLeft: {
     textAlign: 'left'
   },
-  image: {
+  tablePreview: {
+    width: 100,
+    maxWidth: 100,    
     margin: 0,
     padding: 0
   },
@@ -82,17 +84,17 @@ class SliderImageList extends Component {
         <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={styles.alignLeft}>Image</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '52px'}}>Image</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Type</TableHeaderColumn>
-              { !this.props.noEdit ? <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn> : null }
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Type</TableHeaderColumn>
+              { !this.props.noEdit ? <TableHeaderColumn style={styles.narrow}></TableHeaderColumn> : null }
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {this.state.images.map((image, i) =>
               <TableRow key={i} data-id={image.id}>
-                <TableRowColumn style={styles.image}>
+                <TableRowColumn style={styles.tablePreview}>
                   <img className="table-img"src={config.baseURL + image.img} alt="event slider image"/>
                   </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{image.title}</TableRowColumn>

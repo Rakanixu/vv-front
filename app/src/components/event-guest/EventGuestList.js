@@ -14,7 +14,9 @@ var styles = {
   alignLeft: {
     textAlign: 'left'
   },
-  image: {
+  tablePreview: {
+    width: 100,
+    maxWidth: 100,    
     margin: 0,
     padding: 0
   },
@@ -78,23 +80,23 @@ class EventGuestList extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
+        <Table fixedHeader={true}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={styles.alignLeft}>Media</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '52px'}}>Media</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Name</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Description</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Media type</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Media type</TableHeaderColumn>
               { !this.props.noEdit ?
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {this.state.event_guests.map((event_guest, i) =>
               <TableRow key={i} data-id={event_guest.id}>
-                <TableRowColumn style={styles.image}>
+                <TableRowColumn style={styles.tablePreview}>
                   <img className="table-img" src={config.baseURL + event_guest.main_media} alt="named guest media file"/>
                 </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{event_guest.name}</TableRowColumn>

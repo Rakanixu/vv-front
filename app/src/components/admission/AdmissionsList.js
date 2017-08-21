@@ -14,7 +14,9 @@ var styles = {
   alignLeft: {
     textAlign: 'left'
   },
-  image: {
+  tablePreview: {
+    width: 100,
+    maxWidth: 100,    
     margin: 0,
     padding: 0
   },
@@ -81,21 +83,21 @@ class AdmissionsList extends Component {
         <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={styles.alignLeft}>Icon</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '52px'}}>Icon</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Subtitle</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Price</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Description</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Subtitle</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Price</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
               { !this.props.noEdit ?
-              <TableHeaderColumn style={styles.narrow}>Edit</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
-              <TableHeaderColumn style={styles.narrow}>Delete</TableHeaderColumn>
+              <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {this.state.admissions.map((admission, i) =>
               <TableRow key={i} data-id={admission.id}>
-                <TableRowColumn style={styles.image}>
+                <TableRowColumn style={styles.tablePreview}>
                   <img className="table-img"src={config.baseURL + admission.icon} alt="admission icon"/>
                   </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.title}</TableRowColumn>
