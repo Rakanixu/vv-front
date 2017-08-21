@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
 import {GridList, GridTile} from 'material-ui/GridList';
+import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -13,8 +14,11 @@ axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 var styles = {
-  screenHeight: {
-    height: window.innerHeight - 250
+  paper: {
+    padding: 20,
+    overflow: 'auto',
+    height: 'min-content',
+    width: '100%'
   }
 };
 
@@ -87,24 +91,29 @@ class EditQuestionTopic extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="editSliderImage">
-            <TextField floatingLabelText="Topic"
-                      data-val="topic"
-                      value={this.state.question_topic.topic}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      value={this.state.question_topic.description}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+          <form className="edit-question-topic">
+            <Paper style={styles.paper}>
+              <TextField floatingLabelText="Topic"
+                        data-val="topic"
+                        value={this.state.question_topic.topic}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        value={this.state.question_topic.description}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleQuestionTopic.bind(this)} />
+              <RaisedButton label="Edit" 
+                            className="right margin-top-medium margin-left-medium" 
+                            primary={true}
+                            onTouchTap={this._handleQuestionTopic.bind(this)} />
+            </Paper>
           </form>
         </div>
       </div>

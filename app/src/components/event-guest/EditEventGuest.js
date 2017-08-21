@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
 import {GridList, GridTile} from 'material-ui/GridList';
+import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -37,8 +38,22 @@ var styles = {
     overflow: 'hidden',
     maxHeight: 400
   },
-  screenHeight: {
-    height: window.innerHeight - 180
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -90,6 +105,14 @@ class EditEventGuest extends Component {
       showImg: false
     });
   }
+
+  _handleOnClickUpload(e) {
+    this.refs.galleryPreview.style.display = 'none';
+    this.refs.uploadPreview.style.display = 'block';
+    // hack
+    document.querySelector('.fit input[type="file"]').click();
+  }
+
 
   _handleMediaTypeChange = (e, index, val) => {
     this.state.event_guest.main_media_type_id = val;
@@ -175,31 +198,71 @@ class EditEventGuest extends Component {
 
   render() {
     return (
-      <div className="container" style={styles.screenHeight}>
+      <div className="container">
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="editSliderImage">
-            <TextField floatingLabelText="Name"
-                      data-val="name"
-                      value={this.state.event_guest.name}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Description"
-                      data-val="description"
-                      value={this.state.event_guest.description}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+          <form className="edit-event-guest">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Name"
+                        data-val="name"
+                        value={this.state.event_guest.name}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Description"
+                        data-val="description"
+                        value={this.state.event_guest.description}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <SelectField floatingLabelText="Media type"
-                         fullWidth={true}
-                         value={this.state.event_guest.main_media_type_id}
-                         onChange={this._handleMediaTypeChange}>
-              {config.name_guest_media_type.map((type) => (
-                <MenuItem value={type.id} primaryText={type.name} />
-              ))}
-            </SelectField>
+              <SelectField floatingLabelText="Media type"
+                          fullWidth={true}
+                          value={this.state.event_guest.main_media_type_id}
+                          onChange={this._handleMediaTypeChange}>
+                {config.name_guest_media_type.map((type) => (
+                  <MenuItem value={type.id} primaryText={type.name} />
+                ))}
+              </SelectField>
+
+              <RaisedButton label="Edit" 
+                            className="right margin-top-medium" 
+                            primary={true} 
+                            onTouchTap={this._handleEditEventGuest.bind(this)} />
+            </Paper>
+
+            <Paper style={styles.paperRight}>
+              { this.state.event_guest.main_media_type_id === 1 ?
+                <div>
+                  <div ref="galleryPreview">
+                  { this.state.mainMediaUrlFromGallery!== undefined && this.state.mainMediaUrlFromGallery.length > 0 ?
+                    <img src={config.baseURL + this.state.mainMediaUrlFromGallery} alt="gallery item" />
+                    : null }
+                  </div>  
+
+                  <div className="fit hidelabel" ref="uploadPreview" style={{display: 'none'}}>
+                    <UploadPreview label="Add" onChange={this._onImgChange} style={styles.fit}/>
+                  </div>  
+
+                  <div className="overflow">
+                    <RaisedButton label="Select image from gallery"
+                                  className="right margin-top-medium margin-left-medium" 
+                                  primary={true}
+                                  onTouchTap={this._handleDialogOpen.bind(this)} />
+
+                    <RaisedButton label="Select Image from local storage"
+                                  className="right margin-top-medium margin-left-medium" 
+                                  primary={true}
+                                  onTouchTap={this._handleOnClickUpload.bind(this)} />
+                  </div>
+                </div>
+                :
+                <TextField floatingLabelText="Media URL"
+                          data-val="main_media_url"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+              }
+            </Paper>  
 
             <Dialog title="Gallery"
                     modal={false}
@@ -221,15 +284,6 @@ class EditEventGuest extends Component {
                 </GridList>
               </div>
             </Dialog>
-            { this.state.mainMediaUrlFromGallery !== undefined && this.state.mainMediaUrlFromGallery.length > 0 ?
-              <img className="img-preview" src={config.baseURL + this.state.mainMediaUrlFromGallery} alt="gallery item" />
-              : null }
-            <RaisedButton label="Select image from gallery" fullWidth={true} onTouchTap={this._handleDialogOpen.bind(this)} />
-            <div className="fit">
-              <UploadPreview title="Image" label="Add" onChange={this._onImgChange} style={styles.fit}/>
-            </div>
-
-            <RaisedButton label="Edit" fullWidth={true} onTouchTap={this._handleEditEventGuest.bind(this)} />
           </form>
         </div>
       </div>
