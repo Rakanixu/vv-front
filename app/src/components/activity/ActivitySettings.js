@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { blue600, blue100 } from 'material-ui/styles/colors';
 import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
@@ -15,21 +16,22 @@ var styles = {
     overflow: 'hidden',
     maxHeight: 400
   },
-  screenHeight: {
-    height: window.innerHeight - 250
-  },
   toggle: {
     marginBottom: 16,
+    fontSize: '1.15em',
+    color: 'rgb(158, 158, 158)'
+  },
+  thumbSwitched: {
+    backgroundColor: blue600
+  },
+  trackOff: {
+    backgroundColor: blue100    
   }
 };
 
 class QuizEntry extends Component {
   constructor(props) {
     super(props);
-
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
 
     this.state = {
       error: null,
@@ -82,7 +84,7 @@ class QuizEntry extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count} style={styles.screenHeight}>
+      <div className="container" key={this.state.count}>
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
@@ -91,26 +93,36 @@ class QuizEntry extends Component {
             <Toggle label="Chat highlight"
                     toggled={this.state.event.chat_highlight}
                     data-value="chat_highlight"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
             <Toggle label="Highlight chat with user image"
                     toggled={this.state.event.chat_with_user_image}
                     data-value="chat_with_user_image"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
             <Toggle label="Pose a question"
                     toggled={this.state.event.pose_question}
                     data-value="pose_question"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
             <Toggle label="Chat shown in status bar"
                     toggled={this.state.event.chat_shown_status_bar}
                     data-value="chat_shown_status_bar"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
             <Toggle label="Stage moment with webcam"
                     toggled={this.state.event.stage_moment_webcam}
                     data-value="stage_moment_webcam"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
           </form>

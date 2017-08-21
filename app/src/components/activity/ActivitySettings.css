@@ -1,3 +1,7 @@
+form label {
+  color: rgb(158, 158, 158) !important;
+}
+
 .container {
   padding: 25px;
   padding-top: 0; 
