@@ -23,8 +23,12 @@
   margin-bottom: 20px;
 }
 
-.preview-img {
-  margin-bottom: -50px;
+.edit-poll {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 @media (max-width: 600px) {
