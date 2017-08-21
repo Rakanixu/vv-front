@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ThemeDefault from '../theme-default';
 import Events from '../components/event/Events';
 import Event from '../components/event/Event';
 import Login from './Login';
@@ -16,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <MuiThemeProvider /* muiTheme={lightBaseTheme} */>
+        <MuiThemeProvider muiTheme={ThemeDefault}>
           <div>
             <Switch>
               <Route exact path='/' component={Events} />

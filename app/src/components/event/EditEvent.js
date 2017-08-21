@@ -276,6 +276,7 @@ class EditEvent extends Component {
                 <Paper style={styles.paperLeft}>
                   <TextField floatingLabelText="Event title"
                             data-val="title"
+                            primary={true}
                             value={this.state.event.title}
                             onChange={this._handleTextFieldChange.bind(this)}
                             fullWidth={true} />
