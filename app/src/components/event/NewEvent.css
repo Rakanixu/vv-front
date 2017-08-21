@@ -33,6 +33,10 @@
   padding: 0;
 }
 
+.load-img-label {
+  font-size: 1.25em;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px;

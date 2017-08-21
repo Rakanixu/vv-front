@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
-import {GridList, GridTile} from 'material-ui/GridList';
+import { GridList, GridTile } from 'material-ui/GridList';
 import Dialog from 'material-ui/Dialog';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -38,9 +38,6 @@ var styles = {
     overflow: 'hidden',
     maxHeight: 400
   },
-  screenHeight: {
-    height: window.innerHeight - 250
-  },
   paperLeft: {
     padding: 20,
     overflow: 'auto',
@@ -63,10 +60,6 @@ var styles = {
 class SliderImage extends Component {
   constructor(props) {
     super(props);
-
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
 
     this.state = {
       error: null,

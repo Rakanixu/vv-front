@@ -45,6 +45,10 @@ a.form-link {
   float: right;
 }
 
+.block {
+  display: block;
+}
+
 .margin-bottom-medium {
   margin-bottom: 25px;
 }
