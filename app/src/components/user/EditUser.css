@@ -23,8 +23,12 @@
   margin-bottom: 20px;
 }
 
-.img-preview {
-  margin-bottom: -50px;
+.edit-user-form {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 600px) {

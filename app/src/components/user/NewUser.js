@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -17,8 +18,22 @@ const styles = {
     overflow: 'hidden',
     maxHeight: 400
   },
-  screenHeight: {
-    height: window.innerHeight - 150
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '66%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '33%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 var user = {};
@@ -124,41 +139,45 @@ class NewUser extends Component {
         <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
-          <form className="newUserForm">
-            <TextField floatingLabelText="Username"
-                      data-val="username"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Email"
-                      data-val="email"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Password"
-                      data-val="password"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Password confirmation"
-                      data-val="password_confirmation"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+          <form className="new-user-form">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Username"
+                        data-val="username"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Email"
+                        data-val="email"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Password"
+                        data-val="password"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Password confirmation"
+                        data-val="password_confirmation"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <SelectField floatingLabelText="Select role"
-                        fullWidth={true}
-                        value={this.state.role_id}
-                        onChange={this._handleRoleChange}>
-            {Object.keys(config.roles).map((role, i) => (
-              <MenuItem key={i+1} value={i+1} primaryText={role} />
-            ))}
-          </SelectField>
+              <SelectField floatingLabelText="Select role"
+                          fullWidth={true}
+                          value={this.state.role_id}
+                          onChange={this._handleRoleChange}>
+                {Object.keys(config.roles).map((role, i) => (
+                  <MenuItem key={i+1} value={i+1} primaryText={role} />
+                ))}
+              </SelectField>
 
-            <div className="fit">
-              <UploadPreview title="Avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
-            </div>
-
-            <RaisedButton label="Save User"                           
-                          className="right margin-bottom-medium" 
+              <RaisedButton label="Save User"                           
+                          className="right margin-bottom-medium margin-top-medium" 
                           primary={true}  
                           onTouchTap={this._handleNewUser.bind(this)} />
+            </Paper>
+
+            <Paper style={styles.paperRight}>
+              <div className="fit">
+                <UploadPreview title="Avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
+              </div>
+            </Paper>
           </form>
         </div>
       </div>

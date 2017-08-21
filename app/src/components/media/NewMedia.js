@@ -89,7 +89,7 @@ class NewMedia extends Component {
                     error={this.state.error} />
 
           <form className="newMediaForm">
-            <div className="fit">
+            <div className="new-media">
               <UploadPreview title="Image" label="Add" onChange={this._onMediaChange} style={styles.fit}/>
             </div>
 

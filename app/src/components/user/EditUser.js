@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
@@ -15,29 +16,26 @@ axios.defaults.withCredentials = true;
 const moment = require('moment');
 const config = require('../../config.json');
 const styles = {
-   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
-  },
-  gridTile: {
-    cursor: 'pointer',
-    width: 240
-  },
-  titleStyle: {
-    color: 'rgb(0, 188, 212)',
-  },
   fit: {
     overflow: 'hidden',
     maxHeight: 400
   },
-  screenHeight: {
-    height: window.innerHeight - 250
+  paperLeft: {
+    padding: 20,
+    overflow: 'auto',
+    width: '66%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '33%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 var user = {};
@@ -163,45 +161,50 @@ class EditUser extends Component {
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
-          <form className="EditUser">
-            <TextField floatingLabelText="Username"
-                      data-val="username"
-                      value={this.state.user.username}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Email"
-                      data-val="email"
-                      value={this.state.user.email}
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Password"
-                      data-val="password"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
-            <TextField floatingLabelText="Password confirmation"
-                      data-val="password_confirmation"
-                      onChange={this._handleTextFieldChange.bind(this)}
-                      fullWidth={true} />
+          <form className="edit-user-form">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Username"
+                        data-val="username"
+                        value={this.state.user.username}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Email"
+                        data-val="email"
+                        value={this.state.user.email}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Password"
+                        data-val="password"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Password confirmation"
+                        data-val="password_confirmation"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
 
-            <SelectField floatingLabelText="Select role"
-                        fullWidth={true}
-                        value={this.state.user.role_id}
-                        onChange={this._handleRoleChange}>
-            {Object.keys(config.roles).map((role, i) => (
-              <MenuItem key={i+1} value={i+1} primaryText={role} />
-            ))}
-          </SelectField>
-            { this.state.avatarUrl !== undefined && this.state.avatarUrl.length > 0 ?
-              <img className="img-preview" src={config.baseURL + this.state.avatarUrl} alt="user avatar" />
-              : null }
-            <div className="fit">
-              <UploadPreview title="User avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
-            </div>
+              <SelectField floatingLabelText="Select role"
+                          fullWidth={true}
+                          value={this.state.user.role_id}
+                          onChange={this._handleRoleChange}>
+                {Object.keys(config.roles).map((role, i) => (
+                  <MenuItem key={i+1} value={i+1} primaryText={role} />
+                ))}
+              </SelectField>
 
-            <RaisedButton label="Edit"                           
-                          className="right margin-bottom-medium" 
+              <RaisedButton label="Edit"                           
+                          className="right margin-bottom-medium margin-top-medium" 
                           primary={true}
                           onTouchTap={this._handleEditUser.bind(this)} />
+            </Paper>
+
+            <Paper style={styles.paperLeft}>
+              { this.state.avatarUrl !== undefined && this.state.avatarUrl.length > 0 ?
+                <img className="img-preview" src={config.baseURL + this.state.avatarUrl} alt="user avatar" />
+                : null }
+              <div className="fit">
+                <UploadPreview title="User avatar" label="Add" onChange={this._onAvatarChange} style={styles.fit}/>
+              </div>
+            </Paper>
           </form>
         </div>
       </div>
