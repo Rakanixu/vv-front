@@ -27,6 +27,14 @@
   margin-bottom: -50px;
 }
 
+.edit-slider-image {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px;

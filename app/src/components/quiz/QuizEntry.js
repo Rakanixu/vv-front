@@ -42,7 +42,13 @@ class QuizEntry extends Component {
       count: 0,
       quizzesUrl: config.baseAPI_URL + '/event/' + this.props.eventId,
       quizEntriesUrl: config.baseAPI_URL + '/quiz',
-      quizzes: []
+      quizzes: [],
+      question: '',
+      answer_one: '',
+      answer_two: '',
+      answer_three: '',
+      answer_four: '',
+      right_solution: ''
     };
   }
 
@@ -97,14 +103,7 @@ class QuizEntry extends Component {
       count++;
 
       this.setState({
-        error: null,
-        count: count,
-        question: '',
-        answer_one: '',
-        answer_two: '',
-        answer_three: '',
-        answer_four: '',
-        right_solution: ''
+        count: count
       });
 
       if (this.props.onSave) {
