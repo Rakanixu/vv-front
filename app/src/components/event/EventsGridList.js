@@ -12,6 +12,7 @@ axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 const moment = require('moment');
+const _ = require('lodash/core');
 const styles = {
   root: {
     padding: 50,
@@ -30,6 +31,11 @@ const styles = {
   },
   buttonDelete: {
     top: 60,
+    right: 10,
+    position: 'absolute'
+  },
+  buttonCopy: {
+    top: 110,
     right: 10,
     position: 'absolute'
   },
@@ -79,6 +85,28 @@ class EventsGridList extends Component {
     });
   }
 
+  _handleCopy(e) {
+    let event = {};
+    for (var i = 0; i < this.state.events.length; i++) {
+      if (this.state.events[i].id.toString() === e.currentTarget.dataset.id) {
+        event = _.clone(this.state.events[i]);
+        delete event.id;
+        break;
+      }
+    }
+
+    var data = new FormData();
+    for (var i in event) {
+      data.append(i, event[i]);
+    }
+    
+    axios.post(config.baseAPI_URL + '/event', data).then(function(res) {
+      this.props.history.push('/manager/event/edit/' + res.data.id);
+    }.bind(this)).catch(err => {
+      this._handleError(err);
+    });
+  }
+
   _handleError(err) {
     if (!err) {
       err = new Error('Invalid data');
@@ -118,12 +146,17 @@ class EventsGridList extends Component {
                                     label="Edit"
                                     data-id={event.id}
                                     onTouchTap={this._handleEdit.bind(this)}
-                                    style={styles.buttonEdit}/>
+                                    style={styles.buttonEdit}/>         
                       <RaisedButton className="delete"
                                     data-id={event.id}
                                     onTouchTap={this._handleDelete.bind(this)}
                                     label="Delete"
                                     style={styles.buttonDelete}/>
+                      <RaisedButton className="copy"
+                                    label="Copy"
+                                    data-id={event.id}
+                                    onTouchTap={this._handleCopy.bind(this)}
+                                    style={styles.buttonCopy}/>                   
             </GridTile>
           ))}
         </GridList>
