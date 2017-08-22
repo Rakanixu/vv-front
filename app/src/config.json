@@ -1,6 +1,6 @@
 {
-  "baseURL": "http://localhost:9000",
-  "baseAPI_URL": "http://localhost:9000/api/v1",
+  "baseURL": "http://stagingapi.vvents.com:9000",
+  "baseAPI_URL": "http://stagingapi.vvents.com:9000/api/v1",
   "defaultLogo": "/logo.svg",
   "defaultBackground": "/background.png",
   "roles": {
