@@ -1,0 +1,47 @@
+{
+  "baseURL": "http://localhost:9000",
+  "baseAPI_URL": "http://localhost:9000/api/v1",
+  "defaultLogo": "/logo.svg",
+  "defaultBackground": "/background.png",
+  "roles": {
+    "root": {
+      "name": "root",
+      "id": 1
+    },
+    "manager": {
+      "name": "manager",
+      "id": 2
+    },
+    "event_organiser": {
+      "name": "event_organiser",
+      "id": 3
+    },
+    "guest": {
+      "name": "guest",
+      "id": 4
+    },
+    "vip_guest": {
+      "name": "vip_guest",
+      "id": 5
+    }
+  },
+  "event_types": {
+    "default": {
+      "id": 1
+    }
+  },
+  "name_guest_media_type": [
+    {
+      "name": "Image",
+      "id": 1
+    },
+    {
+      "name": "YouTube Link",
+      "id": 2
+    },
+    {
+      "name": "Livestream",
+      "id": 3
+    }
+  ]
+}  

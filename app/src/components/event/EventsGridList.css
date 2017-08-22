@@ -1,0 +1,21 @@
+.title {
+  position: relative;
+}
+
+.new-event {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+img {
+  height: 100%;
+}
+
+.delete button {
+  background-color: #dd4b39 !important;
+}
+
+.edit button {
+  background-color: #00a65a !important;
+}

@@ -1,0 +1,13 @@
+.container {
+  padding: 40px !important;
+}
+
+.title {
+  position: relative;
+}
+
+.export-csv-container {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

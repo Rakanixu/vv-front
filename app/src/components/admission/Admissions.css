@@ -1,0 +1,32 @@
+.container {
+  padding: 25px;
+  padding-top: 0; 
+}
+
+.inner-container {
+  height: calc(100% - 50px);
+  overflow:auto;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.new-admission-container {
+  padding-top: 25px;
+  background-color: #efefef;
+}
+
+.new-admission-form {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.fit {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  max-height: 300px;
+}

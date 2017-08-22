@@ -1,0 +1,15 @@
+.title {
+  position: relative;
+}
+
+.new-event-location {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.container-list {
+  margin: 0;
+  padding: 40px;
+  width: inherit;
+}

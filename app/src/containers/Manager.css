@@ -1,0 +1,23 @@
+.drawer div {
+  background-color: rgb(56, 62, 82) !important; 
+}
+
+.app-bar {
+  background-color: white !important;
+  height: 58px;
+  overflow: hidden;
+  position: fixed !important;
+  top: 0;
+}
+
+.app-bar svg {
+  fill: rgb(56, 62, 82) !important;
+}
+
+.app-bar .avatar {
+  margin-top: -10px;
+}
+
+.manager-container {
+  margin-top: 59px;
+}

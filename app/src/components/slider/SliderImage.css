@@ -1,0 +1,49 @@
+img {
+  max-height: 300px;
+  width: 100%;
+  padding: 20px 0 20px;
+}
+
+img[src=""] {
+   display: none;
+}
+
+.container {
+  padding: 25px;
+  padding-top: 0; 
+}
+
+.new-image-container {
+  padding-top: 25px;
+  background-color: #efefef;
+}
+
+.new-slider-image {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.fit {
+  overflow: hidden;
+  width: 100%;
+  max-height: 300px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.hidelabel label {
+  display: none !important;
+}
+
+.checkbox {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
+
+.overflow {
+  overflow: auto;
+}

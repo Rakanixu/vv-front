@@ -1,0 +1,13 @@
+.container-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+.inner-container-list {
+  background-color: #e4e4e4;
+  border-radius: 3px; 
+  margin: 0;
+  background-clip: content-box, padding-box;
+}

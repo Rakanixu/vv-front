@@ -1,0 +1,9 @@
+.title {
+  position: relative;
+}
+
+.new-principal {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

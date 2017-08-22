@@ -1,0 +1,36 @@
+.register-container {
+  min-width: 320px;
+  max-width: 400px;
+  height: auto;
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.checkbox-container {
+  margin: 25px 0 25px;
+  display: inline-flex;
+}
+
+.checkbox-container div {
+  width: auto !important;
+}
+
+.checkbox-container span {
+  font-size: 1.25em; 
+  margin-left: 25px;
+  line-height: 30px;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.logo {
+  width: 100px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
+}
