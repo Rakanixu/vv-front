@@ -113,7 +113,7 @@ class Principal extends Component {
         <div className="title">
           <h1>Principals</h1>
           <div className="new-principal">
-            <RaisedButton label="New pricipal" primary={true} onTouchTap={this._newPrincipal.bind(this)} />
+            <RaisedButton label="New principal" primary={true} onTouchTap={this._newPrincipal.bind(this)} />
           </div>
         </div>
         <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>

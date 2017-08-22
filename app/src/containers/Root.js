@@ -23,7 +23,6 @@ const utils = require('../utils.js');
 const data = {
   menus: [
     { text: 'Overview', icon: <Assessment />, link: '/root/principal' },
-    { text: 'Table Page', icon: <GridOn />, link: '/root/principal' },
     { text: 'New Principal', icon: <PermIdentity />, link: '/root/principal/new' }
   ]
 };
