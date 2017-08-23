@@ -8,14 +8,147 @@
   top: 0;
 }
 
-img {
-  height: 100%;
-}
-
 .delete button {
   background-color: #dd4b39 !important;
 }
 
 .edit button {
   background-color: #00a65a !important;
+}
+
+@media (max-width: 1300px) {
+  .cards-grid >div {
+    width: 30% !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .cards-grid >div {
+    width: 45% !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .cards-grid >div {
+    width: 80% !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .cards-grid >div {
+    width: 100% !important;
+  }
+}
+
+.card-block {
+  display: flex !important;
+  padding: 0;
+  height: 100%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .20);
+}
+.card-block__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 300px;
+}
+
+.card-block-img {
+  width: 100%;
+  height: 60%;
+}
+
+.card-block-img-wrapper {
+  position: relative;
+  /*padding-bottom: prc(150, 300);*/
+  /*max-height: 0;*/
+  height: 100%;
+}
+
+.card-block-img-wrapper-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.card-block-img-wrapper-inner__img {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.card-block__content__buttons {
+  height: 40%;
+  padding-top: 5%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-block__content__buttons__main {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 30px;
+}
+
+.card-block__content__buttons__reset {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  align-items: baseline;
+  height: 40%;
+  margin-right: 30px;
+}
+
+.card-block__content__buttons__reset a {
+  color: rgb(158, 158, 158);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.start, .stop {
+  width: 150px;
+  border-radius: 10px !important;
+}
+
+.start div, .stop div, .start span, .stop span {
+  border-radius: 10px !important;
+}
+
+.start button {
+  background-color: rgb(30, 136, 229) !important;
+  border-radius: 10px !important;
+}
+
+.stop button {
+  background-color: rgb(56, 62, 82) !important;
+  border-radius: 10px !important;
+}
+
+.card-block__content__buttons__sub  {
+  position: relative;
+  display: flex;
+  top: 30px;
+  right: 30px;
+  justify-content: flex-end;
+}
+
+.copy, .edit {
+  border-radius: 5px !important;
+  opacity: 0.8;
+}
+
+.copy button, .edit button {
+  background-color: rgb(56, 62, 82) !important;
+  border-radius: 5px !important;
+  border-color: rgb(56, 62, 82) !important;
 }

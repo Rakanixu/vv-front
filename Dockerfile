@@ -22,4 +22,6 @@ RUN npm run build
 FROM base as output
 
 RUN mkdir -p /src/
-COPY --from=compiler /src/build/ /src/
+COPY --from=compiler /src/ /src/
+WORKDIR /src/app/
+ENTRYPOINT ["npm", "start"]

@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom'
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
@@ -22,22 +24,57 @@ const styles = {
     maxWidth: 1800,
     overflowY: 'auto',
     paddingTop: 10,
-    cols: (window.innerWidth > 1000) ? 2 : 1
+    cols: 4
   },
-  buttonEdit: {
-    top: 10,
-    right: 10,
-    position: 'absolute'
+  startButton: {
+    position: 'relative',
+    marginRight: 10
   },
-  buttonDelete: {
-    top: 60,
-    right: 10,
-    position: 'absolute'
+  startLabel: {
+    color: '#fff',
+    textTransform: 'none'
   },
-  buttonCopy: {
-    top: 110,
-    right: 10,
-    position: 'absolute'
+  stopButton: {
+    position: 'relative',
+    marginLeft: 10
+  },
+  stopLabel: {
+    color: '#fff',
+    textTransform: 'none'
+  },
+  copyButton: {
+    height: 30,
+    width: 70,
+    minWidth: 20,
+    marginRight: 5
+  },
+  copyLabel: {
+    margin: 5,
+    fontSize: 12,
+    color: '#fff',
+    padding: 0
+  },
+  copyIcon: {
+    width: 15,
+    height: 15,
+    marginLeft: 0
+  },
+  editButton: {
+    height: 30,
+    width: 70,
+    minWidth: 20,
+    marginLeft: 5
+  },
+  editLabel: {
+    margin: 5,
+    fontSize: 12,
+    color: '#fff',
+    padding: 0
+  },
+  editIcon: {
+    width: 15,
+    height: 15,
+    marginLeft: 0
   },
   paperFab: {
     position: 'absolute',
@@ -78,7 +115,7 @@ class EventsGridList extends Component {
   }
 
   _handleDelete(e) {
-    axios.delete(this.state.url + '/' + e.currentTarget.dataset.id).then(function(res) {
+    axios.delete(this.state.url + '/' + e.currentTarget.dataset.id).then(function (res) {
       this._getEvents();
     }.bind(this)).catch(err => {
       this._handleError(err);
@@ -99,7 +136,7 @@ class EventsGridList extends Component {
     for (var i in event) {
       data.append(i, event[i]);
     }
-    
+
     axios.post(config.baseAPI_URL + '/event', data).then(function(res) {
       this.props.history.push('/manager/event/edit/' + res.data.id);
     }.bind(this)).catch(err => {
@@ -134,29 +171,68 @@ class EventsGridList extends Component {
           </div>
         </div>
 
-        <GridList ref="grid" cellHeight={320} cols={styles.gridList.cols} style={styles.gridList}>
+        <GridList ref="grid"
+                  className="cards-grid"
+                  cellHeight={320}
+                  cols={styles.gridList.cols}
+                  style={styles.gridList}
+                  padding={20}>
           {this.state.events.map((event) => (
             <GridTile key={event.id}
-                      title={event.title}
+                      className="card-block"
+                      // title={event.title}
                       subtitle={moment(event.date).format("MMM Do YYYY")}
-                      actionIcon={<IconButton><StarBorder color="white" /></IconButton>}>
-                      <img src={config.baseURL + event.preview_img} />
+                      actionIcon={<IconButton><StarBorder color="white"/></IconButton>}>
 
-                      <RaisedButton className="edit"
-                                    label="Edit"
-                                    data-id={event.id}
-                                    onTouchTap={this._handleEdit.bind(this)}
-                                    style={styles.buttonEdit}/>         
-                      <RaisedButton className="delete"
-                                    data-id={event.id}
-                                    onTouchTap={this._handleDelete.bind(this)}
-                                    label="Delete"
-                                    style={styles.buttonDelete}/>
+              <div className="card-block__content">
+                <div className="card-block-img">
+                  <div className="card-block-img-wrapper">
+                    <div className="card-block-img-wrapper-inner">
+                      <div className="card-block-img-wrapper-inner__img"
+                           style={{backgroundImage: `url(${config.baseURL + event.preview_img})`}}>
+                      </div>
+                    </div>
+
+                    <div className="card-block__content__buttons__sub">
                       <RaisedButton className="copy"
                                     label="Copy"
+                                    labelStyle={styles.copyLabel}
+                                    icon={<ContentCopy color="white" style={styles.copyIcon}/>}
                                     data-id={event.id}
+                                    style={styles.copyButton}
                                     onTouchTap={this._handleCopy.bind(this)}
-                                    style={styles.buttonCopy}/>                   
+                      />
+                      <RaisedButton className="edit"
+                                    label="Edit"
+                                    labelStyle={styles.editLabel}
+                                    icon={<ModeEdit color="white" style={styles.editIcon}/>}
+                                    data-id={event.id}
+                                    style={styles.editButton}
+                                    onTouchTap={this._handleEdit.bind(this)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="card-block__content__buttons">
+                  <div className="card-block__content__buttons__main">
+                    <RaisedButton className="start"
+                                  label="Start"
+                                  labelStyle={styles.startLabel}
+                                  data-id={event.id}
+                                  style={styles.startButton}
+                    />
+                    <RaisedButton className="stop"
+                                  data-id={event.id}
+                                  labelStyle={styles.stopLabel}
+                                  label="Stop"
+                                  style={styles.stopButton}
+                    />
+                  </div>
+                  <div className="card-block__content__buttons__reset">
+                    <a href="#">Reset</a>
+                  </div>
+                </div>
+              </div>
             </GridTile>
           ))}
         </GridList>
