@@ -151,11 +151,16 @@ class Admissions extends Component {
       icon = this.state.iconUrlFromGallery;
     }
 
+    if (this.state.title === undefined || this.state.title === '' ||
+      this.state.price === undefined || this.state.price === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('title', this.state.title);
-    data.append('subtitle', this.state.subtitle);
+    data.append('subtitle', this.state.subtitle || '');
     data.append('price', this.state.price);
-    data.append('description', this.state.description);
+    data.append('description', this.state.description || '');
     data.append('icon', icon);
 
     return axios.post(this.state.url + this.props.eventId + '/admission', data);

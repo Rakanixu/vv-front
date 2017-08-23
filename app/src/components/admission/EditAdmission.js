@@ -115,7 +115,7 @@ class EditAdmission extends Component {
     this._editAdmission()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 1
@@ -142,11 +142,16 @@ class EditAdmission extends Component {
       icon = this.state.iconUrlFromGallery;
     }
 
+    if (this.state.admission.title === undefined || this.state.admission.title === '' ||
+      this.state.admission.price === undefined || this.state.admission.price === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('title', this.state.admission.title);
-    data.append('subtitle', this.state.admission.subtitle);
+    data.append('subtitle', this.state.admission.subtitle || '');
     data.append('price', this.state.admission.price);
-    data.append('description', this.state.admission.description);
+    data.append('description', this.state.admission.description || '');
     data.append('icon', icon);
 
     return axios.put(this.state.url, data);

@@ -147,7 +147,7 @@ class EventPreview extends Component {
               { this.state.event.speaker_media_type === 1 ?
                 <div>
                   <div ref="galleryPreviewImg" className="margin-bottom-medium">
-                    { this.state.event.speaker_media ? <img className="preview-img" src={config.baseURL + this.state.event.speaker_media} alt="preview"/> : null }
+                    { this.state.event.speaker_media ? <img src={config.baseURL + this.state.event.speaker_media} alt="preview"/> : null }
                   </div>  
                 </div>
                 :
@@ -168,12 +168,12 @@ class EventPreview extends Component {
             <Paper style={styles.paperRight}>
               <label className="load-img-label">Preview Image</label>
               <div ref="galleryPreviewImg" className="margin-bottom-medium">
-              { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.previewImgUrlFromGallery} alt="preview"/> : null }
+              { this.state.showPreviewImg ? <img src={config.baseURL + this.state.previewImgUrlFromGallery} alt="preview"/> : null }
               </div>  
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
               <div ref="galleryEventBackground" className="margin-bottom-medium">
-              { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="preview"/> : null }
+              { this.state.showEventBackground ? <img src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="preview"/> : null }
               </div>  
             </Paper>  
           </form>
