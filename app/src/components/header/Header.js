@@ -13,11 +13,14 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Avatar from 'material-ui/Avatar';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RaisedButton from 'material-ui/RaisedButton';
 import ViewModule from 'material-ui/svg-icons/action/view-module';
 import {grey900} from 'material-ui/styles/colors';
 import SearchBar from 'material-ui-search-bar';
 import SearchBox from './SearchBox';
+
+import './Header.css';
 
 class Header extends React.Component {
 
@@ -45,10 +48,8 @@ class Header extends React.Component {
         fontWeight: 400,
       },
       tabs: {
-        position: 'absolute',
         width: 600,
         height: 55,
-        margin: '0 0 0 -20px',
       },
       inkBarStyle: {
         height: 5,
@@ -58,14 +59,14 @@ class Header extends React.Component {
         height: 54,
         background: '#ffffff'
       },
+      text: {
+        fontSize: 15
+      },
       tab: {
         textTransform: 'none'
       },
       button: {
-        position: 'absolute',
-        left: 0,
-
-        margin: '10px 0 0 900px'
+        marginLeft:10
       },
       userMenu: {
         position: 'absolute',
@@ -87,34 +88,43 @@ class Header extends React.Component {
                 </IconButton>
               }
               children={
-                <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                  <Tabs
-                      inkBarStyle={style.inkBarStyle}
-                      tabItemContainerStyle={style.tabItemContainerStyle}
-                      style={style.tabs}>
-                    <Tab
-                        style={style.tab}
-                        label="Cockpit" > </Tab>
-                    <Tab
-                        style={style.tab}
-                        label="Events" > </Tab>
-                    <Tab
-                        style={style.tab}
-                        label="Users" > </Tab>
-                    <Tab
-                        style={style.tab}
-                        label="Donations" > </Tab>
-                    <Tab
-                        style={style.tab}
-                        label="Shop" > </Tab>
-                    <Tab
-                        style={style.tab}
-                        label="Resources" > </Tab>
-                  </Tabs>
-                </MuiThemeProvider>
+                <div className="header-full-bar-left">
+                  <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+                    <Tabs
+                        inkBarStyle={style.inkBarStyle}
+                        tabItemContainerStyle={style.tabItemContainerStyle}
+                        style={style.tabs}>
+                      <Tab
+                          style={style.tab}
+                          label="Cockpit" />
+                      <Tab
+                          style={style.tab}
+                          label="Events" />
+                      <Tab
+                          style={style.tab}
+                          label="Users" />
+                      <Tab
+                          style={style.tab}
+                          label="Donations" />
+                      <Tab
+                          style={style.tab}
+                          label="Shop" />
+                      <Tab
+                          style={style.tab}
+                          label="Resources" />
+                    </Tabs>
+                  </MuiThemeProvider>
+                  <FloatingActionButton
+                      mini={true}
+                      backgroundColor="#2196F3"
+                      zDepth={0}
+                      style={style.button}>
+                    <ContentAdd />
+                  </FloatingActionButton>
+                </div>
               }
               iconElementRight={
-                <div style={style.iconsRightContainer}>
+                <div className="header-bar-right">
                   {/* <IconMenu color={grey900}
                             iconButtonElement={
                               <IconButton><ViewModule color={grey900}/></IconButton>
@@ -126,38 +136,37 @@ class Header extends React.Component {
                     <MenuItem key={2} primaryText="Application 2"/>
                     <MenuItem key={3} primaryText="Application 3"/>
                   </IconMenu> */}
+
+                  <div className="header-short-bar-left">
+                    <IconMenu
+                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
+                      <MenuItem value="1" primaryText="Cockpit" />
+                      <MenuItem value="2" primaryText="Events" />
+                      <MenuItem value="3" primaryText="Users" />
+                      <MenuItem value="4" primaryText="Donations" />
+                      <MenuItem value="5" primaryText="Shop" />
+                      <MenuItem value="6" primaryText="Resources" />
+                    </IconMenu>
+                  </div>
+
+                  <SearchBox />
+                  <p style={style.text}>User</p>
+                  <IconButton >
+                    <ArrowDown color="black"/>
+                  </IconButton>
                   <IconMenu color={grey900}
-                            iconButtonElement={<IconButton><Avatar>R</Avatar></IconButton>}
+                            iconButtonElement={
+                              <FloatingActionButton
+                                  mini={true}
+                                  backgroundColor="#ffffff"
+                                  zDepth={0}>
+                                <Avatar>R</Avatar>
+                              </FloatingActionButton>
+                            }
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
                     <MenuItem primaryText="Sign out" containerElement={<Link to="/login"/>}/>
                   </IconMenu>
-                  <FloatingActionButton
-                      mini={true}
-                      backgroundColor="#2196F3"
-                      zDepth={0}
-                      style={style.button}>
-                    <ContentAdd />
-                  </FloatingActionButton>
-
-                  <RaisedButton
-                      backgroundColor="#ffffff"
-                      icon={<ArrowDown color="black"/>}
-                      buttonStyle={{width: 30}}
-                      style={style.userMenu}
-                  />
-
-                    <SearchBar
-                      onChange={() => console.log('onChange')}
-                      onRequestSearch={() => console.log('onRequestSearch')}
-                      style={{
-                        position: 'absolute',
-                          right: 200,
-                          top: 5,
-                          maxWidth: 200
-                      }}
-                  />
-
                 </div>
               }
             />

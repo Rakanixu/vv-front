@@ -184,6 +184,7 @@ class EventsGridList extends Component {
                       subtitle={event.subtitle}>
                       {/* subtitle={moment(event.date).format("MMM Do YYYY")} */}
 
+
               <div className="card-block__content">
                 <div className="card-block-img">
                   <div className="card-block-img-wrapper">
@@ -192,6 +193,7 @@ class EventsGridList extends Component {
                            style={{backgroundImage: `url(${config.baseURL + event.preview_img})`}}>
                       </div>
                     </div>
+                    <div className="card-block-title">{event.title}</div>
 
                     <div className="card-block__content__buttons__sub">
                       <RaisedButton className="copy"

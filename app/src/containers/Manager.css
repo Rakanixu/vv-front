@@ -20,4 +20,53 @@
 
 .manager-container {
   margin-top: 59px;
+  margin-left: 270px;
+}
+
+.manager-header-bar-right {
+  display: flex;
+  width: 400px;
+  height: 45px;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.manager-header-bar-left {
+  display: flex;
+  position: absolute;
+  margin-left: 256px;
+  width: 660px;
+  height: 60px;
+  justify-content: flex-start;
+  align-items: center;
+  transition: all ease .3s;
+}
+
+.manager-left-panel {
+  width: 500px;
+  height: 100%;
+  background: red;
+}
+
+.manager-header-short-bar-left {
+  display: none;
+  position: absolute;
+  left: 290px;
+}
+
+@media (max-width: 1300px) {
+  .manager-header-bar-left {
+    width: 400px;
+  }
+}
+
+@media (max-width: 1035px) {
+  .manager-header-bar-left {
+    display: none;
+  }
+
+  .manager-header-short-bar-left {
+    display: flex;
+  }
 }
