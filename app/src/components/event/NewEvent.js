@@ -5,6 +5,8 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import DatePicker from 'material-ui/DatePicker';
@@ -111,6 +113,12 @@ class NewEvent extends Component {
     this.setState({ error: null });
   }
 
+  _handleMediaTypeChange = (e, index, val) => {
+    this.setState({
+      speaker_media_type: val
+    });
+  }
+
   _handleOnClickUploadPreviewImg(e) {
     this.refs.galleryPreviewImg.style.display = 'none';
     this.refs.uploadPreviewImg.style.display = 'block';
@@ -145,6 +153,10 @@ class NewEvent extends Component {
     this.setState({ event_background: pictures });
   }
 
+  _onSpeakerMediaChange = (pictures) => {
+    this.setState({ speaker_media: pictures });
+  }
+
   _handelImgSelect = (e) => {
     let obj = {}
     obj[this.state.imgTarget] = e.currentTarget.dataset.url
@@ -173,7 +185,7 @@ class NewEvent extends Component {
   }
 
   _createEvent() {
-    var preview_img, event_background;
+    var preview_img, event_background, speaker_media;
     for (var i in this.state.preview_img) {
       preview_img = this.state.preview_img[i];
       break;
@@ -183,10 +195,19 @@ class NewEvent extends Component {
       event_background = this.state.event_background[i];
       break;
     }
+console.log(typeof this.state.speaker_media);
+
+    if (typeof this.state.speaker_media === 'object') {
+      for (var i in this.state.speaker_media) {
+        speaker_media = this.state.speaker_media[i];
+        break;
+      }
+    }
 
     try {
       preview_img = dataURItoBlob(preview_img);
       event_background = dataURItoBlob(event_background);
+      speaker_media = dataURItoBlob(speaker_media);
     } catch (err) {}
 
     if (this.state.previewImgUrlFromGallery !== '' && this.state.previewImgUrlFromGallery!== undefined) {
@@ -196,10 +217,16 @@ class NewEvent extends Component {
     if (this.state.eventBackgroundUrlFromGallery !== '' && this.state.eventBackgroundUrlFromGallery!== undefined) {
       event_background = this.state.eventBackgroundUrlFromGallery;
     }
+    debugger;
+    if (typeof this.state.speaker_media === 'object') {
+      this.state.speaker_media = speaker_media;
+    }
 
     var now = moment().utc(new Date()).format();
     var data = new FormData();
     data.append('title', this.state.title);
+    data.append('subtitle', this.state.subtitle);
+    data.append('speaker_media_type', this.state.speaker_media_type);
     data.append('notes', this.state.notes);
     data.append('location', this.state.location);
     data.append('created_at', now);
@@ -221,6 +248,7 @@ class NewEvent extends Component {
     data.append('stage_moment_webcam', false);
     data.append('preview_img', preview_img);
     data.append('event_background', event_background);
+    data.append('speaker_media', this.state.speaker_media);
 
     return axios.post(config.baseAPI_URL + '/event', data);
   }
@@ -252,6 +280,10 @@ class NewEvent extends Component {
                         data-val="title"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
+              <TextField floatingLabelText="Event subtitle"
+                        data-val="subtitle"
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />          
               <TextField floatingLabelText="Notes"
                         data-val="notes"
                         onChange={this._handleTextFieldChange.bind(this)}
@@ -265,6 +297,25 @@ class NewEvent extends Component {
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleDateChange.bind(this)}/>
+              <SelectField floatingLabelText="Media type"
+                          fullWidth={true}
+                          value={this.state.speaker_media_type}
+                          onChange={this._handleMediaTypeChange}>
+                {config.name_guest_media_type.map((type) => (
+                  <MenuItem value={type.id} primaryText={type.name} />
+                ))}
+              </SelectField>
+              { this.state.speaker_media_type === 1 ?
+                <div className="fit">
+                  <UploadPreview title="Media" label="Add" onChange={this._onSpeakerMediaChange} style={styles.fit}/>
+                </div>
+                :
+                <TextField floatingLabelText="Speaker media"
+                          data-val="speaker_media"
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+              }
+
               <div className="checkbox">
                 <Checkbox ref="checkbox" label="Login required?"/>
               </div>
