@@ -1,65 +1,57 @@
-.title {
+.events-title {
   position: relative;
 }
 
-.new-event {
+.events-new-event {
   position: absolute;
   right: 0;
   top: 0;
 }
 
-.delete button {
-  background-color: #dd4b39 !important;
-}
-
-.edit button {
-  background-color: #00a65a !important;
-}
-
-@media (max-width: 1200px) {
-  .cards-grid >div {
+@media (max-width: 1350px) {
+  .events-cards-grid >div {
     width: 33% !important;
   }
-  .card-block-title {
+  .events-card-block-title {
     font-size: 15px !important;
   }
 }
 
 @media (max-width: 1100px) {
-  .cards-grid >div {
+  .events-cards-grid >div {
     width: 50% !important;
   }
-  .card-block-title {
+  .events-card-block-title {
     font-size: 15px !important;
   }
 }
 
 @media (max-width: 900px) {
-  .cards-grid >div {
+  .events-cards-grid >div {
     width: 80% !important;
   }
-  .card-block-title {
+  .events-card-block-title {
     font-size: 17px !important;
   }
 }
 
 @media (max-width: 500px) {
-  .cards-grid >div {
+  .events-cards-grid >div {
     width: 100% !important;
   }
-  .card-block-title {
+  .events-card-block-title {
     font-size: 20px !important;
   }
 }
 
-.card-block {
+.events-card-block {
   display: flex !important;
   padding: 0;
   height: 100%;
   box-shadow: 0 0 5px rgba(0, 0, 0, .20);
 }
 
-.card-block__content {
+.events-card-block__content {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -67,24 +59,24 @@
   min-height: 300px;
 }
 
-/* .card-block  > div:nth-child(2) {
+/* .events-card-block  > div:nth-child(2) {
   top: 124px !important;
   height: 68px !important;
 } */
 
-.card-block-img {
+.events-card-block-img {
   width: 100%;
   height: 60%;
 }
 
-.card-block-img-wrapper {
+.events-card-block-img-wrapper {
   position: relative;
   /*padding-bottom: prc(150, 300);*/
   /*max-height: 0;*/
   height: 100%;
 }
 
-.card-block-title {
+.events-card-block-title {
   position: absolute;
   z-index: 2;
   color: white;
@@ -97,7 +89,7 @@
   text-transform: uppercase;
 }
 
-.card-block-img-wrapper-inner {
+.events-card-block-img-wrapper-inner {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -106,7 +98,7 @@
   overflow: hidden;
 }
 
-.card-block-img-wrapper-inner__img {
+.events-card-block-img-wrapper-inner__img {
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -114,16 +106,16 @@
   background-size: cover;
 }
 
-.card-block__content__buttons {
+.events-card-block__content__buttons {
   height: 40%;
-  padding-top: 5%;
+  padding-top: 10%;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.card-block__content__buttons__main {
+.events-card-block__content__buttons__main {
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -131,7 +123,7 @@
   margin: 0 30px;
 }
 
-.card-block__content__buttons__reset {
+.events-card-block__content__buttons__reset {
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
@@ -140,32 +132,32 @@
   margin-right: 30px;
 }
 
-.card-block__content__buttons__reset a {
+.events-card-block__content__buttons__reset a {
   color: rgb(158, 158, 158);
   text-decoration: underline;
   font-weight: 500;
 }
 
-.start, .stop {
+.events-start-btn, .events-stop-btn {
   width: 150px;
   border-radius: 10px !important;
 }
 
-.start div, .stop div, .start span, .stop span {
+.events-start-btn div, .events-stop-btn div, .events-start-btn span, .events-stop-btn span {
   border-radius: 10px !important;
 }
 
-.start button {
+.events-start-btn button {
   background-color: rgb(30, 136, 229) !important;
   border-radius: 10px !important;
 }
 
-.stop button {
+.events-stop-btn button {
   background-color: rgb(56, 62, 82) !important;
   border-radius: 10px !important;
 }
 
-.card-block__content__buttons__sub  {
+.events-card-block__content__buttons__sub  {
   position: relative;
   display: flex;
   top: 30px;
@@ -173,12 +165,12 @@
   justify-content: flex-end;
 }
 
-.copy, .edit {
+.events-copy-btn, .events-edit-btn {
   border-radius: 5px !important;
   opacity: 0.8;
 }
 
-.copy button, .edit button {
+.events-copy-btn button, .events-edit-btn button {
   background-color: rgb(56, 62, 82) !important;
   border-radius: 5px !important;
   border-color: rgb(56, 62, 82) !important;
