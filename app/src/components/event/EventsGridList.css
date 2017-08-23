@@ -58,12 +58,18 @@
   height: 100%;
   box-shadow: 0 0 5px rgba(0, 0, 0, .20);
 }
+
 .card-block__content {
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
   min-height: 300px;
+}
+
+.card-block  > div:nth-child(2) {
+  top: 124px !important;
+  height: 68px !important;
 }
 
 .card-block-img {

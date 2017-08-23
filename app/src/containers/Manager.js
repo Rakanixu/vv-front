@@ -24,7 +24,7 @@ import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
-import NewEventWrapper from '../components/event/NewEventWrapper';
+import NewEvent from '../components/event/NewEvent';
 import EventsGridList from '../components/event/EventsGridList';
 import EditEvent from '../components/event/EditEvent';
 import EditSliderImage from '../components/slider/EditSliderImage';
@@ -260,7 +260,7 @@ class Manager extends Component {
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={EventsGridList} />
               <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
-              <Route exact path={`${this.props.match.path}/event/new`} component={NewEventWrapper} />
+              <Route exact path={`${this.props.match.path}/event/new`} component={NewEvent} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={EditEvent} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/image/:imageId`} component={EditSliderImage} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/admission/:admissionId`} component={EditAdmission} />
