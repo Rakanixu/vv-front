@@ -96,22 +96,22 @@ class Header extends React.Component {
                         style={style.tabs}>
                       <Tab
                           style={style.tab}
-                          label="Cockpit" > </Tab>
+                          label="Cockpit" />
                       <Tab
                           style={style.tab}
-                          label="Events" > </Tab>
+                          label="Events" />
                       <Tab
                           style={style.tab}
-                          label="Users" > </Tab>
+                          label="Users" />
                       <Tab
                           style={style.tab}
-                          label="Donations" > </Tab>
+                          label="Donations" />
                       <Tab
                           style={style.tab}
-                          label="Shop" > </Tab>
+                          label="Shop" />
                       <Tab
                           style={style.tab}
-                          label="Resources" > </Tab>
+                          label="Resources" />
                     </Tabs>
                   </MuiThemeProvider>
                   <FloatingActionButton
@@ -122,7 +122,6 @@ class Header extends React.Component {
                     <ContentAdd />
                   </FloatingActionButton>
                 </div>
-
               }
               iconElementRight={
                 <div className="header-bar-right">

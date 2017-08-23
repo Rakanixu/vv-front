@@ -21,3 +21,29 @@
 .manager-container {
   margin-top: 59px;
 }
+
+.manager-header-bar-right {
+  display: flex;
+  width: 400px;
+  height: 45px;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.manager-header-bar-left {
+  display: flex;
+  position: absolute;
+  margin-left: 40px;
+  width: 660px;
+  height: 60px;
+  justify-content: flex-start;
+  align-items: center;
+  transition: all ease .3s;
+}
+
+@media (max-width: 1080px) {
+  .manager-header-bar-left {
+    width: 400px;
+  }
+}
