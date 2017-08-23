@@ -217,7 +217,20 @@ class Manager extends Component {
                     </div>
                   }
                   iconElementRight={
-                    <div className="header-bar-right">
+                    <div className="manager-header-bar-right">
+
+                      <div className="manager-header-short-bar-left">
+                        <IconMenu
+                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
+                          <MenuItem value="1" primaryText="Cockpit" />
+                          <MenuItem value="2" primaryText="Events" />
+                          <MenuItem value="3" primaryText="Users" />
+                          <MenuItem value="4" primaryText="Donations" />
+                          <MenuItem value="5" primaryText="Shop" />
+                          <MenuItem value="6" primaryText="Resources" />
+                        </IconMenu>
+                      </div>
+
                       <SearchBox />
                       <p style={styles.text}>User</p>
                       <IconButton >

@@ -180,7 +180,6 @@ class EventsGridList extends Component {
           {this.state.events.map((event) => (
             <GridTile key={event.id}
                       className="card-block"
-                      // title={event.title}
                       subtitle={moment(event.date).format("MMM Do YYYY")}
                       actionIcon={<IconButton><StarBorder color="white"/></IconButton>}>
 
@@ -192,6 +191,7 @@ class EventsGridList extends Component {
                            style={{backgroundImage: `url(${config.baseURL + event.preview_img})`}}>
                       </div>
                     </div>
+                    <div className="card-block-title">{event.title}</div>
 
                     <div className="card-block__content__buttons__sub">
                       <RaisedButton className="copy"
