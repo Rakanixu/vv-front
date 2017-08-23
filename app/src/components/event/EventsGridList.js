@@ -180,10 +180,12 @@ class EventsGridList extends Component {
           {this.state.events.map((event) => (
             <GridTile key={event.id}
                       className="card-block"
+                      >
+                      {/* 
                       title={event.title}
-                      subtitle={event.subtitle}>
-                      {/* subtitle={moment(event.date).format("MMM Do YYYY")} */}
-
+                      subtitle={event.subtitle}
+                      subtitle={moment(event.date).format("MMM Do YYYY")} 
+                      */}
 
               <div className="card-block__content">
                 <div className="card-block-img">

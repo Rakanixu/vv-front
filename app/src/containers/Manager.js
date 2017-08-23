@@ -27,6 +27,7 @@ import Avatar from 'material-ui/Avatar';
 import NewEvent from '../components/event/NewEvent';
 import EventsGridList from '../components/event/EventsGridList';
 import EditEvent from '../components/event/EditEvent';
+import EventTabs from '../components/event/EventTabs';
 import EditSliderImage from '../components/slider/EditSliderImage';
 import EditAdmission from '../components/admission/EditAdmission';
 import EditQuestionTopic from '../components/question-topic/EditQuestionTopic';
@@ -262,6 +263,9 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
               <Route exact path={`${this.props.match.path}/event/new`} component={NewEvent} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={EditEvent} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/detail`}>
+                <EventTabs tabIndex={this.state.tabIndex}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/image/:imageId`} component={EditSliderImage} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/admission/:admissionId`} component={EditAdmission} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId`} component={EditPoll} />

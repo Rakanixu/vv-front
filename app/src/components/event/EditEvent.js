@@ -13,7 +13,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import EventTabs from './EventTabs';
 import axios from 'axios';
 import './EditEvent.css';
 
@@ -68,8 +67,6 @@ class EditEvent extends Component {
       openDialog: false,
       showPreviewImg: true,
       showEventBackground: true,
-      showTabs: false,
-      tabIndex: 0,
       url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       preview_img: {},
       event_background: {},
@@ -80,13 +77,6 @@ class EditEvent extends Component {
   }
 
   componentWillMount() {
-    if (this.props.location.query) {
-      this.setState({
-        showTabs: this.props.location.query.showTabs,
-        tabIndex: this.props.location.query.index ? this.props.location.query.index : 0
-      });
-    }
-
     axios.get(config.baseAPI_URL + '/media').then(res => {
       this.setState({ media: res.data });
     }).catch(err => {
@@ -216,17 +206,17 @@ class EditEvent extends Component {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.event.title === undefined || this.state.event.title === "") {
+    if (this.state.event.title === undefined || this.state.event.title === "" ||
+      this.state.event.date === undefined || this.state.event.date === "" ||
+      this.state.event.speaker_media_type === undefined ||
+      this.state.event.speaker_media === undefined || this.state.event.speaker_media === "") {
       this._handleError();
       return;
     }
 
     this._editEvent()
     .then(function(res) {
-      this.setState({
-        showTabs: true,
-        tabIndex: 0
-      });
+      this.props.history.push('/manager/event/edit/' + res.data.id + '/detail');
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -313,159 +303,157 @@ class EditEvent extends Component {
   render() {
     return (
       <div className="container">
-        { !this.state.showTabs ?
-          <div>
-            <ErrorReporting open={this.state.error !== null}
-                      error={this.state.error} />
-  
-            <div className="title">
-              <h1>Edit Event</h1>
-            </div>          
+        <div>
+          <ErrorReporting open={this.state.error !== null}
+                    error={this.state.error} />
 
-            <form className="edit-event-form">
-              <Paper style={styles.paperLeft}>
-                <TextField floatingLabelText="Event title"
-                          data-val="title"
-                          primary={true}
-                          value={this.state.event.title}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Event subtitle"
-                          data-val="subtitle"
-                          primary={true}
-                          value={this.state.event.subtitle}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />                    
-                <TextField floatingLabelText="Notes"
-                          data-val="notes"
-                          value={this.state.event.notes}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Location"
-                          data-val="location"
-                          value={this.state.event.location}
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <DatePicker hintText="Date"
-                          mode="landscape"
+          <div className="title">
+            <h1>Edit Event</h1>
+          </div>          
+
+          <form className="edit-event-form">
+            <Paper style={styles.paperLeft}>
+              <TextField floatingLabelText="Event title"
+                        data-val="title"
+                        primary={true}
+                        value={this.state.event.title}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Event subtitle"
+                        data-val="subtitle"
+                        primary={true}
+                        value={this.state.event.subtitle}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />                    
+              <TextField floatingLabelText="Notes"
+                        data-val="notes"
+                        value={this.state.event.notes}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <TextField floatingLabelText="Location"
+                        data-val="location"
+                        value={this.state.event.location}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+              <DatePicker hintText="Date"
+                        mode="landscape"
+                        fullWidth={true}
+                        value={this.state.event.date}
+                        onChange={this._handleDateChange.bind(this)}/>
+              <TimePicker hintText="Time"
+                        fullWidth="true"
+                        value={this.state.event.date}
+                        mode="landscape" 
+                        autoOk={true} 
+                        onChange={this._handleTimeChange.bind(this)}/>
+              <SelectField floatingLabelText="Media type"
                           fullWidth={true}
-                          value={this.state.event.date}
-                          onChange={this._handleDateChange.bind(this)}/>
-                <TimePicker hintText="Time"
-                          fullWidth="true"
-                          value={this.state.event.date}
-                          mode="landscape" 
-                          autoOk={true} 
-                          onChange={this._handleTimeChange.bind(this)}/>
-                <SelectField floatingLabelText="Media type"
-                            fullWidth={true}
-                            value={this.state.event.speaker_media_type}
-                            onChange={this._handleMediaTypeChange.bind(this)}>
-                  {config.name_guest_media_type.map((type) => (
-                    <MenuItem value={type.id} primaryText={type.name} />
-                  ))}
-                </SelectField>
-                { this.state.event.speaker_media_type === 1 ?
-                  <div>
-                    <div ref="galleryPreviewImg" className="margin-bottom-medium">
-                      { this.state.event.speaker_media ? <img className="preview-img" src={config.baseURL + this.state.event.speaker_media} alt="preview"/> : null }
-                    </div>  
-                    <div className="fit">
-                      <UploadPreview title="Media" label="Change image" onChange={this._onSpeakerMediaChange} style={styles.fit}/>
-                    </div>
-                  </div>
-                  :
-                  <TextField floatingLabelText="Speaker media"
-                            data-val="speaker_media"
-                            primary={true}
-                            value={this.state.event.speaker_media}
-                            onChange={this._handleTextFieldChange.bind(this)}
-                            fullWidth={true} />
-                }
-                <div className="checkbox">
-                  <Checkbox ref="checkbox"
-                          checked={this.state.event.login_required}
-                          onCheck={this._handleLoginRequired}
-                          label="Login required?"/>
-                </div>
-
+                          value={this.state.event.speaker_media_type}
+                          onChange={this._handleMediaTypeChange.bind(this)}>
+                {config.name_guest_media_type.map((type) => (
+                  <MenuItem value={type.id} primaryText={type.name} />
+                ))}
+              </SelectField>
+              { this.state.event.speaker_media_type === 1 ?
                 <div>
-                  <RaisedButton label="Save & Continue"
-                                className="event-wizard-continue-button"
-                                primary={true}
-                                onTouchTap={this._handleEditEvent.bind(this)} />
+                  <div ref="galleryPreviewImg" className="margin-bottom-medium">
+                    { this.state.event.speaker_media ? <img className="preview-img" src={config.baseURL + this.state.event.speaker_media} alt="preview"/> : null }
+                  </div>  
+                  <div className="fit">
+                    <UploadPreview title="Media" label="Change image" onChange={this._onSpeakerMediaChange} style={styles.fit}/>
+                  </div>
                 </div>
-              </Paper>
+                :
+                <TextField floatingLabelText="Speaker media"
+                          data-val="speaker_media"
+                          primary={true}
+                          value={this.state.event.speaker_media}
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+              }
+              <div className="checkbox">
+                <Checkbox ref="checkbox"
+                        checked={this.state.event.login_required}
+                        onCheck={this._handleLoginRequired}
+                        label="Login required?"/>
+              </div>
 
-              <Paper style={styles.paperRight}>
-                <label className="load-img-label">Preview Image</label>
-                <div ref="galleryPreviewImg" className="margin-bottom-medium">
-                { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.previewImgUrlFromGallery} alt="preview"/> : null }
-                </div>  
+              <div>
+                <RaisedButton label="Save"
+                              className="event-wizard-continue-button"
+                              primary={true}
+                              onTouchTap={this._handleEditEvent.bind(this)} />
+              </div>
+            </Paper>
 
-                <div className="fit hidelabel preview-img" ref="uploadPreviewImg" style={{display: 'none'}}>
-                  <UploadPreview label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>
-                </div>  
+            <Paper style={styles.paperRight}>
+              <label className="load-img-label">Preview Image</label>
+              <div ref="galleryPreviewImg" className="margin-bottom-medium">
+              { this.state.showPreviewImg ? <img className="preview-img" src={config.baseURL + this.state.previewImgUrlFromGallery} alt="preview"/> : null }
+              </div>  
 
-                <div className="overflow">
-                  <RaisedButton label="Select image from gallery"
-                                className="right margin-top-medium margin-left-medium" 
-                                primary={true}
-                                data-target="previewImgUrlFromGallery"
-                                onTouchTap={this._handleDialogOpen.bind(this)} />
+              <div className="fit hidelabel preview-img" ref="uploadPreviewImg" style={{display: 'none'}}>
+                <UploadPreview label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>
+              </div>  
 
-                  <RaisedButton label="Select Image from local storage"
-                                className="right margin-top-medium margin-left-medium" 
-                                primary={true}
-                                onTouchTap={this._handleOnClickUploadPreviewImg.bind(this)} />
-                </div>
+              <div className="overflow">
+                <RaisedButton label="Select image from gallery"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              data-target="previewImgUrlFromGallery"
+                              onTouchTap={this._handleDialogOpen.bind(this)} />
 
-                <label className="load-img-label margin-top-medium block">Background Image</label>
-                <div ref="galleryEventBackground" className="margin-bottom-medium">
-                { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="preview"/> : null }
-                </div>  
+                <RaisedButton label="Select Image from local storage"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleOnClickUploadPreviewImg.bind(this)} />
+              </div>
 
-                <div className="fit hidelabel event-background" ref="uploadEventBackground" style={{display: 'none'}}>
-                  <UploadPreview label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>
-                </div>  
+              <label className="load-img-label margin-top-medium block">Background Image</label>
+              <div ref="galleryEventBackground" className="margin-bottom-medium">
+              { this.state.showEventBackground ? <img className="preview-img" src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="preview"/> : null }
+              </div>  
 
-                <div className="overflow">
-                  <RaisedButton label="Select image from gallery"
-                                className="right margin-top-medium margin-left-medium" 
-                                primary={true}
-                                data-target="eventBackgroundUrlFromGallery"
-                                onTouchTap={this._handleDialogOpen.bind(this)} />
+              <div className="fit hidelabel event-background" ref="uploadEventBackground" style={{display: 'none'}}>
+                <UploadPreview label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>
+              </div>  
 
-                  <RaisedButton label="Select Image from local storage"
-                                className="right margin-top-medium margin-left-medium" 
-                                primary={true}
-                                onTouchTap={this._handleOnClickUploadEventBackground.bind(this)} />
-                </div>
-              </Paper>  
+              <div className="overflow">
+                <RaisedButton label="Select image from gallery"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              data-target="eventBackgroundUrlFromGallery"
+                              onTouchTap={this._handleDialogOpen.bind(this)} />
 
-              <Dialog title="Gallery"
-                      modal={false}
-                      open={this.state.openDialog}
-                      onRequestClose={this._handleDialogClose}
-                      autoScrollBodyContent={true}>
-                <div style={styles.root}>
-                  <GridList style={styles.gridList} cols={2.2}>
-                    {this.state.media.map((img, i) => (
-                      <GridTile
-                        key={i}
-                        data-url={img.url}
-                        style={styles.gridTile}
-                        onTouchTap={this._handelImgSelect.bind(this)}
-                        titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                        <img src={config.baseURL + img.url} alt="gallery item"/>
-                      </GridTile>
-                    ))}
-                  </GridList>
-                </div>
-              </Dialog>
-            </form>
-          </div>
-        : <EventTabs eventId={this.props.match.params.eventId} tabIndex={this.state.tabIndex}/> }
+                <RaisedButton label="Select Image from local storage"
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleOnClickUploadEventBackground.bind(this)} />
+              </div>
+            </Paper>  
+
+            <Dialog title="Gallery"
+                    modal={false}
+                    open={this.state.openDialog}
+                    onRequestClose={this._handleDialogClose}
+                    autoScrollBodyContent={true}>
+              <div style={styles.root}>
+                <GridList style={styles.gridList} cols={2.2}>
+                  {this.state.media.map((img, i) => (
+                    <GridTile
+                      key={i}
+                      data-url={img.url}
+                      style={styles.gridTile}
+                      onTouchTap={this._handelImgSelect.bind(this)}
+                      titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
+                      <img src={config.baseURL + img.url} alt="gallery item"/>
+                    </GridTile>
+                  ))}
+                </GridList>
+              </div>
+            </Dialog>
+          </form>
+        </div>
       </div>
     );
   }

@@ -191,8 +191,7 @@ class NewEvent extends Component {
 
     this._createEvent()
     .then(function(res) {
-      ///
-      this.props.onDone(res.data.id);
+      this.props.history.push('/manager/event/edit/' + res.data.id + '/detail');
     }.bind(this))
     .catch(err => {
       this._handleError(err);
