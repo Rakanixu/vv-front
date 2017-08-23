@@ -170,7 +170,10 @@ class NewEvent extends Component {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.title === undefined || this.state.title === "") {
+    if (this.state.title === undefined || this.state.title === "" ||
+      this.state.date === undefined || this.state.date === "" ||
+      this.state.speaker_media_type === undefined ||
+      this.state.speaker_media === undefined || this.state.speaker_media === "") {
       this._handleError();
       return;
     }
@@ -195,7 +198,6 @@ class NewEvent extends Component {
       event_background = this.state.event_background[i];
       break;
     }
-console.log(typeof this.state.speaker_media);
 
     if (typeof this.state.speaker_media === 'object') {
       for (var i in this.state.speaker_media) {
@@ -217,7 +219,7 @@ console.log(typeof this.state.speaker_media);
     if (this.state.eventBackgroundUrlFromGallery !== '' && this.state.eventBackgroundUrlFromGallery!== undefined) {
       event_background = this.state.eventBackgroundUrlFromGallery;
     }
-    debugger;
+
     if (typeof this.state.speaker_media === 'object') {
       this.state.speaker_media = speaker_media;
     }
@@ -270,9 +272,13 @@ console.log(typeof this.state.speaker_media);
   render() {
     return (
       <div className="container">
-        <div className="inner-container">
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
+                    
+          <div>
+            <div className="title">
+              <h1>New Event</h1>
+            </div>
 
           <form className="new-event-form">
             <Paper style={styles.paperLeft}>
@@ -320,7 +326,7 @@ console.log(typeof this.state.speaker_media);
                 <Checkbox ref="checkbox" label="Login required?"/>
               </div>
               <div>
-                <RaisedButton label="Save & Continue"
+                <RaisedButton label="Save"
                               className="event-wizard-continue-button"
                               primary={true}
                               onTouchTap={this._handleNewEvent.bind(this)} />
