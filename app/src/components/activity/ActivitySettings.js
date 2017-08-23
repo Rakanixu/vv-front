@@ -84,55 +84,53 @@ class QuizEntry extends Component {
 
   render() {
     return (
-      <div className="container" key={this.state.count}>
-        <div className="inner-container">
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
+      <div  key={this.state.count}>
+        <ErrorReporting open={this.state.error !== null}
+                  error={this.state.error} />
 
-          <form className="activitySettins">
-            <Toggle label="Chat highlight"
-                    toggled={this.state.event.chat_highlight}
-                    data-value="chat_highlight"
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackOff}
-                    onToggle={this._onToggleChange.bind(this)}
-                    style={styles.toggle}/>
-            <Toggle label="Highlight chat with user image"
-                    toggled={this.state.event.chat_with_user_image}
-                    data-value="chat_with_user_image"
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackOff}
-                    onToggle={this._onToggleChange.bind(this)}
-                    style={styles.toggle}/>
-            <Toggle label="Pose a question"
-                    toggled={this.state.event.pose_question}
-                    data-value="pose_question"
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackOff}
-                    onToggle={this._onToggleChange.bind(this)}
-                    style={styles.toggle}/>
-            <Toggle label="Chat shown in status bar"
-                    toggled={this.state.event.chat_shown_status_bar}
-                    data-value="chat_shown_status_bar"
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackOff}
-                    onToggle={this._onToggleChange.bind(this)}
-                    style={styles.toggle}/>
-            <Toggle label="Stage moment with webcam"
-                    toggled={this.state.event.stage_moment_webcam}
-                    data-value="stage_moment_webcam"
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackOff}
-                    onToggle={this._onToggleChange.bind(this)}
-                    style={styles.toggle}/>
-          </form>
+        <form className="activity-settings">
+          <Toggle label="Chat highlight"
+                  toggled={this.state.event.chat_highlight}
+                  data-value="chat_highlight"
+                  thumbSwitchedStyle={styles.thumbSwitched}
+                  trackSwitchedStyle={styles.trackOff}
+                  onToggle={this._onToggleChange.bind(this)}
+                  style={styles.toggle}/>
+          <Toggle label="Highlight chat with user image"
+                  toggled={this.state.event.chat_with_user_image}
+                  data-value="chat_with_user_image"
+                  thumbSwitchedStyle={styles.thumbSwitched}
+                  trackSwitchedStyle={styles.trackOff}
+                  onToggle={this._onToggleChange.bind(this)}
+                  style={styles.toggle}/>
+          <Toggle label="Pose a question"
+                  toggled={this.state.event.pose_question}
+                  data-value="pose_question"
+                  thumbSwitchedStyle={styles.thumbSwitched}
+                  trackSwitchedStyle={styles.trackOff}
+                  onToggle={this._onToggleChange.bind(this)}
+                  style={styles.toggle}/>
+          <Toggle label="Chat shown in status bar"
+                  toggled={this.state.event.chat_shown_status_bar}
+                  data-value="chat_shown_status_bar"
+                  thumbSwitchedStyle={styles.thumbSwitched}
+                  trackSwitchedStyle={styles.trackOff}
+                  onToggle={this._onToggleChange.bind(this)}
+                  style={styles.toggle}/>
+          <Toggle label="Stage moment with webcam"
+                  toggled={this.state.event.stage_moment_webcam}
+                  data-value="stage_moment_webcam"
+                  thumbSwitchedStyle={styles.thumbSwitched}
+                  trackSwitchedStyle={styles.trackOff}
+                  onToggle={this._onToggleChange.bind(this)}
+                  style={styles.toggle}/>
+        </form>
 
-          <div>
-            <RaisedButton label="Continue"
-                          className="event-wizard-continue-button"
-                          primary={true}
-                          onTouchTap={this.props.onDone} />
-          </div>
+        <div>
+          <RaisedButton label="Continue"
+                        className="event-wizard-continue-button"
+                        primary={true}
+                        onTouchTap={this.props.onDone} />
         </div>
       </div>
     );

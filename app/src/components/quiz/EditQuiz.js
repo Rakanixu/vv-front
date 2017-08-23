@@ -55,7 +55,7 @@ class EditQuiz extends Component {
     this._editQuiz()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 6
@@ -68,6 +68,11 @@ class EditQuiz extends Component {
   }
 
   _editQuiz() {
+    if (this.state.quiz.name === undefined || this.state.quiz.name === '' ||
+      this.state.quiz.description === undefined || this.state.quiz.description === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('name', this.state.quiz.name);
     data.append('description', this.state.quiz.description);
