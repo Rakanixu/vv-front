@@ -10,6 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Checkbox from 'material-ui/Checkbox';
 import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
@@ -114,8 +115,14 @@ class NewEvent extends Component {
   }
 
   _handleMediaTypeChange = (e, index, val) => {
+    let speaker_media = '';
+    if (val === 3) {
+      speaker_media = JSON.parse(localStorage.getItem('alantu-user')).email;
+    }
+
     this.setState({
-      speaker_media_type: val
+      speaker_media_type: val,
+      speaker_media: speaker_media
     });
   }
 
@@ -142,7 +149,11 @@ class NewEvent extends Component {
   }
 
   _handleDateChange = (nil, date) => {
-    this.state.date = moment(date).utc().format();
+    this.state.date = moment(date);
+  }
+
+  _handleTimeChange = (nil, time) => {
+    this.state.time =  moment(time);
   }
 
   _onPreviewImgChange = (pictures) => {
@@ -180,6 +191,7 @@ class NewEvent extends Component {
 
     this._createEvent()
     .then(function(res) {
+      ///
       this.props.onDone(res.data.id);
     }.bind(this))
     .catch(err => {
@@ -224,19 +236,24 @@ class NewEvent extends Component {
       this.state.speaker_media = speaker_media;
     }
 
+    if (this.state.time !== undefined) {
+      this.state.date = this.state.date.hour(this.state.time.get('hour'));
+      this.state.date = this.state.date.minute(this.state.time.get('minute')); 
+    }
+
     var now = moment().utc(new Date()).format();
     var data = new FormData();
     data.append('title', this.state.title);
-    data.append('subtitle', this.state.subtitle);
+    data.append('subtitle', this.state.subtitle || '');
     data.append('speaker_media_type', this.state.speaker_media_type);
-    data.append('notes', this.state.notes);
-    data.append('location', this.state.location);
+    data.append('notes', this.state.notes || '');
+    data.append('location', this.state.location || '');
     data.append('created_at', now);
     data.append('updated_at', now);
     data.append('deleted_at', '1970-01-01T00:00:00.000Z');
     data.append('started_at', '1970-01-01T00:00:00.000Z');
     data.append('ended_at', '1970-01-01T00:00:00.000Z');
-    data.append('date', this.state.date);
+    data.append('date', this.state.date.utc().format());
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
@@ -272,13 +289,13 @@ class NewEvent extends Component {
   render() {
     return (
       <div className="container">
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-                    
-          <div>
-            <div className="title">
-              <h1>New Event</h1>
-            </div>
+        <ErrorReporting open={this.state.error !== null}
+                  error={this.state.error} />
+                  
+        <div>
+          <div className="title">
+            <h1>New Event</h1>
+          </div>
 
           <form className="new-event-form">
             <Paper style={styles.paperLeft}>
@@ -303,10 +320,15 @@ class NewEvent extends Component {
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleDateChange.bind(this)}/>
+              <TimePicker hintText="Time"
+                        fullWidth="true"
+                        mode="landscape" 
+                        autoOk={true} 
+                        onChange={this._handleTimeChange.bind(this)}/>
               <SelectField floatingLabelText="Media type"
                           fullWidth={true}
                           value={this.state.speaker_media_type}
-                          onChange={this._handleMediaTypeChange}>
+                          onChange={this._handleMediaTypeChange.bind(this)}>
                 {config.name_guest_media_type.map((type) => (
                   <MenuItem value={type.id} primaryText={type.name} />
                 ))}
@@ -318,6 +340,7 @@ class NewEvent extends Component {
                 :
                 <TextField floatingLabelText="Speaker media"
                           data-val="speaker_media"
+                          value={this.state.speaker_media}
                           onChange={this._handleTextFieldChange.bind(this)}
                           fullWidth={true} />
               }
