@@ -11,6 +11,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SearchBox from '../components/header/SearchBox';
+import LeftBar from '../components/leftbar/LeftBar';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ArrowDown from 'material-ui/svg-icons/navigation/expand-more';
 import ThemeDefault from '../theme-default';
@@ -18,6 +19,8 @@ import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import IconMenu from 'material-ui/IconMenu';
 import AppBar from 'material-ui/AppBar';
+import Assessment from 'material-ui/svg-icons/action/assessment';
+import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
@@ -94,6 +97,17 @@ const styles = {
         top: 10,
         right: 0
     }
+};
+const data = {
+    menus: [
+        {text: 'Overview', icon: <Assessment/>, link: '/manager/event'},
+        {text: 'Past events', icon: <PermIdentity/>, link: '/manager/event/new'},
+        {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'},
+        {text: 'Donations', icon: <PermIdentity/>, link: '/manager/donations'},
+        {text: 'Users', icon: <PermIdentity/>, link: '/manager/users'},
+        {text: 'Media', icon: <PermIdentity/>, link: '/manager/media'},
+        {text: 'Design options', icon: <PermIdentity/>, link: '/manager/design_options'}
+    ]
 };
 
 class Manager extends Component {
@@ -226,46 +240,9 @@ class Manager extends Component {
                   }
                   onLeftIconButtonTouchTap={this._handleToggle}
                   onTouchTap={this._handleClose}/>
-          <Drawer className="drawer" open={this.state.open} >
-            <div style={styles.logoContainer}>
-              <img style={styles.logo} src="/logo-white.png" alt="logo"/>
-            </div>
-            <MenuItem style={styles.menuItem}
-                      primaryText="Overview Events"
-                      leftIcon=""
-                      data-url="/manager/event"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-            <MenuItem style={styles.menuItem}
-                      primaryText="New event"
-                      leftIcon=""
-                      data-url="/manager/event/new"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-            <MenuItem style={styles.menuItem}
-                      primaryText="Event locations"
-                      leftIcon=""
-                      data-url="/manager/event_location"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-            <MenuItem style={styles.menuItem}
-                      primaryText="Donations"
-                      leftIcon=""
-                      data-url="/manager/donations"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-            <MenuItem style={styles.menuItem}
-                      primaryText="Users"
-                      leftIcon=""
-                      data-url="/manager/users"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-            <MenuItem style={styles.menuItem}
-                      primaryText="Media"
-                      leftIcon=""
-                      data-url="/manager/media"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-            <MenuItem style={styles.menuItem}
-                      primaryText="Design options"
-                      leftIcon=""
-                      data-url="/manager/design_options"
-                      onTouchTap={this._handleRedirect.bind(this)}></MenuItem>
-          </Drawer>
+          <LeftBar  navDrawerOpen={true}
+                    menus={data.menus}
+                    username="User"/>
           <div className="manager-container">
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={EventsGridList} />

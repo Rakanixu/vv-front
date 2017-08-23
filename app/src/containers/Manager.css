@@ -20,6 +20,7 @@
 
 .manager-container {
   margin-top: 59px;
+  margin-left: 270px;
 }
 
 .manager-header-bar-right {
@@ -34,7 +35,7 @@
 .manager-header-bar-left {
   display: flex;
   position: absolute;
-  margin-left: 40px;
+  margin-left: 256px;
   width: 660px;
   height: 60px;
   justify-content: flex-start;
@@ -42,7 +43,13 @@
   transition: all ease .3s;
 }
 
-@media (max-width: 1080px) {
+.manager-left-panel {
+  width: 500px;
+  height: 100%;
+  background: red;
+}
+
+@media (max-width: 1300px) {
   .manager-header-bar-left {
     width: 400px;
   }
