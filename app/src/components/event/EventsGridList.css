@@ -10,7 +10,7 @@
 
 @media (max-width: 1350px) {
   .events-cards-grid >div {
-    width: 33% !important;
+    width: 33.33333% !important;
   }
   .events-card-block-title {
     font-size: 15px !important;
@@ -136,6 +136,13 @@
   color: rgb(158, 158, 158);
   text-decoration: underline;
   font-weight: 500;
+}
+
+.events-tabs__custom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .events-start-btn, .events-stop-btn {

@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 import {GridList, GridTile} from 'material-ui/GridList';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import FlatButton from 'material-ui/FlatButton';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionClear from 'material-ui/svg-icons/content/clear';
+import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
+import Search from 'material-ui/svg-icons/action/search';
+import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
@@ -75,6 +84,61 @@ const styles = {
     width: 15,
     height: 15,
     marginLeft: 0
+  },
+  tabs: {
+    height: 200,
+    backgroundColor: '#ffffff'
+  },
+  tab: {
+
+    color: 'gray',
+    marginTop: -5,
+    height: 45,
+    textTransform: 'none'
+  },
+  inkBarStyle: {
+    background: '#ffffff',
+    height: 40,
+    marginTop: -40
+  },
+  tabItemContainerStyle: {
+    background: 'rgb(219, 223, 222)'
+  },
+  tabTemplateStyle: {
+    background: '#ffffff'
+  },
+  searchRow: {
+    display: 'flex',
+    width: '95%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    borderRadius: 5,
+    overflow: 'hidden',
+    height: 40
+  },
+  searchItemsRow: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '95%',
+    marginTop: 20,
+    overflow: 'hidden',
+    height: 40
+  },
+  searchRowLeftSide: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  searchRowRightSide: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  addSearchItem: {
+    fontSize: 15,
+    textTransform: 'none'
   }
 };
 
@@ -168,6 +232,118 @@ class EventsGridList extends Component {
             />
           </div>
         </div>
+        <Tabs
+            style={styles.tabs}
+            tabItemContainerStyle={styles.tabItemContainerStyle}
+            tabTemplateStyle={styles.tabTemplateStyle}
+            inkBarStyle={styles.inkBarStyle}>
+          <Tab
+              style={styles.tab}
+              label="All Events" >
+            <div>
+              <p>
+                This is an example tab.
+              </p>
+              <p>
+                You can put any sort of HTML or react component in here. It even keeps the component state!
+              </p>
+            </div>
+          </Tab>
+          <Tab
+              style={styles.tab}
+              label="Custom" >
+            <div>
+              <p className="events-tabs__custom">
+                  <Paper
+                      zDepth={1}
+                      style={styles.searchRow}>
+                    <div style={styles.searchRowLeftSide}>
+                      <DropDownMenu
+                          value={1}
+                          underlineStyle={{display: 'none'}}
+                          iconStyle={{marginRight: -20}}
+                          style={{height: 60, borderRight: 'solid 1px rgb(219, 223, 222)'}}
+                          onChange={this.handleChange}>
+                        <MenuItem value={1} primaryText="Filter products" />
+                        <MenuItem value={2} primaryText="Item one" />
+                        <MenuItem value={3} primaryText="Item two" />
+                        <MenuItem value={4} primaryText="Item three" />
+                        <MenuItem value={5} primaryText="Item +" />
+                      </DropDownMenu>
+                      <IconButton>
+                        <Search color={'black'} />
+                      </IconButton>
+                      <TextField
+                          underlineShow={false}
+                          hintText="Start typing to search for products..."
+                      />
+                    </div>
+                    <div style={styles.searchRowRightSide}>
+                      <FlatButton
+                          style={{height: 40, borderLeft: 'solid 1px rgb(219, 223, 222)'}}
+                          labelStyle={styles.addSearchItem}
+                          label="Save this search" />
+                      <FlatButton
+                          style={{height: 45}}
+                          icon={<ActionDelete color={'#ffffff'} />}
+                          backgroundColor={'rgb(72, 78, 100)'}/>
+                    </div>
+                  </Paper>
+                <div style={styles.searchItemsRow}>
+                  <FlatButton
+                      label="Product vendor is Alantu"
+                      labelPosition="before"
+                      backgroundColor={'rgb(54, 152, 222)'}
+                      style={{borderRadius: 15}}
+                      labelStyle={{fontSize: 12, color: '#ffffff', textTransform: 'none'}}
+                      primary={true}
+                      icon={<ActionClear color={"#ffffff"} />}
+                  />
+                </div>
+              </p>
+            </div>
+          </Tab>
+          <Tab
+              style={styles.tab}
+              label="Period" >
+            <div>
+              <h2 style={styles.headline}>Tab Two</h2>
+              <p>
+                This is another example tab.
+              </p>
+            </div>
+          </Tab>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+          <Tab
+              style={styles.tab}
+              disabled/>
+        </Tabs>
 
         <GridList ref="grid"
                   className="events-cards-grid"
