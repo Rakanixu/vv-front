@@ -230,6 +230,11 @@ class NewEvent extends Component {
     data.append('pose_question', false);
     data.append('chat_shown_status_bar', false);
     data.append('stage_moment_webcam', false);
+    data.append('chat_highlight_price', 0);
+    data.append('chat_with_user_image_price', 0);
+    data.append('pose_question_price', 0);
+    data.append('chat_shown_status_bar_price', 0);
+    data.append('stage_moment_webcam_price', 0);
     data.append('preview_img', preview_img);
     data.append('event_background', event_background);
     data.append('speaker_media', this.state.speaker_media);
