@@ -4,9 +4,9 @@ import { dataURItoBlob } from '../../utils';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import UploadPreview from 'material-ui-upload/UploadPreview';
 import ColorPicker from 'material-ui-color-picker';
 import ErrorReporting from 'material-ui-error-reporting';
+import ImgSelection from '../image/ImgSelection';
 import axios from 'axios';
 import './DesignOptions.css';
 
@@ -45,10 +45,9 @@ class DesignOptions extends Component {
       error: null,
       colorPickerUpdater1: 'initialcolorPickerUpdater1',
       colorPickerUpdater2: 'initialcolorPickerUpdater2',
-      background: {},
-      logo: {},
-      showBackground: true,
-      showLogo: true,
+      default_image: '',
+      background: '',
+      logo: '',
       url: config.baseAPI_URL + '/principal',
       principal: {}
     };
@@ -67,6 +66,9 @@ class DesignOptions extends Component {
     axios.get(this.state.url + '/' + user.principal_id).then(function(res) {
       this.setState({
         principal: res.data,
+        default_image: res.data.default_image,
+        background: res.data.background,
+        logo: res.data.logo,
         colorPickerUpdater1: new Date().getTime() + 'A',
         colorPickerUpdater2: new Date().getTime() + 'B',
       });
@@ -76,30 +78,6 @@ class DesignOptions extends Component {
   }
 
   _handleEditPrincipal() {
-    var background, logo;
-    for (var i in this.state.background) {
-      background = this.state.background[i];
-      break;
-    }
-
-    for (var i in this.state.logo) {
-      logo = this.state.logo[i];
-      break;
-    }
-
-    try {
-      background = dataURItoBlob(background);
-      logo = dataURItoBlob(logo);
-    } catch (err) {}
-
-    if (!background) {
-      background = this.state.principal.background;
-    }
-
-    if (!logo) {
-      logo = this.state.principal.logo;
-    }
-
     var data = new FormData();
     data.append('name', this.state.principal.name);
     data.append('domain', this.state.principal.domain);
@@ -109,8 +87,9 @@ class DesignOptions extends Component {
     data.append('tags', this.state.principal.tags);
     data.append('description', this.state.principal.description);
     data.append('created_at', this.state.principal.created_at);
-    data.append('background', background);
-    data.append('logo', logo);
+    data.append('default_image', this.state.default_image || this.state.principal.default_image);
+    data.append('background', this.state.background || this.state.principal.background);
+    data.append('logo', this.state.logo || this.state.principal.logo);
 
     axios.put(config.baseAPI_URL + '/principal/' + user.principal_id, data).then(function(res) {
       this.props.history.push('/manager');
@@ -119,23 +98,21 @@ class DesignOptions extends Component {
     }.bind(this));
   }
 
-  _onBackgroundChange = (pictures) => {
-    this.setState({
-      background: pictures,
-      showBackground: false
-    });
-  }
-
-  _onLogoChange = (pictures) => {
-    this.setState({
-      logo: pictures,
-      showLogo: false
-    });
-  }
-
   _handleTextFieldChange(e) {
     this.state.principal[e.target.dataset.val] = e.target.value;
     this.setState({ error: null });
+  }
+
+  _defaultImgChange(img) {
+    this.setState({ default_image: img });
+  }
+
+  _logoChange(img) {
+    this.setState({ logo: img });
+  }
+
+  _backgroundChange(img) {
+    this.setState({ background: img });
   }
 
   _handelPrimaryColorChange(color) {
@@ -202,15 +179,15 @@ class DesignOptions extends Component {
                             onTouchTap={this._handleEditPrincipal.bind(this)} />          
             </Paper>
 
-            <Paper style={styles.paperLeft}>          
-              { this.state.showBackground ? <img className="preview-img" src={config.baseURL + this.state.principal.background} alt="preview background"/> : null }
-              <div className="fit">
-                <UploadPreview title="Background" label="Add" onChange={this._onBackgroundChange} style={styles.fit}/>
-              </div>
-              { this.state.showLogo ? <img className="preview-img" src={config.baseURL + this.state.principal.logo} alt="preview logo"/> : null }
-              <div className="fit">
-                <UploadPreview title="Logo" label="Add" onChange={this._onLogoChange} style={styles.fit}/>
-              </div>
+            <Paper style={styles.paperLeft}>
+              <label className="load-img-label">Default Image</label>
+              <ImgSelection onChange={this._defaultImgChange.bind(this)} defaultImage={this.state.default_image}/>
+
+              <label className="load-img-label">Preview Image</label>
+              <ImgSelection onChange={this._logoChange.bind(this)} defaultImage={this.state.logo}/>
+
+              <label className="load-img-label block">Background Image</label>
+              <ImgSelection onChange={this._backgroundChange.bind(this)} defaultImage={this.state.background}/>
             </Paper>
           </form>
         </div>
