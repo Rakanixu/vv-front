@@ -55,7 +55,7 @@ class EditQuizEntry extends Component {
     this._EditQuizEntry()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 7
@@ -68,12 +68,17 @@ class EditQuizEntry extends Component {
   }
 
   _EditQuizEntry() {
+    if (this.state.quiz_entry.question === undefined || this.state.quiz_entry.question === '' ||
+      this.state.quiz_entry.right_solution === undefined) {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new URLSearchParams();
     data.append('quiz_id', this.state.quiz_entry.quiz_id);
     data.append('question', this.state.quiz_entry.question);
-    data.append('answer_one', this.state.quiz_entry.answer_one);
-    data.append('answer_two', this.state.quiz_entry.answer_two);
-    data.append('answer_three', this.state.quiz_entry.answer_three);
+    data.append('answer_one', this.state.quiz_entry.answer_one || '');
+    data.append('answer_two', this.state.quiz_entry.answer_two  || '');
+    data.append('answer_three', this.state.quiz_entry.answer_three );
     data.append('answer_four', this.state.quiz_entry.answer_four);
     data.append('right_solution', this.state.quiz_entry.right_solution);
 

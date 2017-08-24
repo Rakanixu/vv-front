@@ -116,6 +116,11 @@ class QuizEntry extends Component {
   }
 
   _createQuizEntry() {
+    if (this.state.question === undefined || this.state.question === '' ||
+      this.state.right_solution === undefined) {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new URLSearchParams();
     data.append('quiz_id', this.state.quiz_id);
     data.append('question', this.state.question);
