@@ -73,11 +73,11 @@ class NewEventLocation extends Component {
   _createEventLocation() {
     var data = new URLSearchParams();
     data.append('principal_id', user.principal_id);
-    data.append('title', this.state.title);
-    data.append('remark', this.state.remark);
-    data.append('street', this.state.street);
-    data.append('city', this.state.city);
-    data.append('zip', this.state.zip);
+    data.append('title', this.state.title || '');
+    data.append('remark', this.state.remark) || '';
+    data.append('street', this.state.street || '');
+    data.append('city', this.state.city || '');
+    data.append('zip', this.state.zip || '');
     data.append('opening_hours', this.state.opening_hours);
 
     return axios.post(config.baseAPI_URL + '/event_location', data);

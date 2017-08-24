@@ -112,12 +112,6 @@ class MediaGridList extends Component {
                 </div>
                 <div className="media-card-block__content__buttons">
                   <div className="media-card-block__content__buttons__main">
-                    <RaisedButton className="media-edit-btn"
-                                  label="Edit"
-                                  labelStyle={styles.editLabel}
-                                  data-id={media.id}
-                                  style={styles.editButton}
-                    />
                     <RaisedButton className="media-delete-btn"
                                   data-id={media.id}
                                   labelStyle={styles.deleteLabel}

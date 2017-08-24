@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
-import {GridList, GridTile} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
-import DatePicker from 'material-ui/DatePicker';
-import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import EventTabs from '../event/EventTabs';
+import ImgSelectionWrapper from '../image/ImgSelectionWrapper';
 import axios from 'axios';
 import './EditSliderImage.css';
 
@@ -18,27 +13,6 @@ axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 var styles = {
-   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
-  },
-  gridTile: {
-    cursor: 'pointer',
-    width: 240
-  },
-  titleStyle: {
-    color: 'rgb(0, 188, 212)',
-  },
-  fit: {
-    overflow: 'hidden',
-    maxHeight: 400
-  },
   paperLeft: {
     padding: 20,
     overflow: 'auto',
@@ -64,12 +38,9 @@ class EditSliderImage extends Component {
 
     this.state = {
       error: null,
-      showImg: true,
-      imgUrlFromGallery: '',
-      img: {},
+      img: '',
       url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId + '/image/' + this.props.match.params.imageId,
-      image: {},
-      media: []
+      image: {}
     };
   }
 
@@ -100,18 +71,8 @@ class EditSliderImage extends Component {
     this.setState({ error: null });
   }
 
-  _handleOnClickUpload(e) {
-    this.refs.galleryPreview.style.display = 'none';
-    this.refs.uploadPreview.style.display = 'block';
-    // hack
-    document.querySelector('.fit input[type="file"]').click();
-  }
-
-  _onImgChange = (pictures) => {
-    this.setState({
-      img: pictures,
-      showImg: false
-    });
+  _imageChange(img) {
+    this.setState({ img: img });
   }
 
   _handleEditImage(e) {
@@ -131,24 +92,10 @@ class EditSliderImage extends Component {
   }
 
   _editImage() {
-    var img;
-    for (var i in this.state.img) {
-      img = this.state.img[i];
-      break;
-    }
-
-    try {
-      img = dataURItoBlob(img);
-    } catch (err) {}
-
-    if (!img) {
-      img = this.state.imgUrlFromGallery;
-    }
-
     var data = new FormData();
     data.append('title', this.state.image.title || '');
     data.append('type', this.state.image.type || '');
-    data.append('img', img);
+    data.append('img', this.state.img || this.state.image.url);
 
     return axios.put(this.state.url, data);
   }
@@ -208,49 +155,8 @@ class EditSliderImage extends Component {
           </Paper>
 
           <Paper style={styles.paperRight}>
-              <div ref="galleryPreview">
-              { this.state.imgUrlFromGallery!== undefined && this.state.imgUrlFromGallery.length > 0 ?
-                <img src={config.baseURL + this.state.imgUrlFromGallery} alt="gallery item" />
-                : null }
-              </div>  
-
-              <div className="fit hidelabel" ref="uploadPreview" style={{display: 'none'}}>
-                <UploadPreview label="Add" onChange={this._onImgChange} style={styles.fit}/>
-              </div>  
-
-              <div className="overflow">
-                <RaisedButton label="Select image from gallery"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              onTouchTap={this._handleDialogOpen.bind(this)} />
-
-                <RaisedButton label="Select Image from local storage"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              onTouchTap={this._handleOnClickUpload.bind(this)} />
-              </div>
+            <ImgSelectionWrapper onChange={this._imageChange.bind(this)} defaultImage={this.state.image.img}/>
           </Paper>  
-
-          <Dialog title="Gallery"
-                  modal={false}
-                  open={this.state.openDialog}
-                  onRequestClose={this._handleDialogClose}
-                  autoScrollBodyContent={true}>
-            <div style={styles.root}>
-              <GridList style={styles.gridList} cols={2.2}>
-                {this.state.media.map((img, i) => (
-                  <GridTile
-                    key={i}
-                    data-url={img.url}
-                    style={styles.gridTile}
-                    onTouchTap={this._handelImgSelect.bind(this)}
-                    titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                    <img src={config.baseURL + img.url} alt="gallery item"/>
-                  </GridTile>
-                ))}
-              </GridList>
-            </div>
-          </Dialog>
         </form>
       </div>
     );

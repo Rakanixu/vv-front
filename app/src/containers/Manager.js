@@ -102,7 +102,7 @@ const styles = {
 const data = {
     menus: [
         {text: 'Overview', icon: <Assessment/>, link: '/manager/event'},
-        {text: 'Past events', icon: <PermIdentity/>, link: '/manager/event/new'},
+        {text: 'New event', icon: <PermIdentity/>, link: '/manager/event/new'},
         {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'},
         {text: 'Donations', icon: <PermIdentity/>, link: '/manager/donations'},
         {text: 'Users', icon: <PermIdentity/>, link: '/manager/users'},
@@ -162,6 +162,10 @@ class Manager extends Component {
   }
 
   _handleError(err) {
+    if (err.toString() === 'Error: Request failed with status code 401') {
+      this._logout();
+    }
+
     if (!err) {
       err = new Error('Invalid data');
     }

@@ -7,8 +7,7 @@ import './Media.css';
 const styles = {
   root: {
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflowX: 'hidden'
+    justifyContent: 'space-around'
   },
   gridList: {
     maxWidth: 1800,
