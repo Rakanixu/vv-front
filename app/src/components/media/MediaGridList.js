@@ -10,17 +10,34 @@ axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 const styles = {
+  root: {
+    padding: 50,
+    paddingTop: 20
+  },
   gridList: {
     maxWidth: 1800,
-    margin: 0,
-    cols: (window.innerWidth > 1000) ? 2 : 1
+    overflowY: 'auto',
+    paddingTop: 10,
+    cols: 4
   },
-  buttonDelete: {
-    top: 10,
-    right: 10,
-    position: 'absolute'
+  editButton: {
+    position: 'relative',
+    marginRight: 10
+  },
+  editLabel: {
+    color: '#fff',
+    textTransform: 'none'
+  },
+  deleteButton: {
+    position: 'relative',
+    marginLeft: 10
+  },
+  deleteLabel: {
+    color: '#fff',
+    textTransform: 'none'
   }
 };
+
 
 class MediaGridList extends Component {
   constructor(props) {
@@ -72,16 +89,45 @@ class MediaGridList extends Component {
       <div>
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
-
-        <GridList ref="grid" cellHeight={320} cols={styles.gridList.cols} style={styles.gridList}>
+        <GridList ref="grid"
+                  className="media-cards-grid"
+                  cellHeight={320}
+                  cols={styles.gridList.cols}
+                  style={styles.gridList}
+                  padding={20}>
           {this.state.images.map((media) => (
-            <GridTile key={media.id}>
-              <img src={config.baseURL + media.url} alt="gallery item"/>
-              <RaisedButton className="delete"
-                            data-id={media.id}
-                            onTouchTap={this._handleDelete.bind(this)}
-                            label="Delete"
-                            style={styles.buttonDelete}/>
+            <GridTile key={media.id}
+                      className="media-card-block"
+            >
+              <div className="media-card-block__content">
+                <div className="media-card-block-img">
+                  <div className="media-card-block-img-wrapper">
+                    <div className="media-card-block-img-wrapper-inner">
+                      <div className="media-card-block-img-wrapper-inner__img"
+                           style={{backgroundImage: `url(${config.baseURL + media.url})`}}>
+                      </div>
+                    </div>
+                    {/*<div className="card-block-title">{media.title}</div>*/}
+                  </div>
+                </div>
+                <div className="media-card-block__content__buttons">
+                  <div className="media-card-block__content__buttons__main">
+                    <RaisedButton className="media-edit-btn"
+                                  label="Edit"
+                                  labelStyle={styles.editLabel}
+                                  data-id={media.id}
+                                  style={styles.editButton}
+                    />
+                    <RaisedButton className="media-delete-btn"
+                                  data-id={media.id}
+                                  labelStyle={styles.deleteLabel}
+                                  label="Delete"
+                                  style={styles.deleteButton}
+                                  onTouchTap={this._handleDelete.bind(this)}
+                    />
+                  </div>
+                </div>
+              </div>
             </GridTile>
           ))}
         </GridList>

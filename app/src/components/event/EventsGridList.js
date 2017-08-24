@@ -75,11 +75,6 @@ const styles = {
     width: 15,
     height: 15,
     marginLeft: 0
-  },
-  paperFab: {
-    position: 'absolute',
-    bottom: 80,
-    right: 40
   }
 };
 
@@ -164,41 +159,44 @@ class EventsGridList extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <div className="title">
+        <div className="events-title">
           <h1>Overview Events</h1>
-          <div className="new-event">
-            <RaisedButton label="New Event" primary={true} onTouchTap={this._handlePageChange.bind(this)} />
+          <div className="events-new-event">
+            <RaisedButton label="New Event"
+                          primary={true}
+                          onTouchTap={this._handlePageChange.bind(this)}
+            />
           </div>
         </div>
 
         <GridList ref="grid"
-                  className="cards-grid"
+                  className="events-cards-grid"
                   cellHeight={320}
                   cols={styles.gridList.cols}
                   style={styles.gridList}
                   padding={20}>
           {this.state.events.map((event) => (
             <GridTile key={event.id}
-                      className="card-block"
+                      className="events-card-block"
                       >
-                      {/* 
+                      {/*
                       title={event.title}
                       subtitle={event.subtitle}
-                      subtitle={moment(event.date).format("MMM Do YYYY")} 
+                      subtitle={moment(event.date).format("MMM Do YYYY")}
                       */}
 
-              <div className="card-block__content">
-                <div className="card-block-img">
-                  <div className="card-block-img-wrapper">
-                    <div className="card-block-img-wrapper-inner">
-                      <div className="card-block-img-wrapper-inner__img"
+              <div className="events-card-block__content">
+                <div className="events-card-block-img">
+                  <div className="events-card-block-img-wrapper">
+                    <div className="events-card-block-img-wrapper-inner">
+                      <div className="events-card-block-img-wrapper-inner__img"
                            style={{backgroundImage: `url(${config.baseURL + event.preview_img})`}}>
                       </div>
                     </div>
-                    <div className="card-block-title">{event.title}</div>
+                    <div className="events-card-block-title">{event.title}</div>
 
-                    <div className="card-block__content__buttons__sub">
-                      <RaisedButton className="copy"
+                    <div className="events-card-block__content__buttons__sub">
+                      <RaisedButton className="events-copy-btn"
                                     label="Copy"
                                     labelStyle={styles.copyLabel}
                                     icon={<ContentCopy color="white" style={styles.copyIcon}/>}
@@ -206,7 +204,7 @@ class EventsGridList extends Component {
                                     style={styles.copyButton}
                                     onTouchTap={this._handleCopy.bind(this)}
                       />
-                      <RaisedButton className="edit"
+                      <RaisedButton className="events-edit-btn"
                                     label="Edit"
                                     labelStyle={styles.editLabel}
                                     icon={<ModeEdit color="white" style={styles.editIcon}/>}
@@ -217,22 +215,22 @@ class EventsGridList extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="card-block__content__buttons">
-                  <div className="card-block__content__buttons__main">
-                    <RaisedButton className="start"
+                <div className="events-card-block__content__buttons">
+                  <div className="events-card-block__content__buttons__main">
+                    <RaisedButton className="events-start-btn"
                                   label="Start"
                                   labelStyle={styles.startLabel}
                                   data-id={event.id}
                                   style={styles.startButton}
                     />
-                    <RaisedButton className="stop"
+                    <RaisedButton className="events-stop-btn"
                                   data-id={event.id}
                                   labelStyle={styles.stopLabel}
                                   label="Stop"
                                   style={styles.stopButton}
                     />
                   </div>
-                  <div className="card-block__content__buttons__reset">
+                  <div className="events-card-block__content__buttons__reset">
                     <a href="#">Reset</a>
                   </div>
                 </div>
