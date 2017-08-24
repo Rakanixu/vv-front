@@ -1,6 +1,6 @@
 @media (max-width: 1350px) {
   .media-cards-grid >div {
-    width: 33% !important;
+    width: 33.33333% !important;
   }
   .media-card-block-title {
     font-size: 15px !important;
