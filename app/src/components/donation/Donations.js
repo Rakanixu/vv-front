@@ -92,7 +92,7 @@ class Donations extends Component {
             <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
-                  <TableHeaderColumn style={styles.alignLeft}>Amount</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Amount ($ USD)</TableHeaderColumn>
                   <TableHeaderColumn style={styles.alignLeft}>Donor</TableHeaderColumn>
                   <TableHeaderColumn style={styles.alignLeft}>Source</TableHeaderColumn>
                   <TableHeaderColumn style={styles.alignLeft}>Donated at</TableHeaderColumn>
@@ -101,7 +101,7 @@ class Donations extends Component {
               <TableBody displayRowCheckbox={false}>
                 {this.state.donations.map((donation, i) =>
                   <TableRow key={i} data-id={donation.id}>
-                    <TableRowColumn style={styles.alignLeft}>{donation.amount}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{'$ ' + parseFloat(donation.amount || 0).toFixed(2)}</TableRowColumn>
                     <TableRowColumn style={styles.alignLeft}>{donation.firstname + donation.lastname}</TableRowColumn>
                     <TableRowColumn style={styles.alignLeft}>{donation.source}</TableRowColumn>
                     <TableRowColumn style={styles.alignLeft}>{new Date(donation.recurring_end).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>

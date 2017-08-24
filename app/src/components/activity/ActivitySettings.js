@@ -5,6 +5,7 @@ import Toggle from 'material-ui/Toggle';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import SvgIcon from 'material-ui/SvgIcon';
 import axios from 'axios';
 import './ActivitySettings.css';
 
@@ -48,6 +49,12 @@ class QuizEntry extends Component {
 
   _getEvent() {
     axios.get(this.state.url).then(function(res) {
+      for (var i in res.data) {
+        if (i.indexOf('_price') > -1) {
+          res.data[i] = parseFloat(res.data[i] || 0).toFixed(2);
+        }
+      }
+
       this.setState({ event: res.data });
     }.bind(this)).catch(err => {
       this._handleError(err);
@@ -70,7 +77,7 @@ class QuizEntry extends Component {
   }
 
   _save() {
-    var data = new URLSearchParams();
+    var data = new FormData();
     for (var attr in this.state.event) {
       if (attr.indexOf('_price') > -1) {
         data.append(attr, this.state.event[attr] || 0);
@@ -118,8 +125,8 @@ class QuizEntry extends Component {
                     trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
-        
-            <TextField floatingLabelText="Price"
+
+            <TextField floatingLabelText="Price ($ USD)"
                         className="text-field"
                         data-val="chat_highlight_price"
                         primary={true}
@@ -137,8 +144,7 @@ class QuizEntry extends Component {
                     trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
-
-            <TextField floatingLabelText="Price"
+            <TextField floatingLabelText="Price ($ USD)"
                       className="text-field"
                       data-val="chat_with_user_image_price"
                       primary={true}
@@ -156,7 +162,7 @@ class QuizEntry extends Component {
                     trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
-            <TextField floatingLabelText="Price"
+            <TextField floatingLabelText="Price ($ USD)"
                       className="text-field"
                       data-val="pose_question_price"
                       primary={true}
@@ -174,7 +180,7 @@ class QuizEntry extends Component {
                     trackSwitchedStyle={styles.trackOff}
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
-            <TextField floatingLabelText="Price"
+            <TextField floatingLabelText="Price ($ USD)"
                       className="text-field"
                       data-val="chat_shown_status_bar_price"
                       primary={true}
@@ -193,7 +199,7 @@ class QuizEntry extends Component {
                     onToggle={this._onToggleChange.bind(this)}
                     style={styles.toggle}/>
 
-            <TextField floatingLabelText="Price"
+            <TextField floatingLabelText="Price ($ USD)"
                       className="text-field"
                       data-val="stage_moment_webcam_price"
                       primary={true}

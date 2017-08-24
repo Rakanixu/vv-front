@@ -27,3 +27,8 @@ form label {
   height: 100%;
   max-height: 300px;
 }
+
+.icon {
+  height: 25px;
+  width: 25px;
+}

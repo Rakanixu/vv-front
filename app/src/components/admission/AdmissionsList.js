@@ -86,7 +86,7 @@ class AdmissionsList extends Component {
               <TableHeaderColumn style={{width: '52px'}}>Icon</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Subtitle</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Price</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Price ($ USD)</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
               { !this.props.noEdit ?
               <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
@@ -102,7 +102,7 @@ class AdmissionsList extends Component {
                   </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.title}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.subtitle}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{admission.price}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft}>{'$ ' + parseFloat(admission.price || 0).toFixed(2)}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.description}</TableRowColumn>
                 { !this.props.noEdit ?
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>

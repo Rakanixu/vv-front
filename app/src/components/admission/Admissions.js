@@ -200,7 +200,7 @@ class Admissions extends Component {
                         data-val="subtitle"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
-              <TextField floatingLabelText="Price"
+              <TextField floatingLabelText="Price ($ USD)"
                         data-val="price"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
