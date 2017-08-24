@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { dataURItoBlob } from '../../utils';
-import { GridList, GridTile } from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
-import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -89,25 +87,6 @@ class NewEvent extends Component {
     }
   }
 
-  _handleDialogOpen = (e) => {
-    if (e.currentTarget.dataset.target === 'previewImgUrlFromGallery') {
-      this.refs.uploadPreviewImg.style.display = 'none';
-      this.refs.galleryPreviewImg.style.display = 'block';
-    } else if (e.currentTarget.dataset.target === 'eventBackgroundUrlFromGallery') {
-      this.refs.uploadEventBackground.style.display = 'none';
-      this.refs.galleryEventBackground.style.display = 'block';
-    }
-    
-    this.setState({ 
-      imgTarget: e.currentTarget.dataset.target,
-      openDialog: true 
-    });
-  };
-
-  _handleDialogClose = () => {
-    this.setState({openDialog: false});
-  };
-
   _handleTextFieldChange(e) {
     var state = {}
     state[e.target.dataset.val] = e.target.value;
@@ -127,38 +106,12 @@ class NewEvent extends Component {
     });
   }
 
-  _handleOnClickUploadPreviewImg(e) {
-    this.refs.galleryPreviewImg.style.display = 'none';
-    this.refs.uploadPreviewImg.style.display = 'block';
-    // hack
-    document.querySelector('.fit.preview-img input[type="file"]').click();
-  }
-
-  _handleOnClickUploadEventBackground(e) {
-    this.refs.galleryEventBackground.style.display = 'none';
-    this.refs.uploadEventBackground.style.display = 'block';
-    // hack
-    document.querySelector('.fit.event-background input[type="file"]').click();
-  }
-
-  _handelPrimaryColorChange(color) {
-    this.state.primary_color = color;
-  }
-
-  _handelSecondaryColorChange(color) {
-    this.state.secondary_color = color;
-  }
-
   _handleDateChange = (nil, date) => {
     this.state.date = moment(date);
   }
 
   _handleTimeChange = (nil, time) => {
     this.state.time =  moment(time);
-  }
-
-  _onPreviewImgChange = (pictures) => {
-    this.setState({ preview_img: pictures });
   }
 
   _onEventBackgroundChange = (pictures) => {
@@ -199,16 +152,28 @@ class NewEvent extends Component {
     });
   }
 
+  _previewImageChange(img) {
+    this.setState({ preview_img: img });
+  }
+
+  _eventBackgroundChange(img) {
+    this.setState({ event_background: img });
+  }
+
   _createEvent() {
     var preview_img, event_background, speaker_media;
-    for (var i in this.state.preview_img) {
-      preview_img = this.state.preview_img[i];
-      break;
+    if (typeof this.state.preview_img === 'object') {
+      for (var i in this.state.preview_img) {
+        preview_img = this.state.preview_img[i];
+        break;
+      }
     }
 
-    for (var i in this.state.event_background) {
-      event_background = this.state.event_background[i];
-      break;
+    if (typeof this.state.event_background === 'object') {
+      for (var i in this.state.event_background) {
+        event_background = this.state.event_background[i];
+        break;
+      }
     }
 
     if (typeof this.state.speaker_media === 'object') {
@@ -224,12 +189,12 @@ class NewEvent extends Component {
       speaker_media = dataURItoBlob(speaker_media);
     } catch (err) {}
 
-    if (this.state.previewImgUrlFromGallery !== '' && this.state.previewImgUrlFromGallery!== undefined) {
-      preview_img = this.state.previewImgUrlFromGallery;
+    if (typeof this.state.preview_img === 'string') {
+      preview_img = this.state.preview_img;
     }
 
-    if (this.state.eventBackgroundUrlFromGallery !== '' && this.state.eventBackgroundUrlFromGallery!== undefined) {
-      event_background = this.state.eventBackgroundUrlFromGallery;
+    if (typeof this.state.event_background === 'string') {
+      event_background = this.state.event_background;
     }
 
     if (typeof this.state.speaker_media === 'object') {
@@ -316,12 +281,12 @@ class NewEvent extends Component {
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
               <DatePicker hintText="Date"
-                        fullWidth="true"
+                        fullWidth={true}
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleDateChange.bind(this)}/>
               <TimePicker hintText="Time"
-                        fullWidth="true"
+                        fullWidth={true}
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleTimeChange.bind(this)}/>
@@ -329,8 +294,8 @@ class NewEvent extends Component {
                           fullWidth={true}
                           value={this.state.speaker_media_type}
                           onChange={this._handleMediaTypeChange.bind(this)}>
-                {config.name_guest_media_type.map((type) => (
-                  <MenuItem value={type.id} primaryText={type.name} />
+                {config.name_guest_media_type.map((type, i) => (
+                  <MenuItem key={i} value={type.id} primaryText={type.name} />
                 ))}
               </SelectField>
               { this.state.speaker_media_type === 1 ?
@@ -357,78 +322,12 @@ class NewEvent extends Component {
             </Paper>
 
             <Paper style={styles.paperRight}>
-              <ImgSelection/>
-
-
               <label className="load-img-label">Preview Image</label>
-              <div ref="galleryPreviewImg">
-              { this.state.previewImgUrlFromGallery!== undefined && this.state.previewImgUrlFromGallery.length > 0 ?
-                <img src={config.baseURL + this.state.previewImgUrlFromGallery} alt="gallery item" />
-                : null }
-              </div>  
-
-              <div className="fit hidelabel preview-img" ref="uploadPreviewImg" style={{display: 'none'}}>
-                <UploadPreview label="Add" onChange={this._onPreviewImgChange} style={styles.fit}/>
-              </div>  
-
-              <div className="overflow">
-                <RaisedButton label="Select image from gallery"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              data-target="previewImgUrlFromGallery"
-                              onTouchTap={this._handleDialogOpen.bind(this)} />
-
-                <RaisedButton label="Select Image from local storage"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              onTouchTap={this._handleOnClickUploadPreviewImg.bind(this)} />
-              </div>
+              <ImgSelection onChange={this._previewImageChange.bind(this)}/>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
-              <div ref="galleryEventBackground">
-              { this.state.eventBackgroundUrlFromGallery!== undefined && this.state.eventBackgroundUrlFromGallery.length > 0 ?
-                <img src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="gallery item" />
-                : null }
-              </div>  
-
-              <div className="fit hidelabel event-background" ref="uploadEventBackground" style={{display: 'none'}}>
-                <UploadPreview label="Add" onChange={this._onEventBackgroundChange} style={styles.fit}/>
-              </div>  
-
-              <div className="overflow">
-                <RaisedButton label="Select image from gallery"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              data-target="eventBackgroundUrlFromGallery"
-                              onTouchTap={this._handleDialogOpen.bind(this)} />
-
-                <RaisedButton label="Select Image from local storage"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              onTouchTap={this._handleOnClickUploadEventBackground.bind(this)} />
-              </div>
+              <ImgSelection onChange={this._eventBackgroundChange.bind(this)}/>
             </Paper>  
-
-            <Dialog title="Gallery"
-                    modal={false}
-                    open={this.state.openDialog}
-                    onRequestClose={this._handleDialogClose}
-                    autoScrollBodyContent={true}>
-              <div style={styles.root}>
-                <GridList style={styles.gridList} cols={2.2}>
-                  {this.state.media.map((img, i) => (
-                    <GridTile
-                      key={i}
-                      data-url={img.url}
-                      style={styles.gridTile}
-                      onTouchTap={this._handelImgSelect.bind(this)}
-                      titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                      <img src={config.baseURL + img.url} alt="gallery item"/>
-                    </GridTile>
-                  ))}
-                </GridList>
-              </div>
-            </Dialog>
           </form>
         </div>
       </div>

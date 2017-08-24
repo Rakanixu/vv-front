@@ -109,12 +109,10 @@ class EventPreview extends Component {
             <Paper style={styles.paperLeft}>
               <TextField floatingLabelText="Event title"
                         disabled={true}
-                        primary={true}
                         value={this.state.event.title}
                         fullWidth={true} />
               <TextField floatingLabelText="Event subtitle"
                         disabled={true}
-                        primary={true}
                         value={this.state.event.subtitle}
                         fullWidth={true} />                    
               <TextField floatingLabelText="Notes"
@@ -132,7 +130,7 @@ class EventPreview extends Component {
                         value={this.state.event.date}/>
               <TimePicker hintText="Time"
                         disabled={true}
-                        fullWidth="true"
+                        fullWidth={true}
                         value={this.state.event.date}
                         mode="landscape" 
                         autoOk={true} />
@@ -140,8 +138,8 @@ class EventPreview extends Component {
                           disabled={true}
                           fullWidth={true}
                           value={this.state.event.speaker_media_type}>
-                {config.name_guest_media_type.map((type) => (
-                  <MenuItem value={type.id} primaryText={type.name} />
+                {config.name_guest_media_type.map((type, i) => (
+                  <MenuItem key={i} value={type.id} primaryText={type.name} />
                 ))}
               </SelectField>
               { this.state.event.speaker_media_type === 1 ?
@@ -153,7 +151,6 @@ class EventPreview extends Component {
                 :
                 <TextField floatingLabelText="Speaker media"
                           disabled={true}
-                          primary={true}
                           value={this.state.event.speaker_media}
                           fullWidth={true} />
               }

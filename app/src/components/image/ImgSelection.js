@@ -36,7 +36,7 @@ class ImgSelection extends Component {
 
     this.state = {
       openDialog: false,
-      selectedImage: '',
+      selectedImage: this.props.defaultImage || '',
       upload_img: {},
       media: []
     };
@@ -51,6 +51,16 @@ class ImgSelection extends Component {
       this._handleError(new Error('User cannot be retrieved'));
     } else {
       user = JSON.parse(localStorage.getItem('alantu-user'));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.defaultImage !== prevProps.defaultImage && this.props.defaultImage) {
+      this.setState({ selectedImage: this.props.defaultImage });
+    }
+
+    if (this.state.selectedImage !== prevState.selectedImage) {
+      this.props.onChange(this.state.selectedImage);
     }
   }
 
@@ -73,7 +83,6 @@ class ImgSelection extends Component {
     this.setState({ upload_img: this.refs.uploadFile.files[0] });
     this._createMedia(this.refs.uploadFile.files[0]).then(function (data) {
       this._handleDialogClose();
-      this.state.selectedImage = data.data.url;
       this.setState({ selectedImage: data.data.url });
       this._getMedias();
     }.bind(this)).catch(function (err) {
