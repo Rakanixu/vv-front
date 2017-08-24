@@ -131,13 +131,7 @@ class QuestionTopic extends Component {
                               primary={true}
                               className="right margin-top-medium margin-left-medium" 
                               onTouchTap={this._handleNewQuestionTopic.bind(this)} />
-              </div>              
-              <div className="overflow">
-                <RaisedButton label="Continue"
-                              primary={true}
-                              className="right margin-top-medium margin-left-medium" 
-                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-              </div>               
+              </div>                       
             </Paper>
           </form>
         </div>  

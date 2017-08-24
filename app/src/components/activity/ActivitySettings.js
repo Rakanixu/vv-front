@@ -125,13 +125,6 @@ class QuizEntry extends Component {
                   onToggle={this._onToggleChange.bind(this)}
                   style={styles.toggle}/>
         </form>
-
-        <div>
-          <RaisedButton label="Continue"
-                        className="event-wizard-continue-button"
-                        primary={true}
-                        onTouchTap={this.props.onDone} />
-        </div>
       </div>
     );
   }

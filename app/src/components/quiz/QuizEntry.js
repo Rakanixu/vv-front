@@ -205,12 +205,6 @@ class QuizEntry extends Component {
                               primary={true}
                               onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
               </div>
-              <div className="overtflow">
-                <RaisedButton label="Save Quiz Entry"                               
-                              className="right margin-top-medium margin-left-medium"
-                              primary={true} 
-                              onTouchTap={this._handleNewQuizEntry.bind(this)} />
-              </div>
             </Paper>
           </form>
         </div>

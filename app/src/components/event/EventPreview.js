@@ -9,6 +9,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
 import './EventPreview.css';
@@ -65,6 +66,10 @@ class EventPreview extends Component {
     this._getEvent();
   }
 
+  _handleRedirect() {
+    this.props.history.push('/manager/event/edit/' + this.props.match.params.eventId + '/detail');
+  }
+
   _getEvent() {
     axios.get(this.state.url).then(function(res) {
       res.data.date = new Date(res.data.date);
@@ -103,6 +108,11 @@ class EventPreview extends Component {
 
           <div className="title">
             <h1>Event: {this.state.event.title}</h1>
+            <div className="finish-later">
+              <RaisedButton label="Finish later" 
+                            className="right margin-top-medium grey" 
+                            onTouchTap={this._handleRedirect.bind(this)} />
+            </div>    
           </div>          
 
           <form className="edit-event-form">

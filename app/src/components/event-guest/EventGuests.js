@@ -189,13 +189,6 @@ class EventGuests extends Component {
                               className="right margin-top-medium margin-left-medium" 
                               onTouchTap={this._handleNewEventGuest.bind(this)} />
               </div>                
-
-              <div className="overflow">
-                <RaisedButton label="Continue"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-              </div>
             </Paper>  
           </form>
         </div>

@@ -1,0 +1,13 @@
+.finish-later {
+  position: absolute;
+  right: 0;
+  top: -30px;
+}
+
+.finish-later button {
+  background-color: #c3c3c3 !important;
+}
+
+.finish-later button span {
+  color: white !important;
+}

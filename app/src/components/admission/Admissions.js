@@ -221,13 +221,7 @@ class Admissions extends Component {
                             className="right margin-top-medium margin-left-medium" 
                             primary={true}
                             onTouchTap={this._handleNewAdmission.bind(this)} />
-              </div>
-              <div className="overflow">
-                <RaisedButton label="Continue"
-                              className="right margin-top-medium"
-                              primary={true}
-                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-              </div>       
+              </div> 
             </Paper>          
 
             <Paper style={styles.paperRight}>

@@ -269,7 +269,7 @@ class EditEvent extends Component {
                     error={this.state.error} />
 
           <div className="title">
-            <h1>Edit Event</h1>
+            <h1>Edit Event</h1>  
           </div>          
 
           <form className="edit-event-form">
