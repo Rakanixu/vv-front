@@ -59,6 +59,10 @@ class ImgSelection extends Component {
       this.setState({ selectedImage: this.props.defaultImage });
     }
 
+    if (this.props.value !== prevProps.value && this.props.value) {
+      this.setState({ selectedImage: this.props.value });
+    }
+
     if (this.state.selectedImage !== prevState.selectedImage) {
       this.props.onChange(this.state.selectedImage);
     }
