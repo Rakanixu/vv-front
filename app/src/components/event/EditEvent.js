@@ -11,7 +11,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import ImgSelection from '../image/ImgSelection';
+import ImgSelectionWrapper from '../image/ImgSelectionWrapper';
 import axios from 'axios';
 import './EditEvent.css';
 
@@ -349,10 +349,10 @@ class EditEvent extends Component {
 
             <Paper style={styles.paperRight}>
               <label className="load-img-label">Preview Image</label>
-              <ImgSelection onChange={this._previewImageChange.bind(this)} defaultImage={this.state.event.preview_img}/>
+              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)} defaultImage={this.state.event.preview_img}/>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
-              <ImgSelection onChange={this._eventBackgroundChange.bind(this)} defaultImage={this.state.event.event_background}/>
+              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} defaultImage={this.state.event.event_background}/>
             </Paper>  
           </form>
         </div>

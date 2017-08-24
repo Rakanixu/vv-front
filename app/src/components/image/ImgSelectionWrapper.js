@@ -34,12 +34,10 @@ class ImgSelectionWrapper extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.defaultImage !== prevProps.defaultImage && this.props.defaultImage) {
-      debugger;
       this.setState({ defaultImage: this.props.defaultImage });
     }
 
     if (this.state.selectedImage !== prevState.selectedImage) {
-      debugger;
       this.props.onChange(this.state.selectedImage);
     }
   }
