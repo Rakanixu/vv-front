@@ -110,14 +110,8 @@ class Quiz extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count}>
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <QuizList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>    
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-quiz-container" : "new-quiz-container" } >
           <div className="title">
@@ -140,12 +134,6 @@ class Quiz extends Component {
                               className="right margin-top-medium margin-left-medium"
                               primary={true}
                               onTouchTap={this._handleNewQuiz.bind(this)} />
-              </div>
-              <div className="overflow">
-                <RaisedButton label="Continue"
-                              className="right margin-top-medium margin-left-medium"
-                              primary={true}
-                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
               </div>
             </Paper>
           </form>

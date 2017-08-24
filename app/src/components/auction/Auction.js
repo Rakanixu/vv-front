@@ -4,7 +4,6 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
-import AuctionList from './AuctionList';
 import axios from 'axios';
 import './Auction.css';
 
@@ -111,14 +110,8 @@ class Auction extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count}>
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <AuctionList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>    
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-auction-container" : "new-auction-container" } >
           <div className="title">

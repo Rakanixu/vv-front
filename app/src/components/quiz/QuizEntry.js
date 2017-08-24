@@ -150,16 +150,10 @@ class QuizEntry extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count}>
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
-          { this.props.showNoEditListing ?
-            <QuizEntryList key={this.state.count} noEdit={true} quizId={this.state.quiz_id} eventId={this.props.eventId}/>
-            : null }
-        </div>    
-
-        <div className={this.props.showNoEditListing ? "container new-quiz-entry-container" : "new-quiz-entry-container" } >
+        <div className="new-quiz-entry-container">
           <div className="title">
             <h1>New Quiz Entry</h1>
           </div>

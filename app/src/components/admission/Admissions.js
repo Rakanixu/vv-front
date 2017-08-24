@@ -8,7 +8,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import AdmissionsList from './AdmissionsList';
 import axios from 'axios';
 import './Admissions.css';
 
@@ -183,14 +182,8 @@ class Admissions extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count}>
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <AdmissionsList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>    
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-admission-container" : "new-admission-container" } >
           <div className="title">

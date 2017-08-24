@@ -4,7 +4,6 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
-import QuestionTopicList from './QuestionTopicList';
 import axios from 'axios';
 import './QuestionTopic.css';
 
@@ -101,14 +100,8 @@ class QuestionTopic extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count}>
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <QuestionTopicList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>    
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-question-topic-container" : "new-question-topic-container" } >
           <div className="title">

@@ -5,7 +5,6 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
-import SliderImageList from './SliderImageList';
 import ImgSelectionWrapper from '../image/ImgSelectionWrapper';
 import axios from 'axios';
 import './SliderImage.css';
@@ -113,14 +112,8 @@ class SliderImage extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count} >
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <SliderImageList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>  
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-image-container" : "new-image-container" } >
           <div className="title">
