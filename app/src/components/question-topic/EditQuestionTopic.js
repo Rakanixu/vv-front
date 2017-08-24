@@ -55,7 +55,7 @@ class EditQuestionTopic extends Component {
     this._editQuestionTopic()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 3
@@ -68,6 +68,11 @@ class EditQuestionTopic extends Component {
   }
 
   _editQuestionTopic() {
+    if (this.state.question_topic.topic === undefined || this.state.question_topic.topic === '' ||
+      this.state.question_topic.description === undefined || this.state.question_topic.description === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('topic', this.state.question_topic.topic);
     data.append('description', this.state.question_topic.description);

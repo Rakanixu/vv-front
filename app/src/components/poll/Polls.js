@@ -72,6 +72,11 @@ class Polls extends Component {
   }
 
   _createPoll() {
+    if (this.state.name === undefined || this.state.name === '' ||
+      this.state.description === undefined || this.state.description === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('name', this.state.name);
     data.append('description', this.state.description);

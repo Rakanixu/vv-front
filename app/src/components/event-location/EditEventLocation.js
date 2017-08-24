@@ -84,11 +84,11 @@ class EditEventLocation extends Component {
   _editEventLocation() {
     var data = new URLSearchParams();
     data.append('principal_id', user.principal_id);
-    data.append('title', this.state.event_location.title);
-    data.append('remark', this.state.event_location.remark);
-    data.append('street', this.state.event_location.street);
-    data.append('city', this.state.event_location.city);
-    data.append('zip', this.state.event_location.zip);
+    data.append('title', this.state.event_location.title || '');
+    data.append('remark', this.state.event_location.remark || '');
+    data.append('street', this.state.event_location.street || '');
+    data.append('city', this.state.event_location.city || '');
+    data.append('zip', this.state.event_location.zip || '');
     data.append('opening_hours', moment(this.state.event_location.opening_hours).utc().format());
 
     return axios.put(this.state.url, data);

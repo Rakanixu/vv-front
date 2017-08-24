@@ -123,7 +123,7 @@ class EditEventGuest extends Component {
     this._editEventGuest()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 4
@@ -150,12 +150,17 @@ class EditEventGuest extends Component {
       main_media = this.state.mainMediaUrlFromGallery;
     }
 
+    if (this.state.event_guest.main_media_type_id === undefined || this.state.event_guest.main_media_type_id === '' ||
+      this.state.event_guest.name === undefined || this.state.event_guest.name === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('main_media_type_id', this.state.event_guest.main_media_type_id);
     data.append('name', this.state.event_guest.name);
-    data.append('description', this.state.event_guest.description);
-    data.append('main_media_file', this.state.event_guest.main_media_file);
-    data.append('main_media', main_media);
+    data.append('description', this.state.event_guest.description || '');
+    data.append('main_media_file', this.state.event_guest.main_media_file || '');
+    data.append('main_media', main_media || '');
 
     return axios.put(this.state.url, data);
   }

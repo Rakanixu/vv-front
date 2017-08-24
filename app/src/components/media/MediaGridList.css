@@ -1,0 +1,130 @@
+@media (max-width: 1350px) {
+  .media-cards-grid >div {
+    width: 33.33333% !important;
+  }
+  .media-card-block-title {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .media-cards-grid >div {
+    width: 50% !important;
+  }
+  .media-card-block-title {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .media-cards-grid >div {
+    width: 80% !important;
+  }
+  .media-card-block-title {
+    font-size: 17px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .media-cards-grid >div {
+    width: 100% !important;
+  }
+  .media-card-block-title {
+    font-size: 20px !important;
+  }
+}
+
+.media-card-block {
+  display: flex !important;
+  padding: 0;
+  height: 100%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .20);
+}
+
+.media-card-block__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 300px;
+}
+
+.media-card-block-img {
+  width: 100%;
+  height: 70%;
+}
+
+.media-card-block-img-wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.media-card-block-title {
+  position: absolute;
+  z-index: 2;
+  color: white;
+  margin-right: 10px;
+  white-space: pre-wrap;
+  bottom: 20px;
+  overflow: auto;
+  font-size: 13px;
+  left: 20px;
+  text-transform: uppercase;
+}
+
+.media-card-block-img-wrapper-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.media-card-block-img-wrapper-inner__img {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.media-card-block__content__buttons {
+  height: 30%;
+  padding-top: 10%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.media-card-block__content__buttons__main {
+  display: block;
+  flex-direction: row;
+  text-align: right;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 30px;
+}
+
+.media-edit-btn, .media-delete-btn {
+  width: 150px;
+  border-radius: 10px !important;
+}
+
+.media-edit-btn div, .media-delete-btn div, .media-edit-btn span, .media-delete-btn span {
+  border-radius: 10px !important;
+}
+
+.media-edit-btn button {
+  background-color: rgb(30, 136, 229) !important;
+  border-radius: 10px !important;
+}
+
+.media-delete-btn button {
+  background-color: #dd4b39 !important;
+  border-radius: 10px !important;
+}
+
+
+

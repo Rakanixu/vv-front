@@ -55,7 +55,7 @@ class EditAuction extends Component {
     this._editAuction()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 5
@@ -68,9 +68,15 @@ class EditAuction extends Component {
   }
 
   _editAuction() {
+    if (this.state.auction.name === undefined || this.state.auction.name === '' ||
+      this.state.auction.title === undefined || this.state.auction.title === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('name', this.state.auction.name);
-    data.append('description', this.state.auction.description);
+    data.append('title', this.state.auction.title);
+    data.append('description', this.state.auction.description || '');
 
     return axios.put(this.state.url, data);
   }
