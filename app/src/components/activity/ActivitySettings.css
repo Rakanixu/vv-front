@@ -2,17 +2,10 @@ form label {
   color: rgb(158, 158, 158) !important;
 }
 
-.container {
-  padding: 25px;
-  padding-top: 0; 
-}
-
-.inner-container {
-  height: calc(100% - 50px);
-  overflow:auto;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+.activity-settings {
+  background: white;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .fit {

@@ -72,6 +72,11 @@ class QuestionTopic extends Component {
   }
 
   _createQuestionTopic() {
+    if (this.state.topic === undefined || this.state.topic === '' ||
+      this.state.description === undefined || this.state.description === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('topic', this.state.topic);
     data.append('description', this.state.description);

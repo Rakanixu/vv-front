@@ -108,12 +108,17 @@ class EventGuests extends Component {
       main_media = this.state.main_media_url;
     }
 
+    if (this.state.main_media_type_id === undefined || this.state.main_media_type_id === '' ||
+      this.state.name === undefined || this.state.name === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('main_media_type_id', this.state.main_media_type_id);
     data.append('name', this.state.name);
-    data.append('description', this.state.description);
-    data.append('main_media_file', this.state.main_media_file);
-    data.append('main_media', main_media);
+    data.append('description', this.state.description || '');
+    data.append('main_media_file', this.state.main_media_file || '');
+    data.append('main_media', main_media || '');
 
     return axios.post(this.state.url + this.props.eventId + '/named_guest', data);
   }

@@ -119,8 +119,35 @@ class SliderImage extends Component {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    this._createSliderImage()
-    .then(function(res) {
+    this._createSliderImage();
+  }
+
+  _createSliderImage() {
+    var img;
+    for (var i in this.state.img) {
+      img = this.state.img[i];
+      break;
+    }
+
+    try {
+      img = dataURItoBlob(img);
+    } catch (err) {}
+
+    if (this.state.imgUrlFromGallery !== '' && this.state.imgUrlFromGallery!== undefined) {
+      img = this.state.imgUrlFromGallery;
+    }
+
+    if (img === undefined) {
+      this._handleError();
+      return;
+    }
+
+    var data = new FormData();
+    data.append('title', this.state.title || '');
+    data.append('type', this.state.type || '');
+    data.append('img', img);
+
+    axios.post(config.baseAPI_URL + '/event/' + this.props.eventId + '/image', data).then(function(res) {
       var count = this.state.count;
       count++;
 
@@ -140,29 +167,6 @@ class SliderImage extends Component {
     .catch(err => {
       this._handleError(err);
     });
-  }
-
-  _createSliderImage() {
-    var img;
-    for (var i in this.state.img) {
-      img = this.state.img[i];
-      break;
-    }
-
-    try {
-      img = dataURItoBlob(img);
-    } catch (err) {}
-
-    if (this.state.imgUrlFromGallery !== '' && this.state.imgUrlFromGallery!== undefined) {
-      img = this.state.imgUrlFromGallery;
-    }
-
-    var data = new FormData();
-    data.append('title', this.state.title);
-    data.append('type', this.state.type);
-    data.append('img', img);
-
-    return axios.post(config.baseAPI_URL + '/event/' + this.props.eventId + '/image', data);
   }
 
   _handleError(err) {

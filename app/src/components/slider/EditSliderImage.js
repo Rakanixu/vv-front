@@ -118,7 +118,7 @@ class EditSliderImage extends Component {
     this._editImage()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 0
@@ -146,8 +146,8 @@ class EditSliderImage extends Component {
     }
 
     var data = new FormData();
-    data.append('title', this.state.image.title);
-    data.append('type', this.state.image.type);
+    data.append('title', this.state.image.title || '');
+    data.append('type', this.state.image.type || '');
     data.append('img', img);
 
     return axios.put(this.state.url, data);

@@ -58,11 +58,6 @@ class Auction extends Component {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.title === undefined || this.state.title === '') {
-      this._handleError();
-      return;
-    }
-
     this._createAuction()
     .then(function(res) {
       var count = this.state.count;
@@ -86,10 +81,15 @@ class Auction extends Component {
   }
 
   _createAuction() {
+    if (this.state.name === undefined || this.state.name === '' ||
+      this.state.title === undefined || this.state.title === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('name', this.state.name);
     data.append('title', this.state.title);
-    data.append('description', this.state.description);
+    data.append('description', this.state.description || '');
 
     return axios.post(this.state.url + this.props.eventId + '/auction', data);
   }

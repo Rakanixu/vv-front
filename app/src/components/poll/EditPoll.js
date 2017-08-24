@@ -55,7 +55,7 @@ class EditPoll extends Component {
     this._editPoll()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId,
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 2
@@ -68,6 +68,11 @@ class EditPoll extends Component {
   }
 
   _editPoll() {
+    if (this.state.poll.name === undefined || this.state.poll.name === '' ||
+      this.state.poll.description === undefined || this.state.poll.description === '') {
+      return new Promise(function(resolve, reject) { reject(); });
+    }
+
     var data = new FormData();
     data.append('name', this.state.poll.name);
     data.append('description', this.state.poll.description);
