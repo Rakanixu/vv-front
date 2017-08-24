@@ -1,0 +1,18 @@
+img.preview {
+  padding-bottom: 0;
+}
+
+.img-selection {
+  background-color: white;
+  margin: 25px 0 25px;
+}
+
+.paper-fab {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.paper-fab button {
+  background-color: rgb(30, 136, 229) !important;
+}

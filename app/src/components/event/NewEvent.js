@@ -13,6 +13,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import ImgSelection from '../image/ImgSelection';
 import axios from 'axios';
 import './NewEvent.css';
 
@@ -356,6 +357,9 @@ class NewEvent extends Component {
             </Paper>
 
             <Paper style={styles.paperRight}>
+              <ImgSelection/>
+
+
               <label className="load-img-label">Preview Image</label>
               <div ref="galleryPreviewImg">
               { this.state.previewImgUrlFromGallery!== undefined && this.state.previewImgUrlFromGallery.length > 0 ?
