@@ -5,7 +5,7 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
 import axios from 'axios';
 import ErrorReporting from 'material-ui-error-reporting';
-import './EventGuestList.css';
+import './MediaSourceList.css';
 
 axios.defaults.withCredentials = true;
 
@@ -31,7 +31,7 @@ var styles = {
   }
 };
 
-class EventGuestList extends Component {
+class MediaSourceList extends Component {
   constructor(props) {
     super(props);
 
@@ -115,4 +115,4 @@ class EventGuestList extends Component {
   }
 }
 
-export default withRouter(EventGuestList);
+export default withRouter(MediaSourceList);

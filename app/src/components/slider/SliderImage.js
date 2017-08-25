@@ -140,7 +140,7 @@ class SliderImage extends Component {
             </Paper>            
 
             <Paper style={styles.paperRight}>
-              <ImgSelectionWrapper onChange={this._imageChange.bind(this)}/>
+              <ImgSelectionWrapper onChange={this._imageChange.bind(this)} hideDefaultImageButton={true}/>
             </Paper>  
           </form>
         </div>  

@@ -65,9 +65,11 @@ class ImgSelectionWrapper extends Component {
                       defaultImage={this.state.defaultImage} 
                       value={this.state.image}/>
         <div style={{ textAlign: 'center' }}>
-          <RaisedButton label="Default Image"
+          { !this.props.hideDefaultImageButton ?
+            <RaisedButton label="Default Image"
                         primary={true}
                         onTouchTap={this._setDefaultImage.bind(this)} />
+          : null }
         </div>
       </div>
     );

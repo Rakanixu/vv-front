@@ -11,8 +11,8 @@ import Polls from '../poll/Polls';
 import PollsList from '../poll/PollsList';
 import QuestionTopic from '../question-topic/QuestionTopic';
 import QuestionTopicList from '../question-topic/QuestionTopicList';
-import EventGuestsList from '../event-guest/EventGuestList';
-import EventGuests from '../event-guest/EventGuests';
+import MediaSourceList from '../media-source/MediaSourceList';
+import MediaSource from '../media-source/MediaSource';
 import Auction from '../auction/Auction';
 import AuctionList from '../auction/AuctionList';
 import Quiz from '../quiz/Quiz';
@@ -35,47 +35,47 @@ class EventTabs extends Component {
       tabs: [
         {
           handleActive: this.handleTabChange.bind(this, 0),
-          title: 'Slider'
+          title: 'Media sources'
         },
         {
           handleActive: this.handleTabChange.bind(this, 1),
-          title: 'Admissions'
+          title: 'Slider'
         },
         {
           handleActive: this.handleTabChange.bind(this, 2),
-          title: 'Polls'
+          title: 'Admissions'
         },
         {
           handleActive: this.handleTabChange.bind(this, 3),
-          title: 'Question Topics'
+          title: 'Polls'
         },
         {
           handleActive: this.handleTabChange.bind(this, 4),
-          title: 'Event Guests'
+          title: 'Question Topics'
         },
-        {
+/*         {
           handleActive: this.handleTabChange.bind(this, 5),
           title: 'Auctions'
-        },
+        }, */
         {
-          handleActive: this.handleTabChange.bind(this, 6),
+          handleActive: this.handleTabChange.bind(this, 5),
           title: 'Quizzes'
         },
         {
-          handleActive: this.handleTabChange.bind(this, 7),
+          handleActive: this.handleTabChange.bind(this, 6),
           title: 'Quiz Entries'
         },
         {
-          handleActive: this.handleTabChange.bind(this, 8),
+          handleActive: this.handleTabChange.bind(this, 7),
           title: 'Activity Settings'
         }
       ],
-      show: [true, false, false, false, false, false, false, false, false],
+      show: [true, false, false, false, false, false, false, false/* , false */],
       reloadSliderImageList: time + 'A',
       reloadAdmissionsList: time + 'B',
       reloadPollsList: time + 'C',
       reloadQuestionTopicList: time + 'D',
-      reloadEventGuestsList: time + 'E',
+      reloadMediaSourceList: time + 'E',
       reloadAuctionList: time + 'F',
       reloadQuizList: time + 'G',
       reloadQuizEntryList: time + 'F',
@@ -141,53 +141,53 @@ class EventTabs extends Component {
             <Nav tabs={this.state.tabs} tabIndex={this.props.tabIndex}/>
             { this.state.show[0] ?
               <div>
+                <MediaSourceList key={this.state.reloadMediaSourceList} eventId={this.props.match.params.eventId}/>
+                <MediaSource onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadMediaSourceList')} eventId={this.props.match.params.eventId} noFit={true}/>
+              </div>
+              : null }  
+            { this.state.show[1] ?
+              <div>
                 <SliderImageList key={this.state.reloadSliderImageList} eventId={this.props.match.params.eventId}/>
                 <SliderImage onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadSliderImageList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[1] ?
+            { this.state.show[2] ?
               <div>
                 <AdmissionsList key={this.state.reloadAdmissionsList} eventId={this.props.match.params.eventId}/>
                 <Admissions onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAdmissionsList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[2] ?
+            { this.state.show[3] ?
               <div>
                 <PollsList key={this.state.reloadPollsList} eventId={this.props.match.params.eventId}/>
                 <Polls onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadPollsList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[3] ?
+            { this.state.show[4] ?
               <div>
                 <QuestionTopicList key={this.state.reloadQuestionTopicList} eventId={this.props.match.params.eventId}/>
                 <QuestionTopic onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuestionTopicList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[4] ?
-              <div>
-                <EventGuestsList key={this.state.reloadEventGuestsList} eventId={this.props.match.params.eventId}/>
-                <EventGuests onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadEventGuestsList')} eventId={this.props.match.params.eventId} noFit={true}/>
-              </div>
-              : null }
-            { this.state.show[5] ?
+{/*             { this.state.show[5] ?
               <div>
                 <AuctionList key={this.state.reloadAuctionList} eventId={this.props.match.params.eventId}/>
                 <Auction onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAuctionList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
-              : null }
-            { this.state.show[6] ?
+              : null } */}
+            { this.state.show[5] ?
               <div>
                 <QuizList key={this.state.reloadQuizList} eventId={this.props.match.params.eventId}/>
                 <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[7] ?
+            { this.state.show[6] ?
               <div>
                 <QuizEntryList key={this.state.reloadQuizEntryList} eventId={this.props.match.params.eventId}/>
                 <QuizEntry onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizEntryList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[8] ?
+            { this.state.show[7] ?
               <div>
                 <ActivitySettings onDone={this.onDone} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>

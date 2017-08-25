@@ -328,10 +328,10 @@ class NewEvent extends Component {
 
             <Paper style={styles.paperRight}>
               <label className="load-img-label">Preview Image</label>
-              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)}/>
+              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)} hideDefaultImageButton={true}/>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
-              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)}/>
+              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} hideDefaultImageButton={true}/>
             </Paper>  
           </form>
         </div>
