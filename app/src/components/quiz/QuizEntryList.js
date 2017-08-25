@@ -34,6 +34,7 @@ class QuizEntryList extends Component {
     super(props);
 
     this.state = {
+      quizId: this.props.match.params.quizId,
       tableHeight: window.innerHeight - 125,
       error: null,
       url: config.baseAPI_URL + '/quiz/',
@@ -42,10 +43,7 @@ class QuizEntryList extends Component {
   }
 
   componentWillMount() {
-    window.addEventListener('quizIdChanged', function(e) {
-      this._getQuizEntries(e.detail);
-      this.setState({ quizId: e.detail });
-    }.bind(this));
+    this._getQuizEntries(this.props.match.params.quizId);
   }
 
   componentWillReceiveProps(nextProps) {

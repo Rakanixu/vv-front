@@ -5,3 +5,7 @@
   padding: 0;
   margin: 0;
 }
+
+.container.no-padding-top {
+  padding-top: 0 !important;
+}

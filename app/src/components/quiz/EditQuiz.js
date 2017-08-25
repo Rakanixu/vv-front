@@ -7,6 +7,8 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import QuizEntry from '../quiz/QuizEntry';
+import QuizEntryList from '../quiz/QuizEntryList';
 import axios from 'axios';
 import './EditQuiz.css';
 
@@ -37,6 +39,12 @@ class EditQuiz extends Component {
     this._getQuiz();
   }
 
+  reloadQuizEntry() {
+    this.setState({
+      reloadQuizEntryList: new Date().getTime()
+    });
+  }
+
   _getQuiz() {
     axios.get(this.state.url).then(function(res) {
       this.setState({ quiz: res.data });
@@ -51,7 +59,17 @@ class EditQuiz extends Component {
     this.setState({ error: null });
   }
 
-  _handleEditQuiz(e) {
+  _handleSaveQuiz(e) {
+    this._editQuiz()
+    .then(function(res) {
+
+    }.bind(this))
+    .catch(err => {
+      this._handleError(err);
+    });
+  }
+
+  _goDetailPage() {
     this._editQuiz()
     .then(function(res) {
       this.props.history.push({
@@ -96,30 +114,49 @@ class EditQuiz extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="inner-container">
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
+      <div>
+        <div className="container">
+          <div className="title">
+            <h1>Edit Quiz: {this.state.quiz.name}</h1>
+            <div className="finish-later">
+              <RaisedButton label="Finish later" 
+                            className="right margin-top-medium grey" 
+                            onTouchTap={this._goDetailPage.bind(this)} />
+            </div> 
+          </div>
 
-          <form className="edit-quiz">
-            <Paper style={styles.paper}>
-              <TextField floatingLabelText="Name"
-                        data-val="name"
-                        value={this.state.quiz.name}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-              <TextField floatingLabelText="Description"
-                        data-val="description"
-                        value={this.state.quiz.description}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
+          <div>
+            <ErrorReporting open={this.state.error !== null}
+                      error={this.state.error} />
 
-              <RaisedButton label="Edit"
-                            className="right margin-top-medium" 
-                            primary={true} 
-                            onTouchTap={this._handleEditQuiz.bind(this)} />
-            </Paper>   
-          </form>
+            <form className="edit-quiz">
+              <Paper style={styles.paper}>
+                <TextField floatingLabelText="Name"
+                          data-val="name"
+                          value={this.state.quiz.name}
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+                <TextField floatingLabelText="Description"
+                          data-val="description"
+                          value={this.state.quiz.description}
+                          onChange={this._handleTextFieldChange.bind(this)}
+                          fullWidth={true} />
+
+                <RaisedButton label="Save"
+                              className="right margin-top-medium" 
+                              primary={true} 
+                              onTouchTap={this._handleSaveQuiz.bind(this)} />
+              </Paper>   
+            </form>
+          </div>
+        </div>
+
+        <div className="container no-padding-top">
+          <div className="title">
+            <h1>Quiz Entries</h1>
+          </div>
+          <QuizEntryList key={this.state.reloadQuizEntryList} eventId={this.props.match.params.eventId}/>
+          <QuizEntry onDone={this.reloadQuizEntry.bind(this)} eventId={this.props.match.params.eventId} />
         </div>
       </div>
     );

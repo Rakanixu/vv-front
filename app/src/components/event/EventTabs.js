@@ -61,16 +61,16 @@ class EventTabs extends Component {
           handleActive: this.handleTabChange.bind(this, 5),
           title: 'Quizzes'
         },
-        {
+/*         {
           handleActive: this.handleTabChange.bind(this, 6),
           title: 'Quiz Entries'
-        },
+        }, */
         {
-          handleActive: this.handleTabChange.bind(this, 7),
+          handleActive: this.handleTabChange.bind(this, 6),
           title: 'Activity Settings'
         }
       ],
-      show: [true, false, false, false, false, false, false, false/* , false */],
+      show: [true, false, false, false, false, false, false/*, false, false */],
       reloadSliderImageList: time + 'A',
       reloadAdmissionsList: time + 'B',
       reloadPollsList: time + 'C',
@@ -181,15 +181,15 @@ class EventTabs extends Component {
                 <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
-            { this.state.show[6] ?
+{/*             { this.state.show[6] ?
               <div>
                 <QuizEntryList key={this.state.reloadQuizEntryList} eventId={this.props.match.params.eventId}/>
                 <QuizEntry onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizEntryList')} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
-              : null }
-            { this.state.show[7] ?
+              : null } */}
+            { this.state.show[6] ?
               <div>
-                <ActivitySettings onDone={this.onDone} eventId={this.props.match.params.eventId} noFit={true}/>
+                <ActivitySettings onDone={this.onDone.bind(this)} eventId={this.props.match.params.eventId} noFit={true}/>
               </div>
               : null }
           </div>

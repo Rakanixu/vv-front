@@ -80,7 +80,6 @@ class SliderImage extends Component {
 
       this.setState({
         error: null,
-        img: {},
         count: count,
         title: '',
         type: ''
