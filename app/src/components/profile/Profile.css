@@ -1,0 +1,46 @@
+.profile label {
+  color: #e3e3e3;
+  text-transform: uppercase;
+  padding-bottom: 8px; 
+  display: block;
+}
+
+.profile img {
+  border-radius: 100%; 
+  padding: 0;
+  max-height: 100%;
+}
+
+.profile {
+  display: inline-flex;
+  background-color: #efefef;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-data {
+  overflow: hidden;
+}
+
+.profile h2 {
+  color: rgb(30, 136, 229);
+  font-weight: 100;
+  font-size: 2em;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #d3d9e2;
+}
+
+.timezone-picker {
+  width: 100%;
+}
+
+.flag-select {
+  color: #a2a2a2;
+  padding-bottom: 30px; 
+}
+
+.flag-select .flag-options {
+  top: -12px;
+  width: 100%;
+}

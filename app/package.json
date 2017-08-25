@@ -14,7 +14,10 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "react": "^15.6.1",
+    "react-bootstrap": "^0.31.2",
+    "react-bootstrap-timezone-picker": "^1.0.11",
     "react-dom": "^15.6.1",
+    "react-flags-select": "^1.1.0",
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10",
     "react-tap-event-plugin": "^2.0.1"

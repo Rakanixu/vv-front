@@ -46,6 +46,7 @@ import DesignOptions from '../components/design-option/DesignOptions';
 import EventLocationList from '../components/event-location/EventLocationList';
 import NewEventLocation from '../components/event-location/NewEventLocation';
 import EditEventLocation from '../components/event-location/EditEventLocation';
+import Profile from '../components/profile/Profile';
 import axios from 'axios';
 import './Manager.css';
 
@@ -256,6 +257,7 @@ class Manager extends Component {
                                 }
                                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+                        <MenuItem primaryText="Profile" data-url="/manager/profile" onTouchTap={this._handleRedirect.bind(this)}/>
                         <MenuItem primaryText="Sign out" onClick={this._logout}/>
                       </IconMenu>
                     </div>
@@ -292,6 +294,7 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/users/edit/:userId`} component={EditUser} />
               <Route exact path={`${this.props.match.path}/donations`} component={Donations} />
               <Route exact path={`${this.props.match.path}/design_options`} component={DesignOptions} />
+              <Route exact path={`${this.props.match.path}/profile`} component={Profile} />
             </Switch>
           </div>
         </div>
