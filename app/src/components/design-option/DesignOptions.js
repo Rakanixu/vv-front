@@ -183,7 +183,7 @@ class DesignOptions extends Component {
               <label className="load-img-label">Default Image</label>
               <ImgSelection onChange={this._defaultImgChange.bind(this)} defaultImage={this.state.default_image}/>
 
-              <label className="load-img-label">Preview Image</label>
+              <label className="load-img-label">Logo</label>
               <ImgSelection onChange={this._logoChange.bind(this)} defaultImage={this.state.logo}/>
 
               <label className="load-img-label block">Background Image</label>

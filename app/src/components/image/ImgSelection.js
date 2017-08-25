@@ -179,9 +179,10 @@ class ImgSelection extends Component {
                   </GridTile>
                 ))}
               </GridList>
-              <FloatingActionButton primary={true} className="paper-fab" onTouchTap={this._selectLocalImg.bind(this)}>
-                <ContentAdd />
-              </FloatingActionButton>
+              <RaisedButton label="Upload New Media"
+                            className="add-media" 
+                            primary={true}
+                            onTouchTap={this._selectLocalImg.bind(this)} />
             </div>
           </Dialog>
         </div>
