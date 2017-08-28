@@ -33,6 +33,7 @@ import EditAdmission from '../components/admission/EditAdmission';
 import EditQuestionTopic from '../components/question-topic/EditQuestionTopic';
 import EditMediaSource from '../components/media-source/EditMediaSource';
 import EditPoll from '../components/poll/EditPoll';
+import EditPollEntry from '../components/poll/EditPollEntry';
 import EditAuction from '../components/auction/EditAuction';
 import EditQuiz from '../components/quiz/EditQuiz';
 import EditQuizEntry from '../components/quiz/EditQuizEntry';
@@ -279,6 +280,7 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/image/:imageId`} component={EditSliderImage} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/admission/:admissionId`} component={EditAdmission} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId`} component={EditPoll} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`} component={EditPollEntry} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/question_topic/:questionTopicId`} component={EditQuestionTopic} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
