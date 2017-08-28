@@ -44,6 +44,9 @@ class Profile extends Component {
       error: null,
       userUrl: config.baseAPI_URL + '/user/',
       user: {},
+      avatar: '',
+      timezone: '',
+      language: '',
       id: 0
     };
   }
@@ -60,8 +63,23 @@ class Profile extends Component {
 
   _getProfile(id) {
     axios.get(this.state.userUrl + id).then(function(res) {
-      this.setState({ user: res.data });
-      console.log(this.state.user.avatar)
+      console.log(res.data);
+      this.setState({ 
+        user: res.data,
+        avatar: res.data.avatar,
+        timezone: res.data.timezone,
+        language: res.data.language
+      });
+
+      if (this.refs.imgSelectorWrapper) {
+        this.refs.imgSelectorWrapper.setState({ defaultValue: this.state.avatar });
+      }
+      if (this.refs.flagSelect) {
+        this.refs.flagSelect.setState({ defaultCountry : this.state.language });
+      }
+      if (this.refs.timezonePicker) {
+        this.refs.timezonePicker.setState({ value : this.state.timezone });
+      }
     }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));
@@ -77,7 +95,7 @@ class Profile extends Component {
   }
 
   _profileImageChange(img) {
-    this.state.user.avatar = img
+    this.state.user.avatar = img;
     this.setState({ user: this.state.user });
   }
 
@@ -92,7 +110,7 @@ class Profile extends Component {
   }
 
   _handleSave() {
-    var data = new FormData();
+    var data = new URLSearchParams();
     data.append('avatar', this.state.user.avatar);
     data.append('timezone', this.state.user.timezone);
     data.append('language', this.state.user.language);
@@ -129,27 +147,26 @@ class Profile extends Component {
 
           <div className="profile"> 
             <Paper style={styles.paperLeft} className="profile-picture">
-              <ImgSelectionWrapper onChange={this._profileImageChange.bind(this)} 
+              <ImgSelectionWrapper  ref="imgSelectorWrapper"
+                                    onChange={this._profileImageChange.bind(this)} 
                                     className="profile-picture"
-                                    selectedImage={this.state.user.avatar}
+                                    defaultImage={this.state.avatar}
                                     hideDefaultImageButton={true}/>
-
-                                    <p>{this.state.user.avatar}</p>
-                                    <p>{this.state.user.timezone}</p>
-                                    <p>{this.state.user.language}</p>
             </Paper>
 
             <Paper style={styles.paperRight} className="profile-data">
               <h2>{this._getRoleNameById(this.state.user.role_id)}</h2>
               <label>Default language</label>
-              <FlagsSelect countries={['US', 'GB']} 
+              <FlagsSelect ref="flagSelect"
+                           countries={['US', 'GB']} 
                            customLabels={{'US': 'EN-US','GB': 'EN-GB'}}
-                           defaultCountry={this.state.user.language}
+                           defaultCountry={this.state.language}
                            onSelect={this._handleLanguageChange.bind(this)}/>
 
               <label>Default timezone</label>
-              <TimezonePicker absolute={false} 
-                              defaultValue={this.state.user.timezone} 
+              <TimezonePicker ref="timezonePicker"
+                              absolute={false} 
+                              value={this.state.timezone} 
                               placeholder= "Select timezone..."
                               onChange={this._handleTimezoneChange.bind(this)}/>
             </Paper>

@@ -45,7 +45,9 @@ class ImgSelectionWrapper extends Component {
   _getPrincipal = (id) => {
     axios.get(this.state.principalUrl + '/' + id).then(res => {
       defaultPrincipalImage = res.data.default_image;
-      this.setState({ defaultImage: res.data.default_image });
+      if (!this.props.defaultImage) {
+        this.setState({ defaultImage: defaultPrincipalImage });
+      }
     });
   }
 
