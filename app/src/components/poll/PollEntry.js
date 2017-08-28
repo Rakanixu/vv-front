@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import IconSelection from '../image/IconSelection';
 import axios from 'axios';
 import './PollEntry.css';
 
@@ -12,13 +13,21 @@ axios.defaults.withCredentials = true;
 const config = require('../../config.json');
 
 var styles = {
-  fit: {
-    overflow: 'hidden',
-    maxHeight: 400
-  },
-  paper: {
+  paperLeft: {
     padding: 20,
     overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 150,
     height: 'min-content'
   }
 };
@@ -32,7 +41,8 @@ class PollEntry extends Component {
       poll_id: this.props.match.params.pollId,
       pollEntriesUrl: config.baseAPI_URL + '/poll',
       title: '',
-      description: ''
+      description: '',
+      icon: ''
     };
   }
 
@@ -41,6 +51,10 @@ class PollEntry extends Component {
     state[e.target.dataset.val] = e.target.value;
     this.setState(state);
     this.setState({ error: null });
+  }
+
+  _iconChange(img) {
+    this.setState({ icon: img });
   }
 
   _handleNewPollEntry(e) {
@@ -72,6 +86,7 @@ class PollEntry extends Component {
     data.append('poll_id', this.state.poll_id);
     data.append('title', this.state.title);
     data.append('description', this.state.description || '');
+    data.append('icon', this.state.icon);
 
     return axios.post(this.state.pollEntriesUrl + '/' + this.state.poll_id + '/poll_entry', data);
   }
@@ -102,7 +117,7 @@ class PollEntry extends Component {
           </div>
 
           <form className="new-poll-entry-form">
-            <Paper style={styles.paper}>  
+            <Paper style={styles.paperLeft}>
               <TextField floatingLabelText="Title"
                         data-val="title"
                         onChange={this._handleTextFieldChange.bind(this)}
@@ -119,6 +134,10 @@ class PollEntry extends Component {
                               onTouchTap={this._handleNewPollEntry.bind(this)} />
               </div>
             </Paper>
+
+            <Paper style={styles.paperRight}>
+              <IconSelection onChange={this._iconChange.bind(this)} hideDefaultImageButton={true}/>
+            </Paper>  
           </form>
         </div>
       </div>

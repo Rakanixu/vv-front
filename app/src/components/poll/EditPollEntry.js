@@ -7,6 +7,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import IconSelection from '../image/IconSelection';
 import axios from 'axios';
 import './EditPollEntry.css';
 
@@ -14,11 +15,22 @@ axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 var styles = {
-  paper: {
+  paperLeft: {
     padding: 20,
     overflow: 'auto',
-    height: 'min-content',
-    width: '100%'
+    width: '50%',
+    float: 'left',
+    minWidth: 220,
+    marginRight: 40,
+    height: 'min-content'
+  },
+  paperRight: {
+    padding: 20,
+    overflow: 'auto',
+    width: '50%',
+    float: 'left',
+    minWidth: 150,
+    height: 'min-content'
   }
 };
 
@@ -51,6 +63,11 @@ class EditPollEntry extends Component {
     this.setState({ error: null });
   }
 
+  _iconChange(img) {
+    this.state.poll_entry.icon = img;
+    this.setState({ poll_entry: this.state.poll_entry });
+  }
+
   _handleQuestionTopic(e) {
     this._EditPollEntry()
     .then(function(res) {
@@ -68,7 +85,8 @@ class EditPollEntry extends Component {
   }
 
   _EditPollEntry() {
-    if (this.state.poll_entry.title === undefined || this.state.poll_entry.title === '') {
+    if (this.state.poll_entry.title === undefined || this.state.poll_entry.title === '' ||
+      this.state.poll_entry.icon === undefined || this.state.poll_entry.icon === '') {
       return new Promise(function(resolve, reject) { reject(); });
     }
 
@@ -76,6 +94,7 @@ class EditPollEntry extends Component {
     data.append('poll_id', this.state.poll_entry.poll_id);
     data.append('title', this.state.poll_entry.title);
     data.append('description', this.state.poll_entry.description || '');
+    data.append('icon', this.state.poll_entry.icon);
 
     return axios.put(this.state.url, data);
   }
@@ -105,7 +124,7 @@ class EditPollEntry extends Component {
         </div>
 
         <form className="edit-poll-entry">
-          <Paper style={styles.paper}>
+          <Paper style={styles.paperLeft}>
             <TextField floatingLabelText="Title"
                       data-val="title"
                       value={this.state.poll_entry.title}
@@ -122,6 +141,12 @@ class EditPollEntry extends Component {
                           primary={true} 
                           onTouchTap={this._handleQuestionTopic.bind(this)} />
           </Paper>
+
+          <Paper style={styles.paperRight}>
+              <IconSelection onChange={this._iconChange.bind(this)} 
+                             defaultIcon={this.state.poll_entry.icon}
+                             hideDefaultImageButton={true}/>
+            </Paper>  
         </form>
       </div>
     );

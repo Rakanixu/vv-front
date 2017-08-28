@@ -103,7 +103,9 @@ class PollEntryList extends Component {
               <TableRow key={i} data-id={poll_entry.id}>
                 <TableRowColumn style={styles.alignLeft}>{poll_entry.title}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{poll_entry.description}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{poll_entry.icon}</TableRowColumn>
+                <TableRowColumn style={styles.tablePreview} className="transparent-icon-background">
+                  <img className="table-img"src={poll_entry.icon} alt="poll entry icon"/>
+                  </TableRowColumn>
                 { !this.props.noEdit ?
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
                 : null }
