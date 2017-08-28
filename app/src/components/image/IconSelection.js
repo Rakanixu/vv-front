@@ -82,10 +82,11 @@ class IconSelection extends Component {
   }
 
   _onUploadIconChange = () => {
+
     this.setState({ upload_icon: this.refs.uploadFile.files[0] });
     this._createMedia(this.refs.uploadFile.files[0]).then(function (data) {
       this._handleDialogClose();
-      this.setState({ selectedIcon: data.data.url });
+      this.setState({ selectedIcon: config.baseURL + data.data.url });
       this._getMedias();
     }.bind(this)).catch(function (err) {
       this._handleError(err);
@@ -174,10 +175,10 @@ class IconSelection extends Component {
                   </GridTile>
                 ))}
               </GridList>
-{/*               <RaisedButton label="Upload New Icon"
+              <RaisedButton label="Upload New Icon"
                             className="add-media" 
                             primary={true}
-                            onTouchTap={this._selectLocalIcon.bind(this)} /> */}
+                            onTouchTap={this._selectLocalIcon.bind(this)} />
             </div>
           </Dialog>
         </div>
