@@ -55,7 +55,7 @@ class EditQuizEntry extends Component {
     this._EditQuizEntry()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/quiz/' + this.props.match.params.quizId,
         query: {
           showTabs: true,
           index: 7
@@ -102,50 +102,52 @@ class EditQuizEntry extends Component {
   render() {
     return (
       <div className="container">
-        <div className="inner-container">
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
+        <ErrorReporting open={this.state.error !== null}
+                  error={this.state.error} />
 
-          <form className="edit-quiz-entry">
-            <Paper style={styles.paper}>
-              <TextField floatingLabelText="Question"
-                        data-val="question"
-                        value={this.state.quiz_entry.question}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-              <TextField floatingLabelText="Answer one"
-                        data-val="answer_one"
-                        value={this.state.quiz_entry.answer_one}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-              <TextField floatingLabelText="Answer two"
-                        data-val="answer_two"
-                        value={this.state.quiz_entry.answer_two}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-              <TextField floatingLabelText="Answer three"
-                        data-val="answer_three"
-                        value={this.state.quiz_entry.answer_three}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-              <TextField floatingLabelText="Answer four"
-                        data-val="answer_four"
-                        value={this.state.quiz_entry.answer_four}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-              <TextField floatingLabelText="Right solution"
-                        data-val="right_solution"
-                        value={this.state.quiz_entry.right_solution}
-                        onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />
-
-              <RaisedButton label="Edit" 
-                            className="right margin-top-medium" 
-                            primary={true} 
-                            onTouchTap={this._handleQuestionTopic.bind(this)} />
-            </Paper>
-          </form>
+        <div className="title">
+          <h1>Edit Quiz Entry</h1>
         </div>
+
+        <form className="edit-quiz-entry">
+          <Paper style={styles.paper}>
+            <TextField floatingLabelText="Question"
+                      data-val="question"
+                      value={this.state.quiz_entry.question}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+            <TextField floatingLabelText="Answer one"
+                      data-val="answer_one"
+                      value={this.state.quiz_entry.answer_one}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+            <TextField floatingLabelText="Answer two"
+                      data-val="answer_two"
+                      value={this.state.quiz_entry.answer_two}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+            <TextField floatingLabelText="Answer three"
+                      data-val="answer_three"
+                      value={this.state.quiz_entry.answer_three}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+            <TextField floatingLabelText="Answer four"
+                      data-val="answer_four"
+                      value={this.state.quiz_entry.answer_four}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+            <TextField floatingLabelText="Right solution"
+                      data-val="right_solution"
+                      value={this.state.quiz_entry.right_solution}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+
+            <RaisedButton label="Save" 
+                          className="right margin-top-medium" 
+                          primary={true} 
+                          onTouchTap={this._handleQuestionTopic.bind(this)} />
+          </Paper>
+        </form>
       </div>
     );
   }

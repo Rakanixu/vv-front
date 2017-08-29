@@ -5,7 +5,6 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
-import SliderImageList from './SliderImageList';
 import ImgSelectionWrapper from '../image/ImgSelectionWrapper';
 import axios from 'axios';
 import './SliderImage.css';
@@ -81,7 +80,6 @@ class SliderImage extends Component {
 
       this.setState({
         error: null,
-        img: {},
         count: count,
         title: '',
         type: ''
@@ -113,14 +111,8 @@ class SliderImage extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count} >
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <SliderImageList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>  
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-image-container" : "new-image-container" } >
           <div className="title">
@@ -143,18 +135,11 @@ class SliderImage extends Component {
                               className="right margin-top-medium" 
                               primary={true}
                               onTouchTap={this._handleNewSliderImage.bind(this)} />
-              </div>
-
-              <div className="overflow">
-                <RaisedButton label="Continue" 
-                              className="right margin-top-medium" 
-                              primary={true} 
-                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-              </div>          
+              </div>    
             </Paper>            
 
             <Paper style={styles.paperRight}>
-              <ImgSelectionWrapper onChange={this._imageChange.bind(this)}/>
+              <ImgSelectionWrapper onChange={this._imageChange.bind(this)} hideDefaultImageButton={true}/>
             </Paper>  
           </form>
         </div>  

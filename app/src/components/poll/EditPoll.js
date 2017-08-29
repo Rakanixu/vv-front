@@ -7,6 +7,8 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import PollEntry from '../poll/PollEntry';
+import PollEntryList from '../poll/PollEntryList';
 import axios from 'axios';
 import './EditPoll.css';
 
@@ -35,6 +37,12 @@ class EditPoll extends Component {
 
   componentDidMount() {
     this._getPoll();
+  }
+
+  reloadPollEntry() {
+    this.setState({
+      reloadPollEntryList: new Date().getTime()
+    });
   }
 
   _getPoll() {
@@ -80,6 +88,22 @@ class EditPoll extends Component {
     return axios.put(this.state.url, data);
   }
 
+  _goDetailPage() {
+    this._editPoll()
+    .then(function(res) {
+      this.props.history.push({
+        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        query: {
+          showTabs: true,
+          index: 3
+        }
+      });
+    }.bind(this))
+    .catch(err => {
+      this._handleError(err);
+    });
+  }
+
   _handleError(err) {
     if (!err) {
       err = new Error('Invalid data');
@@ -96,8 +120,17 @@ class EditPoll extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="inner-container">
+      <div>
+        <div className="container">
+          <div className="title">
+            <h1>Edit Poll: {this.state.poll.name}</h1>
+            <div className="finish-later">
+              <RaisedButton label="Finish later" 
+                            className="right margin-top-medium grey" 
+                            onTouchTap={this._goDetailPage.bind(this)} />
+            </div> 
+          </div>
+
           <ErrorReporting open={this.state.error !== null}
                     error={this.state.error} />
 
@@ -120,6 +153,14 @@ class EditPoll extends Component {
                             onTouchTap={this._handleEditAdmission.bind(this)} />
             </Paper>
           </form>
+        </div>
+
+        <div className="container no-padding-top">
+          <div className="title">
+            <h1>Poll Entries</h1>
+          </div>
+          <PollEntryList key={this.state.reloadPollEntryList} eventId={this.props.match.params.eventId}/>
+          <PollEntry onDone={this.reloadPollEntry.bind(this)} eventId={this.props.match.params.eventId} />
         </div>
       </div>
     );

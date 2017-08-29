@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
-import './EditEventGuest.css';
+import './EditMediaSource.css';
 
 axios.defaults.withCredentials = true;
 
@@ -57,7 +57,7 @@ var styles = {
   }
 };
 
-class EditEventGuest extends Component {
+class EditMediaSource extends Component {
   constructor(props) {
     super(props);
 
@@ -119,8 +119,8 @@ class EditEventGuest extends Component {
     this.setState({ event_guest: this.state.event_guest });
   }
 
-  _handleEditEventGuest(e) {
-    this._editEventGuest()
+  _handleEditMediaSource(e) {
+    this._EditMediaSource()
     .then(function(res) {
       this.props.history.push({
         pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
@@ -135,7 +135,7 @@ class EditEventGuest extends Component {
     });
   }
 
-  _editEventGuest() {
+  _EditMediaSource() {
     var main_media;
     for (var i in this.state.main_media) {
       main_media = this.state.main_media[i];
@@ -233,7 +233,7 @@ class EditEventGuest extends Component {
               <RaisedButton label="Edit" 
                             className="right margin-top-medium" 
                             primary={true} 
-                            onTouchTap={this._handleEditEventGuest.bind(this)} />
+                            onTouchTap={this._handleEditMediaSource.bind(this)} />
             </Paper>
 
             <Paper style={styles.paperRight}>
@@ -296,4 +296,4 @@ class EditEventGuest extends Component {
   }
 }
 
-export default withRouter(EditEventGuest);
+export default withRouter(EditMediaSource);

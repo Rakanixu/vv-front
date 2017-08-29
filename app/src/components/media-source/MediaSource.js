@@ -8,19 +8,15 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
-import EventGuestList from './EventGuestList';
+import ImgSelectionWrapper from '../image/ImgSelectionWrapper';
 import axios from 'axios';
-import './EventGuests.css';
+import './MediaSource.css';
 
 axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
 
 var styles = {
-  fit: {
-    overflow: 'hidden',
-    maxHeight: 400
-  },
   screenHeight: {
     height: window.innerHeight - 250
   },
@@ -31,13 +27,9 @@ var styles = {
   }
 };
 
-class EventGuests extends Component {
+class MediaSource extends Component {
   constructor(props) {
     super(props);
-
-    if (this.props.noFit) {
-      delete styles.screenHeight.height;
-    }
 
     this.state = {
       error: null,
@@ -55,9 +47,9 @@ class EventGuests extends Component {
     this.setState({ error: null });
   }
 
-  _onMainMediaChange = (pictures) => {
+  _onMainMediaChange = (img) => {
     this.setState({
-      main_media: pictures,
+      main_media: img,
       main_media_url: ''
     });
   }
@@ -68,8 +60,8 @@ class EventGuests extends Component {
     });
   }
 
-  _handleNewEventGuest(e) {
-    this._createGuest()
+  _handleNewMediaSource(e) {
+    this._createMediaSource()
     .then(function(res) {
       var count = this.state.count;
       count++;
@@ -93,21 +85,7 @@ class EventGuests extends Component {
     });
   }
 
-  _createGuest() {
-    var main_media;
-    for (var i in this.state.main_media) {
-      main_media = this.state.main_media[i];
-      break;
-    }
-
-    try {
-      main_media = dataURItoBlob(main_media);
-    } catch (err) {}
-
-    if (this.state.main_media_url !== undefined && this.state.main_media_url !== '') {
-      main_media = this.state.main_media_url;
-    }
-
+  _createMediaSource() {
     if (this.state.main_media_type_id === undefined || this.state.main_media_type_id === '' ||
       this.state.name === undefined || this.state.name === '') {
       return new Promise(function(resolve, reject) { reject(); });
@@ -118,7 +96,7 @@ class EventGuests extends Component {
     data.append('name', this.state.name);
     data.append('description', this.state.description || '');
     data.append('main_media_file', this.state.main_media_file || '');
-    data.append('main_media', main_media || '');
+    data.append('main_media', this.state.main_media || '');
 
     return axios.post(this.state.url + this.props.eventId + '/named_guest', data);
   }
@@ -140,18 +118,12 @@ class EventGuests extends Component {
   render() {
     return (
       <div>
-        <div className="container" key={this.state.count}>
-          <ErrorReporting open={this.state.error !== null}
-                    error={this.state.error} />
-
-          { this.props.showNoEditListing ?
-            <EventGuestList key={this.state.count} noEdit={true} eventId={this.props.eventId}/>
-            : null }
-        </div>
+        <ErrorReporting open={this.state.error !== null}
+                        error={this.state.error} />
 
         <div className={this.props.showNoEditListing ? "container new-admission-container" : "new-admission-container" } >
           <div className="title">
-            <h1>New Event Guest</h1>
+            <h1>New Media Source</h1>
           </div>
 
           <form className="newEventGuest">
@@ -174,8 +146,8 @@ class EventGuests extends Component {
                 ))}
               </SelectField>
               { this.state.main_media_type_id === 1 ?
-                <div className="fit">
-                  <UploadPreview title="Media" label="Add" onChange={this._onMainMediaChange} style={styles.fit}/>
+                <div className="image-selector-container">
+                  <ImgSelectionWrapper onChange={this._onMainMediaChange.bind(this)} hideDefaultImageButton={true}/>
                 </div>
                 :
                 <TextField floatingLabelText="Media URL"
@@ -184,18 +156,11 @@ class EventGuests extends Component {
                           fullWidth={true} />
               }
               <div className="overflow">
-                <RaisedButton label="Save Guest"
+                <RaisedButton label="Save Source"
                               primary={true}
                               className="right margin-top-medium margin-left-medium" 
-                              onTouchTap={this._handleNewEventGuest.bind(this)} />
+                              onTouchTap={this._handleNewMediaSource.bind(this)} />
               </div>                
-
-              <div className="overflow">
-                <RaisedButton label="Continue"
-                              className="right margin-top-medium margin-left-medium" 
-                              primary={true}
-                              onTouchTap={this.props.onDone.bind(null, this.props.eventId)} />
-              </div>
             </Paper>  
           </form>
         </div>
@@ -204,4 +169,4 @@ class EventGuests extends Component {
   }
 }
 
-export default withRouter(EventGuests);
+export default withRouter(MediaSource);

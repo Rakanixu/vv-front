@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import axios from 'axios';
-import './ImgSelection.css';
+import './IconSelection.css';
 
 axios.defaults.withCredentials = true;
 
@@ -30,20 +30,18 @@ var styles = {
   }
 };
 
-class ImgSelection extends Component {
+class IconSelection extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       openDialog: false,
-      selectedImage: this.props.defaultImage || '',
-      upload_img: {},
-      media: []
+      selectedIcon: this.props.defaultIcon || window.location.origin + config.icons[0],
+      upload_icon: {},
+      icons: config.icons
     };
-  }
 
-  componentWillMount() {
-    this._getMedias();
+    this.props.onChange(this.state.selectedIcon);
   }
 
   componentDidMount() {
@@ -55,16 +53,16 @@ class ImgSelection extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.defaultImage !== prevProps.defaultImage && this.props.defaultImage) {
-      this.setState({ selectedImage: this.props.defaultImage });
+    if (this.props.defaultIcon !== prevProps.defaultIcon && this.props.defaultIcon) {
+      this.setState({ selectedIcon: this.props.defaultIcon });
     }
 
     if (this.props.value !== prevProps.value && this.props.value) {
-      this.setState({ selectedImage: this.props.value });
+      this.setState({ selectedIcon: this.props.value });
     }
 
-    if (this.state.selectedImage !== prevState.selectedImage) {
-      this.props.onChange(this.state.selectedImage);
+    if (this.state.selectedIcon !== prevState.selectedIcon) {
+      this.props.onChange(this.state.selectedIcon);
     }
   }
 
@@ -78,32 +76,25 @@ class ImgSelection extends Component {
     this.setState({ openDialog: false });
   };
 
-  _handleImgSelect = (e) => {
-    this.setState({ selectedImage: e.currentTarget.dataset.url });
+  _handleIconSelect = (e) => {
+    this.setState({ selectedIcon: e.currentTarget.dataset.url });
     this._handleDialogClose();
   }
 
-  _onUploadImgChange = () => {
-    this.setState({ upload_img: this.refs.uploadFile.files[0] });
+  _onUploadIconChange = () => {
+
+    this.setState({ upload_icon: this.refs.uploadFile.files[0] });
     this._createMedia(this.refs.uploadFile.files[0]).then(function (data) {
       this._handleDialogClose();
-      this.setState({ selectedImage: data.data.url });
+      this.setState({ selectedIcon: config.baseURL + data.data.url });
       this._getMedias();
     }.bind(this)).catch(function (err) {
       this._handleError(err);
     }.bind(this));
   }
 
-  _selectLocalImg = (e) => {
+  _selectLocalIcon = (e) => {
     this.refs.uploadFile.click();
-  }
-
-  _getMedias() {
-    axios.get(config.baseAPI_URL + '/media').then(res => {
-      this.setState({ media: res.data });
-    }).catch(err => {
-      this._handleError(err);
-    });
   }
 
   _createMedia(file) {
@@ -143,20 +134,24 @@ class ImgSelection extends Component {
 
   render() {
     return (
-      <div style={{ width: '100%' }}>
-        <div className="img-selection">
+      <div style={{ width: '100%', overflow: 'auto' }}>
+        <div className="img-selection transparent-icon-background">
           <div ref="gallery">
-            {this.state.selectedImage !== undefined && this.state.selectedImage.length > 0 ?
-              <img className="preview" src={config.baseURL + this.state.selectedImage} alt="" />
+            {this.state.selectedIcon !== undefined && this.state.selectedIcon.length > 0 ?
+              <img className="preview" src={this.state.selectedIcon} alt="" />
               : null}
           </div>
 
           <div className="fit hidelabel preview-img" ref="upload" style={{ display: 'none' }}>
-            <input id="fileUpload" type="file" ref="uploadFile" style={{ display: 'none' }} onChange={this._onUploadImgChange.bind(this)} />
+            <input id="fileUpload" 
+                   type="file" 
+                   ref="uploadFile" 
+                   style={{ display: 'none' }} 
+                   onChange={this._onUploadIconChange.bind(this)} />
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <RaisedButton label="Select Image"
+            <RaisedButton label="Select Icon"
               primary={true}
               onTouchTap={this._handleDialogOpen.bind(this)} />
           </div>
@@ -168,21 +163,22 @@ class ImgSelection extends Component {
             autoScrollBodyContent={true}>
             <div style={styles.root}>
               <GridList style={styles.gridList} cols={2.2}>
-                {this.state.media.map((img, i) => (
+                {this.state.icons.map((url, i) => (
                   <GridTile
+                    className="transparent-icon-background"
                     key={i}
-                    data-url={img.url}
+                    data-url={window.location.origin + url}
                     style={styles.gridTile}
-                    onTouchTap={this._handleImgSelect.bind(this)}
+                    onTouchTap={this._handleIconSelect.bind(this)}
                     titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)">
-                    <img src={config.baseURL + img.url} alt="gallery item" />
+                    <img src={window.location.origin + url} alt="icon" />
                   </GridTile>
                 ))}
               </GridList>
-              <RaisedButton label="Upload New Media"
+              <RaisedButton label="Upload New Icon"
                             className="add-media" 
                             primary={true}
-                            onTouchTap={this._selectLocalImg.bind(this)} />
+                            onTouchTap={this._selectLocalIcon.bind(this)} />
             </div>
           </Dialog>
         </div>
@@ -191,4 +187,4 @@ class ImgSelection extends Component {
   }
 }
 
-export default withRouter(ImgSelection);
+export default withRouter(IconSelection);

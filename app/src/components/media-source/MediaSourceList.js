@@ -5,7 +5,7 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
 import axios from 'axios';
 import ErrorReporting from 'material-ui-error-reporting';
-import './AdmissionsList.css';
+import './MediaSourceList.css';
 
 axios.defaults.withCredentials = true;
 
@@ -31,37 +31,37 @@ var styles = {
   }
 };
 
-class AdmissionsList extends Component {
+class MediaSourceList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       tableHeight: window.innerHeight - 125,
       error: null,
-      url: config.baseAPI_URL + '/event/' + this.props.eventId + '/admission',
-      admissions: []
+      url: config.baseAPI_URL + '/event/' + this.props.eventId + '/named_guest',
+      event_guests: []
     };
   }
 
   componentWillMount() {
-    this._getAdmissions();
+    this._getEventGuests();
   }
 
-  _getAdmissions() {
+  _getEventGuests() {
     axios.get(this.state.url).then(res => {
-      this.setState({ admissions: res.data });
+      this.setState({ event_guests: res.data });
     }).catch(err => {
       this._handleError(err);
     });
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/admission/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/event_guest/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {
     axios.delete(this.state.url + '/' + e.currentTarget.parentNode.dataset.id).then(function(res) {
-      this._getAdmissions();
+      this._getEventGuests();
     }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));
@@ -80,14 +80,13 @@ class AdmissionsList extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
+        <Table fixedHeader={true}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Subtitle</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Price ($ USD)</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '52px'}}>Media</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft}>Name</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
-              <TableHeaderColumn className="column-fix-left-margin">Icon</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Media type</TableHeaderColumn>
               { !this.props.noEdit ?
               <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
@@ -95,15 +94,14 @@ class AdmissionsList extends Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {this.state.admissions.map((admission, i) =>
-              <TableRow key={i} data-id={admission.id}>
-                <TableRowColumn style={styles.alignLeft}>{admission.title}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{admission.subtitle}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{'$ ' + parseFloat(admission.price || 0).toFixed(2)}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{admission.description}</TableRowColumn>
-                <TableRowColumn style={styles.tablePreview} className="transparent-icon-background">
-                  <img className="table-img" src={admission.icon} alt="admission icon"/>
+            {this.state.event_guests.map((event_guest, i) =>
+              <TableRow key={i} data-id={event_guest.id}>
+                <TableRowColumn style={styles.tablePreview}>
+                  <img className="table-img" src={config.baseURL + event_guest.main_media} alt="named guest media file"/>
                 </TableRowColumn>
+                <TableRowColumn style={styles.alignLeft}>{event_guest.name}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft}>{event_guest.description}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft}>{config.name_guest_media_type[event_guest.main_media_type_id - 1].name}</TableRowColumn>
                 { !this.props.noEdit ?
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
                 : null }
@@ -117,4 +115,4 @@ class AdmissionsList extends Component {
   }
 }
 
-export default withRouter(AdmissionsList);
+export default withRouter(MediaSourceList);

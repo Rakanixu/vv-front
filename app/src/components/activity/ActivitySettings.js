@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { blue600, blue100 } from 'material-ui/styles/colors';
 import Toggle from 'material-ui/Toggle';
+import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import SvgIcon from 'material-ui/SvgIcon';
 import axios from 'axios';
 import './ActivitySettings.css';
 
@@ -47,23 +49,48 @@ class QuizEntry extends Component {
 
   _getEvent() {
     axios.get(this.state.url).then(function(res) {
+      for (var i in res.data) {
+        if (i.indexOf('_price') > -1) {
+          res.data[i] = parseFloat(res.data[i] || 0).toFixed(2);
+        }
+      }
+
       this.setState({ event: res.data });
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
   }
 
+  _handleTextFieldChange(e) {
+    this.state.event[e.target.dataset.val] = e.target.value;
+    this.setState({ error: null });
+  }
+
   _onToggleChange(e, checked) {
     this.state.event[e.currentTarget.dataset.value] = checked;
     this.setState({ event: this.state.event });
+    this._save();
+  }
 
-    var data = new URLSearchParams();
+  _handleSave() {
+    this._save();
+  }
+
+  _save() {
+    var data = new FormData();
     for (var attr in this.state.event) {
-      data.append(attr, this.state.event[attr]);
+      if (attr.indexOf('_price') > -1) {
+        data.append(attr, this.state.event[attr] || 0);
+      } else {
+        data.append(attr, this.state.event[attr]);
+      }
     }
 
-    axios.put(this.state.url, data).catch(function(err) {
+    axios.put(this.state.url, data)
+    .then(function() {
       this._getEvent();
+    }.bind(this))
+    .catch(function(err) {
       this._handleError(err);
     }.bind(this));
   }
@@ -89,49 +116,105 @@ class QuizEntry extends Component {
                   error={this.state.error} />
 
         <form className="activity-settings">
-          <Toggle label="Chat highlight"
-                  toggled={this.state.event.chat_highlight}
-                  data-value="chat_highlight"
-                  thumbSwitchedStyle={styles.thumbSwitched}
-                  trackSwitchedStyle={styles.trackOff}
-                  onToggle={this._onToggleChange.bind(this)}
-                  style={styles.toggle}/>
-          <Toggle label="Highlight chat with user image"
-                  toggled={this.state.event.chat_with_user_image}
-                  data-value="chat_with_user_image"
-                  thumbSwitchedStyle={styles.thumbSwitched}
-                  trackSwitchedStyle={styles.trackOff}
-                  onToggle={this._onToggleChange.bind(this)}
-                  style={styles.toggle}/>
-          <Toggle label="Pose a question"
-                  toggled={this.state.event.pose_question}
-                  data-value="pose_question"
-                  thumbSwitchedStyle={styles.thumbSwitched}
-                  trackSwitchedStyle={styles.trackOff}
-                  onToggle={this._onToggleChange.bind(this)}
-                  style={styles.toggle}/>
-          <Toggle label="Chat shown in status bar"
-                  toggled={this.state.event.chat_shown_status_bar}
-                  data-value="chat_shown_status_bar"
-                  thumbSwitchedStyle={styles.thumbSwitched}
-                  trackSwitchedStyle={styles.trackOff}
-                  onToggle={this._onToggleChange.bind(this)}
-                  style={styles.toggle}/>
-          <Toggle label="Stage moment with webcam"
-                  toggled={this.state.event.stage_moment_webcam}
-                  data-value="stage_moment_webcam"
-                  thumbSwitchedStyle={styles.thumbSwitched}
-                  trackSwitchedStyle={styles.trackOff}
-                  onToggle={this._onToggleChange.bind(this)}
-                  style={styles.toggle}/>
-        </form>
+          <div>
+            <Toggle label="Chat highlight"
+                    className="toggle"
+                    toggled={this.state.event.chat_highlight}
+                    data-value="chat_highlight"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
+                    onToggle={this._onToggleChange.bind(this)}
+                    style={styles.toggle}/>
 
-        <div>
-          <RaisedButton label="Continue"
-                        className="event-wizard-continue-button"
+            <TextField floatingLabelText="Price ($ USD)"
+                        className="text-field"
+                        data-val="chat_highlight_price"
                         primary={true}
-                        onTouchTap={this.props.onDone} />
-        </div>
+                        value={this.state.event.chat_highlight_price}
+                        onChange={this._handleTextFieldChange.bind(this)}
+                        fullWidth={true} />
+          </div>
+
+          <div>
+            <Toggle label="Highlight chat with user image"
+                    className="toggle"
+                    toggled={this.state.event.chat_with_user_image}
+                    data-value="chat_with_user_image"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
+                    onToggle={this._onToggleChange.bind(this)}
+                    style={styles.toggle}/>
+            <TextField floatingLabelText="Price ($ USD)"
+                      className="text-field"
+                      data-val="chat_with_user_image_price"
+                      primary={true}
+                      value={this.state.event.chat_with_user_image_price}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+          </div>
+
+          <div>
+            <Toggle label="Pose a question"
+                    className="toggle"
+                    toggled={this.state.event.pose_question}
+                    data-value="pose_question"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
+                    onToggle={this._onToggleChange.bind(this)}
+                    style={styles.toggle}/>
+            <TextField floatingLabelText="Price ($ USD)"
+                      className="text-field"
+                      data-val="pose_question_price"
+                      primary={true}
+                      value={this.state.event.pose_question_price}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+          </div>
+
+          <div>
+            <Toggle label="Chat shown in status bar"
+                    className="toggle"
+                    toggled={this.state.event.chat_shown_status_bar}
+                    data-value="chat_shown_status_bar"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
+                    onToggle={this._onToggleChange.bind(this)}
+                    style={styles.toggle}/>
+            <TextField floatingLabelText="Price ($ USD)"
+                      className="text-field"
+                      data-val="chat_shown_status_bar_price"
+                      primary={true}
+                      value={this.state.event.chat_shown_status_bar_price}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />
+          </div>                  
+
+          <div>        
+            <Toggle label="Stage moment with webcam"
+                    className="toggle"
+                    toggled={this.state.event.stage_moment_webcam}
+                    data-value="stage_moment_webcam"
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackOff}
+                    onToggle={this._onToggleChange.bind(this)}
+                    style={styles.toggle}/>
+
+            <TextField floatingLabelText="Price ($ USD)"
+                      className="text-field"
+                      data-val="stage_moment_webcam_price"
+                      primary={true}
+                      value={this.state.event.stage_moment_webcam_price}
+                      onChange={this._handleTextFieldChange.bind(this)}
+                      fullWidth={true} />                    
+          </div>         
+
+          <div>
+            <RaisedButton label="Save"
+                          className="event-wizard-continue-button"
+                          primary={true}
+                          onTouchTap={this._handleSave.bind(this)} />
+          </div> 
+        </form>
       </div>
     );
   }

@@ -31,8 +31,9 @@ import EventTabs from '../components/event/EventTabs';
 import EditSliderImage from '../components/slider/EditSliderImage';
 import EditAdmission from '../components/admission/EditAdmission';
 import EditQuestionTopic from '../components/question-topic/EditQuestionTopic';
-import EditEventGuest from '../components/event-guest/EditEventGuest';
+import EditMediaSource from '../components/media-source/EditMediaSource';
 import EditPoll from '../components/poll/EditPoll';
+import EditPollEntry from '../components/poll/EditPollEntry';
 import EditAuction from '../components/auction/EditAuction';
 import EditQuiz from '../components/quiz/EditQuiz';
 import EditQuizEntry from '../components/quiz/EditQuizEntry';
@@ -46,6 +47,7 @@ import DesignOptions from '../components/design-option/DesignOptions';
 import EventLocationList from '../components/event-location/EventLocationList';
 import NewEventLocation from '../components/event-location/NewEventLocation';
 import EditEventLocation from '../components/event-location/EditEventLocation';
+import Profile from '../components/profile/Profile';
 import axios from 'axios';
 import './Manager.css';
 
@@ -103,7 +105,7 @@ const data = {
     menus: [
         {text: 'Overview', icon: <Assessment/>, link: '/manager/event'},
         {text: 'New event', icon: <PermIdentity/>, link: '/manager/event/new'},
-        {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'},
+        /* {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'}, */
         {text: 'Donations', icon: <PermIdentity/>, link: '/manager/donations'},
         {text: 'Users', icon: <PermIdentity/>, link: '/manager/users'},
         {text: 'Media', icon: <PermIdentity/>, link: '/manager/media'},
@@ -130,7 +132,11 @@ class Manager extends Component {
       user = JSON.parse(localStorage.getItem('alantu-user'));
     }
 
-    this._getPrincipal(user.principal_id);
+    if (user && user.principal_id) {
+      this._getPrincipal(user.principal_id);
+    } else {
+      this.props.history.push('/login');
+    }
   }
 
   _getPrincipal = (id) => {
@@ -252,6 +258,7 @@ class Manager extends Component {
                                 }
                                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
+                        <MenuItem primaryText="Profile" data-url="/manager/profile" onTouchTap={this._handleRedirect.bind(this)}/>
                         <MenuItem primaryText="Sign out" onClick={this._logout}/>
                       </IconMenu>
                     </div>
@@ -273,8 +280,9 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/image/:imageId`} component={EditSliderImage} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/admission/:admissionId`} component={EditAdmission} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId`} component={EditPoll} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`} component={EditPollEntry} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/question_topic/:questionTopicId`} component={EditQuestionTopic} />
-              <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:eventGuestId`} component={EditEventGuest} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
@@ -288,6 +296,7 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/users/edit/:userId`} component={EditUser} />
               <Route exact path={`${this.props.match.path}/donations`} component={Donations} />
               <Route exact path={`${this.props.match.path}/design_options`} component={DesignOptions} />
+              <Route exact path={`${this.props.match.path}/profile`} component={Profile} />
             </Switch>
           </div>
         </div>

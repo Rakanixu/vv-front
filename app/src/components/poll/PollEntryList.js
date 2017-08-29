@@ -5,18 +5,16 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Delete from 'material-ui/svg-icons/action/delete';
 import axios from 'axios';
 import ErrorReporting from 'material-ui-error-reporting';
-import './EventGuestList.css';
+import './PollEntryList.css';
 
 axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
-var styles = {
+const styles = {
   alignLeft: {
     textAlign: 'left'
   },
-  tablePreview: {
-    width: 100,
-    maxWidth: 100,    
+  image: {
     margin: 0,
     padding: 0
   },
@@ -31,37 +29,45 @@ var styles = {
   }
 };
 
-class EventGuestList extends Component {
+class PollEntryList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      pollId: this.props.match.params.pollId,
       tableHeight: window.innerHeight - 125,
       error: null,
-      url: config.baseAPI_URL + '/event/' + this.props.eventId + '/named_guest',
-      event_guests: []
+      url: config.baseAPI_URL + '/poll/',
+      poll_entries: []
     };
   }
 
   componentWillMount() {
-    this._getEventGuests();
+    this._getPollEntries(this.props.match.params.pollId);
   }
 
-  _getEventGuests() {
-    axios.get(this.state.url).then(res => {
-      this.setState({ event_guests: res.data });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.pollId && nextProps.pollId >= 0) {
+      this.setState({ pollId: nextProps.pollId });
+      this._getPollEntries(nextProps.pollId);
+    }
+  }
+
+  _getPollEntries(pollId) {
+    axios.get(this.state.url + pollId + '/poll_entry').then(res => {
+      this.setState({ poll_entries: res.data });
     }).catch(err => {
       this._handleError(err);
     });
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/event_guest/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/poll/' + this.state.pollId + '/poll_entry/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {
-    axios.delete(this.state.url + '/' + e.currentTarget.parentNode.dataset.id).then(function(res) {
-      this._getEventGuests();
+    axios.delete(this.state.url + this.state.pollId + '/poll_entry/' + e.currentTarget.parentNode.dataset.id).then(function(res) {
+      this._getPollEntries(this.state.pollId);
     }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));
@@ -80,13 +86,12 @@ class EventGuestList extends Component {
         <ErrorReporting open={this.state.error !== null}
           error={this.state.error} />
 
-        <Table fixedHeader={true}>
+        <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={{width: '52px'}}>Media</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft}>Name</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
-              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Media type</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft}>Description</TableHeaderColumn>
+              <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Icon</TableHeaderColumn>
               { !this.props.noEdit ?
               <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
@@ -94,14 +99,13 @@ class EventGuestList extends Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
-            {this.state.event_guests.map((event_guest, i) =>
-              <TableRow key={i} data-id={event_guest.id}>
-                <TableRowColumn style={styles.tablePreview}>
-                  <img className="table-img" src={config.baseURL + event_guest.main_media} alt="named guest media file"/>
-                </TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{event_guest.name}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{event_guest.description}</TableRowColumn>
-                <TableRowColumn style={styles.alignLeft}>{config.name_guest_media_type[event_guest.main_media_type_id - 1].name}</TableRowColumn>
+            {this.state.poll_entries.map((poll_entry, i) =>
+              <TableRow key={i} data-id={poll_entry.id}>
+                <TableRowColumn style={styles.alignLeft}>{poll_entry.title}</TableRowColumn>
+                <TableRowColumn style={styles.alignLeft}>{poll_entry.description}</TableRowColumn>
+                <TableRowColumn style={styles.tablePreview} className="transparent-icon-background">
+                  <img className="table-img"src={poll_entry.icon} alt="poll entry icon"/>
+                  </TableRowColumn>
                 { !this.props.noEdit ?
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
                 : null }
@@ -115,4 +119,4 @@ class EventGuestList extends Component {
   }
 }
 
-export default withRouter(EventGuestList);
+export default withRouter(PollEntryList);

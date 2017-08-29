@@ -55,9 +55,24 @@ class Donations extends Component {
   _getDonations() {
     axios.get(this.state.url + user.principal_id + '/donation').then(res => {
       this.setState({ donations: res.data });
+      
+      for (var i = 0; i < res.data.length; i++) {
+        this._getEventTitleByPaymentId(res.data[i].payment_id, i);
+      }
     }).catch(err => {
       this._handleError(err);
     });
+  }
+
+  _getEventTitleByPaymentId(paymentId, i) {
+    axios.get(config.baseAPI_URL + '/payment/' + paymentId + '/event').then(function(res) {
+      this.state.donations[i].event_title = res.data[0].title;
+      this.setState({
+        donations: this.state.donations
+      });
+    }.bind(this)).catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
   }
 
   _handleExportCSV() {
@@ -92,18 +107,20 @@ class Donations extends Component {
             <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
               <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                 <TableRow>
-                  <TableHeaderColumn style={styles.alignLeft}>Amount</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Amount ($ USD)</TableHeaderColumn>
                   <TableHeaderColumn style={styles.alignLeft}>Donor</TableHeaderColumn>
                   <TableHeaderColumn style={styles.alignLeft}>Source</TableHeaderColumn>
+                  <TableHeaderColumn style={styles.alignLeft}>Donated to event</TableHeaderColumn>
                   <TableHeaderColumn style={styles.alignLeft}>Donated at</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody displayRowCheckbox={false}>
                 {this.state.donations.map((donation, i) =>
                   <TableRow key={i} data-id={donation.id}>
-                    <TableRowColumn style={styles.alignLeft}>{donation.amount}</TableRowColumn>
+                    <TableRowColumn style={styles.alignLeft}>{'$ ' + parseFloat(donation.amount || 0).toFixed(2)}</TableRowColumn>
                     <TableRowColumn style={styles.alignLeft}>{donation.firstname + donation.lastname}</TableRowColumn>
                     <TableRowColumn style={styles.alignLeft}>{donation.source}</TableRowColumn>
+                    <TableRowColumn ref={'event' + i} key={i} style={styles.alignLeft}>{donation.event_title}</TableRowColumn>
                     <TableRowColumn style={styles.alignLeft}>{new Date(donation.recurring_end).toJSON().slice(0,10).replace(/-/g,'/')}</TableRowColumn>
                   </TableRow>
                 )}

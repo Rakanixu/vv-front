@@ -230,6 +230,11 @@ class NewEvent extends Component {
     data.append('pose_question', false);
     data.append('chat_shown_status_bar', false);
     data.append('stage_moment_webcam', false);
+    data.append('chat_highlight_price', 0);
+    data.append('chat_with_user_image_price', 0);
+    data.append('pose_question_price', 0);
+    data.append('chat_shown_status_bar_price', 0);
+    data.append('stage_moment_webcam_price', 0);
     data.append('preview_img', preview_img);
     data.append('event_background', event_background);
     data.append('speaker_media', this.state.speaker_media);
@@ -323,10 +328,10 @@ class NewEvent extends Component {
 
             <Paper style={styles.paperRight}>
               <label className="load-img-label">Preview Image</label>
-              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)}/>
+              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)} hideDefaultImageButton={true}/>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
-              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)}/>
+              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} hideDefaultImageButton={true}/>
             </Paper>  
           </form>
         </div>

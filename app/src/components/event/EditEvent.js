@@ -269,7 +269,7 @@ class EditEvent extends Component {
                     error={this.state.error} />
 
           <div className="title">
-            <h1>Edit Event</h1>
+            <h1>Edit Event</h1>  
           </div>          
 
           <form className="edit-event-form">
@@ -349,10 +349,14 @@ class EditEvent extends Component {
 
             <Paper style={styles.paperRight}>
               <label className="load-img-label">Preview Image</label>
-              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)} defaultImage={this.state.event.preview_img}/>
+              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)} 
+                                   defaultImage={this.state.event.preview_img}
+                                   hideDefaultImageButton={true}/>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
-              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} defaultImage={this.state.event.event_background}/>
+              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} 
+                                   defaultImage={this.state.event.event_background}
+                                   hideDefaultImageButton={true}/>
             </Paper>  
           </form>
         </div>

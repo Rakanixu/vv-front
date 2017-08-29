@@ -9,6 +9,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
 import axios from 'axios';
 import './EventPreview.css';
@@ -49,9 +50,12 @@ class EventPreview extends Component {
 
     this.state = {
       error: null,
+      domain: '',
+      inviteWith: '',
       showPreviewImg: true,
       showEventBackground: true,
       url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
+      principalUrl:  config.baseAPI_URL + '/principal/',
       event: {}
     };
   }
@@ -62,7 +66,19 @@ class EventPreview extends Component {
     } else {
       user = JSON.parse(localStorage.getItem('alantu-user'));
     }
-    this._getEvent();
+
+    this._getPrincipal(user.principal_id).then(function(res) {
+      this.setState({ domain: res.data.domain });
+      this._getEvent();
+    }.bind(this));
+  }
+
+  _getPrincipal = (id) => {
+    return axios.get(this.state.principalUrl + id);
+  }
+
+  _handleRedirect() {
+    this.props.history.push('/manager/event/edit/' + this.props.match.params.eventId + '/detail');
   }
 
   _getEvent() {
@@ -70,6 +86,7 @@ class EventPreview extends Component {
       res.data.date = new Date(res.data.date);
       this.setState({ 
         event: res.data,
+        inviteWith: 'https://' + this.state.domain + '/events/' + res.data.id,
         eventBackgroundUrlFromGallery: res.data.event_background,
         previewImgUrlFromGallery: res.data.preview_img,
         original_speaker_media: res.data.speaker_media
@@ -103,6 +120,11 @@ class EventPreview extends Component {
 
           <div className="title">
             <h1>Event: {this.state.event.title}</h1>
+            <div className="finish-later">
+              <RaisedButton label="Finish later" 
+                            className="right margin-top-medium grey" 
+                            onTouchTap={this._handleRedirect.bind(this)} />
+            </div>    
           </div>          
 
           <form className="edit-event-form">
@@ -134,6 +156,10 @@ class EventPreview extends Component {
                         value={this.state.event.date}
                         mode="landscape" 
                         autoOk={true} />
+              <TextField floatingLabelText="Invite With"
+                        disabled={true}
+                        value={this.state.inviteWith}
+                        fullWidth={true} />
               <SelectField floatingLabelText="Media type"
                           disabled={true}
                           fullWidth={true}
