@@ -272,7 +272,7 @@ class EventsGridList extends Component {
                           onTouchTap={this._handlePageChange.bind(this)}/>
           </div>
         </div>
-        <Tabs style={styles.tabs}
+{/*         <Tabs style={styles.tabs}
               tabItemContainerStyle={styles.tabItemContainerStyle}
               tabTemplateStyle={styles.tabTemplateStyle}
               inkBarStyle={styles.inkBarStyle}>
@@ -373,7 +373,7 @@ class EventsGridList extends Component {
           <Tab
               style={styles.tab}
               disabled/>
-        </Tabs>
+        </Tabs> */}
 
         <GridList ref="grid"
                   className="events-cards-grid"
