@@ -16,6 +16,7 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import { ToastContainer, ToastMessage } from 'react-toastr';
 import axios from 'axios';
 import './EventsGridList.css';
 
@@ -24,6 +25,7 @@ axios.defaults.withCredentials = true;
 const config = require('../../config.json');
 const moment = require('moment');
 const _ = require('lodash/core');
+const ToastMessageFactory = React.createFactory(ToastMessage.animation);
 const styles = {
   root: {
     padding: 50,
@@ -222,6 +224,7 @@ class EventsGridList extends Component {
 
   _handleStartEvent(e) {
     this._startEvent(e.currentTarget.dataset.id).then(function(res) {
+      this.refs.toastContainer.success('Event ' + res.data.title + ' started.', '', { closeButton: true });
       window.open('https://' + this.state.domain + '/events/' + res.data.id, '_blank');
     }.bind(this)).catch(function(err) {
       this._handleError(err);
@@ -230,10 +233,10 @@ class EventsGridList extends Component {
 
   _handleStopEvent(e) {
     this._stopEvent(e.currentTarget.dataset.id).then(function(res) {
-
-    }).catch(function(err) {
+      this.refs.toastContainer.success('Event ' + res.data.title + ' stopped.', '', { closeButton: true });
+    }.bind(this)).catch(function(err) {
       this._handleError(err);
-    });
+    }.bind(this));
   }
 
   _startEvent(id) {
@@ -261,8 +264,12 @@ class EventsGridList extends Component {
   render() {
     return (
       <div style={styles.root}>
+        <ToastContainer ref="toastContainer"
+                        toastMessageFactory={ToastMessageFactory}
+                        className="toast-top-right" />
+
         <ErrorReporting open={this.state.error !== null}
-          error={this.state.error} />
+                        error={this.state.error} />
 
         <div className="events-title">
           <h1>Overview Events</h1>

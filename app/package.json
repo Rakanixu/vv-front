@@ -20,7 +20,8 @@
     "react-flags-select": "^1.1.0",
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "react-toastr": "^2.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
