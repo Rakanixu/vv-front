@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 import ErrorReporting from 'material-ui-error-reporting';
+import IconSelection from '../image/IconSelection';
 import axios from 'axios';
 import './Admissions.css';
 
@@ -63,6 +64,10 @@ class Admissions extends Component {
     state[e.target.dataset.val] = e.target.value;
     this.setState(state);
     this.setState({ error: null });
+  }
+
+  _iconChange(img) {
+    this.setState({ icon: img });
   }
 
   _handleNewAdmission(e) {
@@ -152,14 +157,14 @@ class Admissions extends Component {
 
               <div className="overflow">
                 <RaisedButton label="Save Admission"
-                            className="right margin-top-medium margin-left-medium" 
-                            primary={true}
-                            onTouchTap={this._handleNewAdmission.bind(this)} />
+                              className="right margin-top-medium margin-left-medium" 
+                              primary={true}
+                              onTouchTap={this._handleNewAdmission.bind(this)} />
               </div> 
             </Paper>          
 
             <Paper style={styles.paperRight}>
-
+              <IconSelection onChange={this._iconChange.bind(this)} hideDefaultImageButton={true}/>
             </Paper> 
           </form>
         </div>

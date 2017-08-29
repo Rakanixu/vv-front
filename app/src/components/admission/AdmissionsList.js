@@ -83,11 +83,11 @@ class AdmissionsList extends Component {
         <Table fixedHeader={true} height={'"' + this.state.tableHeight.toString() + '"'}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={{width: '52px'}}>Icon</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Title</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Subtitle</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Price ($ USD)</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
+              <TableHeaderColumn className="column-fix-left-margin">Icon</TableHeaderColumn>
               { !this.props.noEdit ?
               <TableHeaderColumn style={styles.narrow}></TableHeaderColumn>
               : null }
@@ -97,13 +97,13 @@ class AdmissionsList extends Component {
           <TableBody displayRowCheckbox={false}>
             {this.state.admissions.map((admission, i) =>
               <TableRow key={i} data-id={admission.id}>
-                <TableRowColumn style={styles.tablePreview}>
-                  <img className="table-img"src={config.baseURL + admission.icon} alt="admission icon"/>
-                  </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.title}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.subtitle}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{'$ ' + parseFloat(admission.price || 0).toFixed(2)}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{admission.description}</TableRowColumn>
+                <TableRowColumn style={styles.tablePreview} className="transparent-icon-background">
+                  <img className="table-img" src={admission.icon} alt="admission icon"/>
+                </TableRowColumn>
                 { !this.props.noEdit ?
                 <TableRowColumn style={styles.narrowCenter} onTouchTap={this._edit.bind(this)}><ModeEdit/></TableRowColumn>
                 : null }

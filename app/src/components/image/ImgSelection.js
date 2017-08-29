@@ -143,7 +143,7 @@ class ImgSelection extends Component {
 
   render() {
     return (
-      <div style={{ width: '100%', overflow: 'auto' }}>
+      <div style={{ width: '100%' }}>
         <div className="img-selection">
           <div ref="gallery">
             {this.state.selectedImage !== undefined && this.state.selectedImage.length > 0 ?
