@@ -201,21 +201,7 @@ class EventsGridList extends Component {
   }
 
   _handleCopy(e) {
-    let event = {};
-    for (var i = 0; i < this.state.events.length; i++) {
-      if (this.state.events[i].id.toString() === e.currentTarget.dataset.id) {
-        event = _.clone(this.state.events[i]);
-        delete event.id;
-        break;
-      }
-    }
-
-    var data = new FormData();
-    for (var i in event) {
-      data.append(i, event[i]);
-    }
-
-    axios.post(config.baseAPI_URL + '/event', data).then(function(res) {
+    axios.post(config.baseAPI_URL + '/event/' + e.currentTarget.dataset.id + '/copy', {}).then(function(res) {
       this.props.history.push('/manager/event/edit/' + res.data.id);
     }.bind(this)).catch(err => {
       this._handleError(err);
