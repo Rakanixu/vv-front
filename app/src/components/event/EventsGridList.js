@@ -55,7 +55,7 @@ const styles = {
   },
   copyButton: {
     height: 30,
-    width: 70,
+    width: 65,
     minWidth: 20,
     marginRight: 5
   },
@@ -72,7 +72,7 @@ const styles = {
   },
   editButton: {
     height: 30,
-    width: 70,
+    width: 60,
     minWidth: 20,
     marginLeft: 5
   },
@@ -83,6 +83,23 @@ const styles = {
     padding: 0
   },
   editIcon: {
+    width: 15,
+    height: 15,
+    marginLeft: 0
+  },
+  deleteButton: {
+    height: 30,
+    width: 72,
+    minWidth: 20,
+    marginLeft: 5
+  },
+  deleteLabel: {
+    margin: 5,
+    fontSize: 12,
+    color: '#fff',
+    padding: 0
+  },
+  deleteIcon: {
     width: 15,
     height: 15,
     marginLeft: 0
@@ -403,6 +420,13 @@ class EventsGridList extends Component {
                                     data-id={event.id}
                                     style={styles.editButton}
                                     onTouchTap={this._handleEdit.bind(this)}/>
+                      <RaisedButton className="events-delete-btn"
+                                    label="Delete"
+                                    labelStyle={styles.deleteLabel}
+                                    icon={<ModeEdit color="white" style={styles.deleteIcon}/>}
+                                    data-id={event.id}
+                                    style={styles.deleteButton}
+                                    onTouchTap={this._handleDelete.bind(this)}/>
                     </div>
                   </div>
                 </div>
