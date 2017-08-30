@@ -105,6 +105,8 @@ const data = {
     menus: [
         {text: 'Overview', icon: <Assessment/>, link: '/manager/event'},
         {text: 'New event', icon: <PermIdentity/>, link: '/manager/event/new'},
+        {text: 'Templates', icon: <Assessment/>, link: '/manager/template'},
+        {text: 'New template', icon: <PermIdentity/>, link: '/manager/template/new'},
         /* {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'}, */
         {text: 'Donations', icon: <PermIdentity/>, link: '/manager/donations'},
         {text: 'Users', icon: <PermIdentity/>, link: '/manager/users'},
@@ -272,7 +274,9 @@ class Manager extends Component {
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={EventsGridList} />
               <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
-              <Route exact path={`${this.props.match.path}/event/new`} component={NewEvent} />
+              <Route exact path={`${this.props.match.path}/event/new`}>
+                <NewEvent isTemplate={false}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={EditEvent} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/detail`}>
                 <EventTabs tabIndex={this.state.tabIndex}/>
@@ -286,6 +290,10 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
+              <Route exact path={`${this.props.match.path}/template`} component={EventsGridList} />
+              <Route exact path={`${this.props.match.path}/template/new`}>
+                <NewEvent isTemplate={true}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event_location`} component={EventLocationList} />
               <Route exact path={`${this.props.match.path}/event_location/new`} component={NewEventLocation} />
               <Route exact path={`${this.props.match.path}/event_location/edit/:eventLocationId`} component={EditEventLocation} />

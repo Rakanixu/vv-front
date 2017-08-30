@@ -43,5 +43,11 @@
       "name": "Livestream",
       "id": 3
     }
+  ],
+  "icons": [
+    "/icons/01.png",
+    "/icons/02.png",
+    "/icons/03.png",
+    "/icons/04.png"
   ]
 }  
