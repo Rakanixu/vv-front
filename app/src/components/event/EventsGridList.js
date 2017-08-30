@@ -169,7 +169,7 @@ class EventsGridList extends Component {
     this.state = {
       error: null,
       domain: '',
-      eventsUrl: config.baseAPI_URL + '/event',
+      eventsUrl: config.baseAPI_URL + '/' + this._getType(),
       principalUrl:  config.baseAPI_URL + '/principal/',
       events: []
     };
@@ -189,6 +189,10 @@ class EventsGridList extends Component {
     this._getEvents();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getPrincipal = (id) => {
     return axios.get(this.state.principalUrl + id);
   }
@@ -202,11 +206,11 @@ class EventsGridList extends Component {
   }
 
   _handlePageChange() {
-    this.props.history.push('/manager/event/new');
+    this.props.history.push('/manager/' + this._getType() + '/new');
   }
 
   _handleEdit(e) {
-    this.props.history.push('/manager/event/edit/' + e.currentTarget.dataset.id);
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + e.currentTarget.dataset.id);
   }
 
   _handleDelete(e) {
@@ -218,8 +222,8 @@ class EventsGridList extends Component {
   }
 
   _handleCopy(e) {
-    axios.post(config.baseAPI_URL + '/event/' + e.currentTarget.dataset.id + '/copy', {}).then(function(res) {
-      this.props.history.push('/manager/event/edit/' + res.data.id);
+    axios.post(config.baseAPI_URL + '/' + this._getType() + '/' + e.currentTarget.dataset.id + '/copy', {}).then(function(res) {
+      this.props.history.push('/manager/' + this._getType() + '/edit/' + res.data.id);
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
@@ -275,9 +279,9 @@ class EventsGridList extends Component {
                         error={this.state.error} />
 
         <div className="events-title">
-          <h1>Overview Events</h1>
+          <h1>Overview {this._getType().capitalize()}s</h1>
           <div className="events-new-event">
-            <RaisedButton label="New Event"
+            <RaisedButton label={'New ' + this._getType().capitalize()}
                           primary={true}
                           onTouchTap={this._handlePageChange.bind(this)}/>
           </div>
@@ -406,6 +410,7 @@ class EventsGridList extends Component {
                     <div className="events-card-block-title">{event.title}</div>
 
                     <div className="events-card-block__content__buttons__sub">
+                      {!this.props.isTemplate ?
                       <RaisedButton className="events-copy-btn"
                                     label="Copy"
                                     labelStyle={styles.copyLabel}
@@ -413,6 +418,8 @@ class EventsGridList extends Component {
                                     data-id={event.id}
                                     style={styles.copyButton}
                                     onTouchTap={this._handleCopy.bind(this)}/>
+                      : null }
+
                       <RaisedButton className="events-edit-btn"
                                     label="Edit"
                                     labelStyle={styles.editLabel}
@@ -431,6 +438,7 @@ class EventsGridList extends Component {
                   </div>
                 </div>
                 <div className="events-card-block__content__buttons">
+                  {!this.props.isTemplate ?
                   <div className="events-card-block__content__buttons__main">
                     <RaisedButton className="events-start-btn"
                                   label="Start"
@@ -443,8 +451,9 @@ class EventsGridList extends Component {
                                   labelStyle={styles.stopLabel}
                                   label="Stop"
                                   onTouchTap={this._handleStopEvent.bind(this)}
-                                  style={styles.stopButton}/>
+                                  style={styles.stopButton}/>            
                   </div>
+                  : null }  
                   <div className="events-card-block__content__buttons__reset">
                     <a href="#">Reset</a>
                   </div>

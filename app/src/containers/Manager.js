@@ -273,7 +273,9 @@ class Manager extends Component {
           <div className="manager-container">
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={EventsGridList} />
-              <Route exact path={`${this.props.match.path}/event`} component={EventsGridList} />
+              <Route exact path={`${this.props.match.path}/event`}>
+                <EventsGridList isTemplate={false} key={this.state.reloadEventList}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event/new`}>
                 <NewEvent isTemplate={false}/>
               </Route>
@@ -290,7 +292,9 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
-              <Route exact path={`${this.props.match.path}/template`} component={EventsGridList} />
+              <Route exact path={`${this.props.match.path}/template`}>
+                <EventsGridList isTemplate={true} key={this.state.reloadTemplateList}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/template/new`}>
                 <NewEvent isTemplate={true}/>
               </Route>
