@@ -78,8 +78,7 @@ class EventTabs extends Component {
       reloadMediaSourceList: time + 'E',
       reloadAuctionList: time + 'F',
       reloadQuizList: time + 'G',
-      reloadQuizEntryList: time + 'F',
-      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId
+      reloadQuizEntryList: time + 'F'
     };
   }
 
@@ -88,11 +87,20 @@ class EventTabs extends Component {
   }
 
   componentDidMount() {
-    axios.get(this.state.url).then(res => {
+    console.log(this._url())
+    axios.get(this._url()).then(res => {
       this.setState({ events: res.data });
     }).catch(function(err) {
       this._handleError(err);
     }.bind(this));
+  }
+
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType() + '/' + this.props.match.params.eventId;
   }
 
   handleTabChange = (index) => {
@@ -108,13 +116,13 @@ class EventTabs extends Component {
   }
 
   onDone = () => {
-    this.props.history.push('/manager/event');
+    this.props.history.push('/manager/' + this._getType());
   }
 
   onSave = (key) => {
     var state = {};
     state[key] = new Date().getTime();
-    this.setState(state)
+    this.setState(state);
   }
 
   _handleError(err) {
@@ -134,7 +142,7 @@ class EventTabs extends Component {
   render() {
     return (
       <div>
-        <EventPreview />
+        <EventPreview isTemplate={this.props.isTemplate}/>
 
         <div className="container">
           <div style={{overflow:'hidden'}}>

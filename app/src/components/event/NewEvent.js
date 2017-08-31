@@ -300,6 +300,8 @@ class NewEvent extends Component {
                         data-val="location"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
+              {!this.props.isTemplate ?
+              <span>   
               <DatePicker hintText="Date"
                         fullWidth={true}
                         mode="landscape" 
@@ -310,6 +312,8 @@ class NewEvent extends Component {
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleTimeChange.bind(this)}/>
+              </span>
+              : null}          
               <SelectField floatingLabelText="Media type"
                           fullWidth={true}
                           value={this.state.speaker_media_type}

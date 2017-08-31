@@ -279,9 +279,11 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/new`}>
                 <NewEvent isTemplate={false}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/event/edit/:eventId`} component={EditEvent} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId`}>
+                <EditEvent isTemplate={false}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/detail`}>
-                <EventTabs tabIndex={this.state.tabIndex}/>
+                <EventTabs isTemplate={false} tabIndex={this.state.tabIndex}/>
               </Route>
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/image/:imageId`} component={EditSliderImage} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/admission/:admissionId`} component={EditAdmission} />
@@ -298,9 +300,11 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/template/new`}>
                 <NewEvent isTemplate={true}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/template/edit/:eventId`} component={EditEvent} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId`}>
+                <EditEvent isTemplate={true}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/detail`}>
-                <EventTabs tabIndex={this.state.tabIndex}/>
+                <EventTabs isTemplate={true} tabIndex={this.state.tabIndex}/>
               </Route>
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/image/:imageId`} component={EditSliderImage} />
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/admission/:admissionId`} component={EditAdmission} />

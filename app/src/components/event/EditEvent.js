@@ -63,7 +63,6 @@ class EditEvent extends Component {
 
     this.state = {
       error: null,
-      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       preview_img: {},
       event_background: {},
       original_speaker_media: '',
@@ -89,8 +88,16 @@ class EditEvent extends Component {
     this._getEvent();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType() + '/' + this.props.match.params.eventId;
+  }
+
   _getEvent() {
-    axios.get(this.state.url).then(function(res) {
+    axios.get(this._url()).then(function(res) {
       res.data.date = new Date(res.data.date);
       this.setState({ 
         event: res.data,
@@ -173,7 +180,7 @@ class EditEvent extends Component {
 
     this._editEvent()
     .then(function(res) {
-      this.props.history.push('/manager/event/edit/' + res.data.id + '/detail');
+      this.props.history.push('/manager/' + this._getType() + '/edit/' + res.data.id + '/detail');
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -244,7 +251,7 @@ class EditEvent extends Component {
     data.append('event_background', event_background);
     data.append('speaker_media', this.state.event.speaker_media);
 
-    return axios.put(this.state.url, data);
+    return axios.put(this._url(), data);
   }
 
   _handleError(err) {
@@ -269,18 +276,18 @@ class EditEvent extends Component {
                     error={this.state.error} />
 
           <div className="title">
-            <h1>Edit Event</h1>  
+            <h1>Edit {this._getType().capitalize()}</h1>  
           </div>          
 
           <form className="edit-event-form">
             <Paper style={styles.paperLeft}>
-              <TextField floatingLabelText="Event title"
+              <TextField floatingLabelText={this._getType().capitalize() + ' title'}
                         data-val="title"
                         primary={true}
                         value={this.state.event.title}
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
-              <TextField floatingLabelText="Event subtitle"
+              <TextField floatingLabelText={this._getType().capitalize() + ' subtitle'}
                         data-val="subtitle"
                         primary={true}
                         value={this.state.event.subtitle}
@@ -296,6 +303,8 @@ class EditEvent extends Component {
                         value={this.state.event.location}
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
+              {!this.props.isTemplate ?
+              <span>            
               <DatePicker hintText="Date"
                         mode="landscape"
                         fullWidth={true}
@@ -307,6 +316,8 @@ class EditEvent extends Component {
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleTimeChange.bind(this)}/>
+              </span>
+              : null }          
               <SelectField floatingLabelText="Media type"
                           fullWidth={true}
                           value={this.state.event.speaker_media_type}
