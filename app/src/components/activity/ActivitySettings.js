@@ -38,7 +38,6 @@ class QuizEntry extends Component {
     this.state = {
       error: null,
       count: 0,
-      url: config.baseAPI_URL + '/event/' + this.props.eventId,
       event: {}
     };
   }
@@ -47,8 +46,16 @@ class QuizEntry extends Component {
     this._getEvent();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType() + '/' + this.props.eventId;
+  }
+
   _getEvent() {
-    axios.get(this.state.url).then(function(res) {
+    axios.get(this._url()).then(function(res) {
       for (var i in res.data) {
         if (i.indexOf('_price') > -1) {
           res.data[i] = parseFloat(res.data[i] || 0).toFixed(2);
@@ -86,7 +93,7 @@ class QuizEntry extends Component {
       }
     }
 
-    axios.put(this.state.url, data)
+    axios.put(this._url(), data)
     .then(function() {
       this._getEvent();
     }.bind(this))
