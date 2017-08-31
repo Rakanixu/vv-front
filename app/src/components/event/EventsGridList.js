@@ -176,7 +176,9 @@ class EventsGridList extends Component {
 
   componentWillReceiveProps(nextProps, nextState) {
     if (nextProps.isTemplate !== this.props.isTemplate) {
-      this._getEvents();
+      setTimeout(function() {
+        this._getEvents();
+      }.bind(this), 50);
     }
   }
 

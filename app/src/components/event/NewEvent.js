@@ -139,13 +139,24 @@ class NewEvent extends Component {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.title === undefined || this.state.title === "" ||
-      this.state.date === undefined || this.state.date === "" ||
-      this.state.speaker_media_type === undefined ||
-      this.state.speaker_media === undefined || this.state.speaker_media === "") {
-      this._handleError();
-      return;
+
+    if (this._getType() === 'event') {
+      if (this.state.title === undefined || this.state.title === "" ||
+        this.state.date === undefined || this.state.date === "" ||
+        this.state.speaker_media_type === undefined ||
+        this.state.speaker_media === undefined || this.state.speaker_media === "") {
+        this._handleError();
+        return;
+      }
+    } else if (this._getType() === 'template') {
+      if (this.state.title === undefined || this.state.title === "" ||
+        this.state.speaker_media_type === undefined ||
+        this.state.speaker_media === undefined || this.state.speaker_media === "") {
+        this._handleError();
+        return;
+      }
     }
+
 
     this._createEvent()
     .then(function(res) {
@@ -222,7 +233,7 @@ class NewEvent extends Component {
     data.append('deleted_at', '1970-01-01T00:00:00.000Z');
     data.append('started_at', '1970-01-01T00:00:00.000Z');
     data.append('ended_at', '1970-01-01T00:00:00.000Z');
-    data.append('date', this.state.date.utc().format());
+    data.append('date', this.state.date ? this.state.date.utc().format() : null);
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
