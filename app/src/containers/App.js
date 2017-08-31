@@ -3,8 +3,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ThemeDefault from '../theme-default';
-import Events from '../components/event/Events';
-import Event from '../components/event/Event';
 import Login from './Login';
 import Register from './Register';
 import Root from './Root';
@@ -20,9 +18,9 @@ class App extends Component {
         <MuiThemeProvider muiTheme={ThemeDefault}>
           <div>
             <Switch>
-              <Route exact path='/' component={Events} />
-              <Route exact path='/event' component={Events} />
-              <Route exact path='/event/:eventId' component={Event} />
+              <Route exact path='/'/>
+              <Route exact path='/event'/>
+              <Route exact path='/event/:eventId'/>
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />
               <Route path='/root' component={Root} />
