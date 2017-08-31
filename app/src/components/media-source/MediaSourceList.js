@@ -47,6 +47,10 @@ class MediaSourceList extends Component {
     this._getEventGuests();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getEventGuests() {
     axios.get(this.state.url).then(res => {
       this.setState({ event_guests: res.data });
@@ -56,7 +60,7 @@ class MediaSourceList extends Component {
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/event_guest/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.eventId + '/event_guest/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {

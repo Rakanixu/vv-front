@@ -17,9 +17,6 @@ axios.defaults.withCredentials = true;
 const config = require('../../config.json');
 
 var styles = {
-  screenHeight: {
-    height: window.innerHeight - 250
-  },
   paper: {
     padding: 20,
     overflow: 'auto',

@@ -300,7 +300,9 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/question_topic/:questionTopicId`}>
                 <EditQuestionTopic isTemplate={false}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:eventGuestId`}>
+                <EditMediaSource isTemplate={false}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
@@ -331,7 +333,9 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/question_topic/:questionTopicId`}>
                 <EditQuestionTopic isTemplate={true}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/template/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/event_guest/:eventGuestId`}>
+                <EditMediaSource isTemplate={true}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/auction/:auctionId`} component={EditAuction} />
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
