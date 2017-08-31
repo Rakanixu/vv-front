@@ -169,10 +169,15 @@ class EventsGridList extends Component {
     this.state = {
       error: null,
       domain: '',
-      eventsUrl: config.baseAPI_URL + '/' + this._getType(),
       principalUrl:  config.baseAPI_URL + '/principal/',
       events: []
     };
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    if (nextProps.isTemplate !== this.props.isTemplate) {
+      this._getEvents();
+    }
   }
 
   componentDidMount() {
@@ -189,6 +194,10 @@ class EventsGridList extends Component {
     this._getEvents();
   }
 
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType();
+  }
+
   _getType() {
     return (this.props.isTemplate ? 'template' : 'event');
   }
@@ -198,7 +207,7 @@ class EventsGridList extends Component {
   }
 
   _getEvents() {
-    axios.get(this.state.eventsUrl).then(function(res) {
+    axios.get(this._url()).then(function(res) {
       this.setState({ events: res.data });
     }.bind(this)).catch(err => {
       this._handleError(err);
@@ -214,7 +223,7 @@ class EventsGridList extends Component {
   }
 
   _handleDelete(e) {
-    axios.delete(this.state.eventsUrl + '/' + e.currentTarget.dataset.id).then(function (res) {
+    axios.delete(this._url() + '/' + e.currentTarget.dataset.id).then(function (res) {
       this._getEvents();
     }.bind(this)).catch(err => {
       this._handleError(err);
