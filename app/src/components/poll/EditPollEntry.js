@@ -49,6 +49,10 @@ class EditPollEntry extends Component {
     this._getQuestionTopic();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getQuestionTopic() {
     axios.get(this.state.url).then(function(res) {
       this.setState({ poll_entry: res.data });
@@ -68,11 +72,11 @@ class EditPollEntry extends Component {
     this.setState({ poll_entry: this.state.poll_entry });
   }
 
-  _handleQuestionTopic(e) {
-    this._EditPollEntry()
+  _handlePollEntry(e) {
+    this._editPollEntry()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/poll/' + this.props.match.params.pollId,
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/poll/' + this.props.match.params.pollId,
         query: {
           showTabs: true,
           index: 7
@@ -84,7 +88,7 @@ class EditPollEntry extends Component {
     });
   }
 
-  _EditPollEntry() {
+  _editPollEntry() {
     if (this.state.poll_entry.title === undefined || this.state.poll_entry.title === '' ||
       this.state.poll_entry.icon === undefined || this.state.poll_entry.icon === '') {
       return new Promise(function(resolve, reject) { reject(); });
@@ -139,7 +143,7 @@ class EditPollEntry extends Component {
             <RaisedButton label="Save" 
                           className="right margin-top-medium" 
                           primary={true} 
-                          onTouchTap={this._handleQuestionTopic.bind(this)} />
+                          onTouchTap={this._handlePollEntry.bind(this)} />
           </Paper>
 
           <Paper style={styles.paperRight}>

@@ -291,8 +291,12 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/admission/:admissionId`}>
                 <EditAdmission isTemplate={false}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId`} component={EditPoll} />
-              <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`} component={EditPollEntry} />
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId`}>
+                <EditPoll isTemplate={false}/>
+              </Route>
+              <Route exact path={`${this.props.match.path}/event/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`}>
+                <EditPollEntry isTemplate={false}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/question_topic/:questionTopicId`} component={EditQuestionTopic} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
               <Route exact path={`${this.props.match.path}/event/edit/:eventId/auction/:auctionId`} component={EditAuction} />
@@ -316,8 +320,12 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/admission/:admissionId`}>
                 <EditAdmission isTemplate={true}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/template/edit/:eventId/poll/:pollId`} component={EditPoll} />
-              <Route exact path={`${this.props.match.path}/template/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`} component={EditPollEntry} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/poll/:pollId`}>
+                <EditPoll isTemplate={true}/>
+              </Route>
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`}>
+                <EditPollEntry isTemplate={true}/>
+              </Route>
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/question_topic/:questionTopicId`} component={EditQuestionTopic} />
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
               <Route exact path={`${this.props.match.path}/template/edit/:eventId/auction/:auctionId`} component={EditAuction} />
