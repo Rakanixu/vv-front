@@ -149,31 +149,31 @@ class EventTabs extends Component {
             <Nav tabs={this.state.tabs} tabIndex={this.props.tabIndex}/>
             { this.state.show[0] ?
               <div>
-                <MediaSourceList key={this.state.reloadMediaSourceList} eventId={this.props.match.params.eventId}/>
+                <MediaSourceList isTemplate={this.props.isTemplate} key={this.state.reloadMediaSourceList} eventId={this.props.match.params.eventId}/>
                 <MediaSource onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadMediaSourceList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }  
             { this.state.show[1] ?
               <div>
-                <SliderImageList key={this.state.reloadSliderImageList} eventId={this.props.match.params.eventId}/>
+                <SliderImageList isTemplate={this.props.isTemplate} key={this.state.reloadSliderImageList} eventId={this.props.match.params.eventId}/>
                 <SliderImage onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadSliderImageList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
             { this.state.show[2] ?
               <div>
-                <AdmissionsList key={this.state.reloadAdmissionsList} eventId={this.props.match.params.eventId}/>
+                <AdmissionsList isTemplate={this.props.isTemplate} key={this.state.reloadAdmissionsList} eventId={this.props.match.params.eventId}/>
                 <Admissions onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAdmissionsList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
             { this.state.show[3] ?
               <div>
-                <PollsList key={this.state.reloadPollsList} eventId={this.props.match.params.eventId}/>
+                <PollsList isTemplate={this.props.isTemplate} key={this.state.reloadPollsList} eventId={this.props.match.params.eventId}/>
                 <Polls onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadPollsList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
             { this.state.show[4] ?
               <div>
-                <QuestionTopicList key={this.state.reloadQuestionTopicList} eventId={this.props.match.params.eventId}/>
+                <QuestionTopicList isTemplate={this.props.isTemplate} key={this.state.reloadQuestionTopicList} eventId={this.props.match.params.eventId}/>
                 <QuestionTopic onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuestionTopicList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
@@ -185,7 +185,7 @@ class EventTabs extends Component {
               : null } */}
             { this.state.show[5] ?
               <div>
-                <QuizList key={this.state.reloadQuizList} eventId={this.props.match.params.eventId}/>
+                <QuizList isTemplate={this.props.isTemplate} key={this.state.reloadQuizList} eventId={this.props.match.params.eventId}/>
                 <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }

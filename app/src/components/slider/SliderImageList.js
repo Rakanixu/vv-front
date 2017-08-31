@@ -48,6 +48,10 @@ class SliderImageList extends Component {
     this._getImages();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getImages() {
     axios.get(this.state.url).then(res => {
       this.setState({ images: res.data });
@@ -57,7 +61,7 @@ class SliderImageList extends Component {
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/image/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.eventId + '/image/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {

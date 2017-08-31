@@ -48,6 +48,10 @@ class EditAdmission extends Component {
     this._getAdmission();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getAdmission() {
     axios.get(this.state.url).then(function(res) {
       this.setState({
@@ -73,7 +77,7 @@ class EditAdmission extends Component {
     this._editAdmission()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 1
