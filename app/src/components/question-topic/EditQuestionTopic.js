@@ -37,6 +37,10 @@ class EditQuestionTopic extends Component {
     this._getQuestionTopic();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getQuestionTopic() {
     axios.get(this.state.url).then(function(res) {
       this.setState({ question_topic: res.data });
@@ -55,7 +59,7 @@ class EditQuestionTopic extends Component {
     this._editQuestionTopic()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 3
