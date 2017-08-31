@@ -62,7 +62,7 @@ class EditQuizEntry extends Component {
         pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/quiz/' + this.props.match.params.quizId,
         query: {
           showTabs: true,
-          index: 7
+          index: 5
         }
       });
     }.bind(this))

@@ -88,7 +88,7 @@ class EditMediaSource extends Component {
         pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
-          index: 4
+          index: 0
         }
       });
     }.bind(this))
