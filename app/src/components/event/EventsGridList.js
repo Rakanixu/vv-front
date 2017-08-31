@@ -13,6 +13,8 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Delete from 'material-ui/svg-icons/action/delete';
+import Create from 'material-ui/svg-icons/file/create-new-folder';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
@@ -179,7 +181,7 @@ class EventsGridList extends Component {
   componentWillReceiveProps(nextProps, nextState) {
     if (nextProps.isTemplate !== this.props.isTemplate) {
       this._hideConfirmation();
-      
+
       setTimeout(function() {
         this._getEvents();
       }.bind(this), 50);
@@ -249,7 +251,7 @@ class EventsGridList extends Component {
 
   _handleCopy(e) {
     axios.post(config.baseAPI_URL + '/' + this._getType() + '/' + e.currentTarget.dataset.id + '/copy', {}).then(function(res) {
-      this.props.history.push('/manager/' + this._getType() + '/edit/' + res.data.id);
+      this.props.history.push('/manager/event/edit/' + res.data.id);
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
@@ -452,7 +454,15 @@ class EventsGridList extends Component {
                                     data-id={event.id}
                                     style={styles.copyButton}
                                     onTouchTap={this._handleCopy.bind(this)}/>
-                      : null }
+                      :
+                      <RaisedButton className="events-copy-btn"
+                                    label="New event"
+                                    labelStyle={styles.copyLabel}
+                                    icon={<Create color="white" style={styles.copyIcon}/>}
+                                    data-id={event.id}
+                                    style={styles.copyButton}
+                                    onTouchTap={this._handleCopy.bind(this)}/>
+                      }
 
                       <RaisedButton className="events-edit-btn"
                                     label="Edit"
@@ -464,7 +474,7 @@ class EventsGridList extends Component {
                       <RaisedButton className="events-delete-btn"
                                     label="Delete"
                                     labelStyle={styles.deleteLabel}
-                                    icon={<ModeEdit color="white" style={styles.deleteIcon}/>}
+                                    icon={<Delete color="white" style={styles.deleteIcon}/>}
                                     data-id={event.id}
                                     style={styles.deleteButton}
                                     onTouchTap={this._handleDelete.bind(this)}/>
