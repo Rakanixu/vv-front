@@ -1,0 +1,11 @@
+.dialog-actions {
+  display: inline-flex;
+}
+
+.dialog-actions .cancel-button button {
+  background-color: white !important;
+}
+
+.dialog-actions .confirm-button button {
+  background-color: red !important;
+}

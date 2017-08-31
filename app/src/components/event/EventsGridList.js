@@ -16,6 +16,7 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import ConfirmationDialog from '../confirmation-dialog/ConfirmationDialog';
 import { ToastContainer, ToastMessage } from 'react-toastr';
 import axios from 'axios';
 import './EventsGridList.css';
@@ -169,6 +170,7 @@ class EventsGridList extends Component {
     this.state = {
       error: null,
       domain: '',
+      showDeleteConfirmation: false,
       principalUrl:  config.baseAPI_URL + '/principal/',
       events: []
     };
@@ -176,6 +178,8 @@ class EventsGridList extends Component {
 
   componentWillReceiveProps(nextProps, nextState) {
     if (nextProps.isTemplate !== this.props.isTemplate) {
+      this._hideConfirmation();
+      
       setTimeout(function() {
         this._getEvents();
       }.bind(this), 50);
@@ -216,6 +220,14 @@ class EventsGridList extends Component {
     });
   }
 
+  _deleteEvent() {
+    axios.delete(this._url() + '/' + this.state.eventId).then(function (res) {
+      this._getEvents();
+    }.bind(this)).catch(err => {
+      this._handleError(err);
+    });
+  }
+
   _handlePageChange() {
     this.props.history.push('/manager/' + this._getType() + '/new');
   }
@@ -225,11 +237,14 @@ class EventsGridList extends Component {
   }
 
   _handleDelete(e) {
-    axios.delete(this._url() + '/' + e.currentTarget.dataset.id).then(function (res) {
-      this._getEvents();
-    }.bind(this)).catch(err => {
-      this._handleError(err);
+    this.setState({ 
+      showDeleteConfirmation: true,
+      eventId: e.currentTarget.dataset.id
     });
+  }
+
+  _hideConfirmation() {
+    this.setState({ showDeleteConfirmation: false });
   }
 
   _handleCopy(e) {
@@ -285,6 +300,14 @@ class EventsGridList extends Component {
         <ToastContainer ref="toastContainer"
                         toastMessageFactory={ToastMessageFactory}
                         className="toast-top-right" />
+
+        <ConfirmationDialog title="Confirm deletion"
+                            message="Are you sure to do this? Can't be undone."
+                            confirmLabel="Confirm"
+                            cancelLabel="Cancel"
+                            showDialog={this.state.showDeleteConfirmation}
+                            onConfirm={this._deleteEvent.bind(this)}
+                            onCancel={this._hideConfirmation.bind(this)}/>
 
         <ErrorReporting open={this.state.error !== null}
                         error={this.state.error} />
