@@ -298,9 +298,22 @@ class Manager extends Component {
               <Route exact path={`${this.props.match.path}/template/new`}>
                 <NewEvent isTemplate={true}/>
               </Route>
-              <Route exact path={`${this.props.match.path}/event_location`} component={EventLocationList} />
-              <Route exact path={`${this.props.match.path}/event_location/new`} component={NewEventLocation} />
-              <Route exact path={`${this.props.match.path}/event_location/edit/:eventLocationId`} component={EditEventLocation} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId`} component={EditEvent} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/detail`}>
+                <EventTabs tabIndex={this.state.tabIndex}/>
+              </Route>
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/image/:imageId`} component={EditSliderImage} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/admission/:admissionId`} component={EditAdmission} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/poll/:pollId`} component={EditPoll} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/poll/:pollId/poll_entry/:pollEntryId`} component={EditPollEntry} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/question_topic/:questionTopicId`} component={EditQuestionTopic} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/event_guest/:MediaSourceId`} component={EditMediaSource} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/auction/:auctionId`} component={EditAuction} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/quiz/:quizId`} component={EditQuiz} />
+              <Route exact path={`${this.props.match.path}/template/edit/:eventId/quiz/:quizId/quiz_entry/:quizEntryId`} component={EditQuizEntry} />
+              <Route exact path={`${this.props.match.path}/template_location`} component={EventLocationList} />
+              <Route exact path={`${this.props.match.path}/template_location/new`} component={NewEventLocation} />
+              <Route exact path={`${this.props.match.path}/template_location/edit/:eventLocationId`} component={EditEventLocation} />
               <Route exact path={`${this.props.match.path}/media`} component={Media} />
               <Route exact path={`${this.props.match.path}/media/new`} component={NewMedia} />
               <Route exact path={`${this.props.match.path}/users`} component={Users} />
