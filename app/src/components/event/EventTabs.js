@@ -78,8 +78,7 @@ class EventTabs extends Component {
       reloadMediaSourceList: time + 'E',
       reloadAuctionList: time + 'F',
       reloadQuizList: time + 'G',
-      reloadQuizEntryList: time + 'F',
-      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId
+      reloadQuizEntryList: time + 'F'
     };
   }
 
@@ -88,11 +87,20 @@ class EventTabs extends Component {
   }
 
   componentDidMount() {
-    axios.get(this.state.url).then(res => {
+    console.log(this._url())
+    axios.get(this._url()).then(res => {
       this.setState({ events: res.data });
     }).catch(function(err) {
       this._handleError(err);
     }.bind(this));
+  }
+
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType() + '/' + this.props.match.params.eventId;
   }
 
   handleTabChange = (index) => {
@@ -108,13 +116,13 @@ class EventTabs extends Component {
   }
 
   onDone = () => {
-    this.props.history.push('/manager/event');
+    this.props.history.push('/manager/' + this._getType());
   }
 
   onSave = (key) => {
     var state = {};
     state[key] = new Date().getTime();
-    this.setState(state)
+    this.setState(state);
   }
 
   _handleError(err) {
@@ -134,39 +142,39 @@ class EventTabs extends Component {
   render() {
     return (
       <div>
-        <EventPreview />
+        <EventPreview isTemplate={this.props.isTemplate}/>
 
         <div className="container">
           <div style={{overflow:'hidden'}}>
             <Nav tabs={this.state.tabs} tabIndex={this.props.tabIndex}/>
             { this.state.show[0] ?
               <div>
-                <MediaSourceList key={this.state.reloadMediaSourceList} eventId={this.props.match.params.eventId}/>
-                <MediaSource onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadMediaSourceList')} eventId={this.props.match.params.eventId} noFit={true}/>
+                <MediaSourceList isTemplate={this.props.isTemplate} key={this.state.reloadMediaSourceList} eventId={this.props.match.params.eventId}/>
+                <MediaSource onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadMediaSourceList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }  
             { this.state.show[1] ?
               <div>
-                <SliderImageList key={this.state.reloadSliderImageList} eventId={this.props.match.params.eventId}/>
-                <SliderImage onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadSliderImageList')} eventId={this.props.match.params.eventId} noFit={true}/>
+                <SliderImageList isTemplate={this.props.isTemplate} key={this.state.reloadSliderImageList} eventId={this.props.match.params.eventId}/>
+                <SliderImage onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadSliderImageList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
             { this.state.show[2] ?
               <div>
-                <AdmissionsList key={this.state.reloadAdmissionsList} eventId={this.props.match.params.eventId}/>
-                <Admissions onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAdmissionsList')} eventId={this.props.match.params.eventId} noFit={true}/>
+                <AdmissionsList isTemplate={this.props.isTemplate} key={this.state.reloadAdmissionsList} eventId={this.props.match.params.eventId}/>
+                <Admissions onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadAdmissionsList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
             { this.state.show[3] ?
               <div>
-                <PollsList key={this.state.reloadPollsList} eventId={this.props.match.params.eventId}/>
-                <Polls onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadPollsList')} eventId={this.props.match.params.eventId} noFit={true}/>
+                <PollsList isTemplate={this.props.isTemplate} key={this.state.reloadPollsList} eventId={this.props.match.params.eventId}/>
+                <Polls onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadPollsList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
             { this.state.show[4] ?
               <div>
-                <QuestionTopicList key={this.state.reloadQuestionTopicList} eventId={this.props.match.params.eventId}/>
-                <QuestionTopic onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuestionTopicList')} eventId={this.props.match.params.eventId} noFit={true}/>
+                <QuestionTopicList isTemplate={this.props.isTemplate} key={this.state.reloadQuestionTopicList} eventId={this.props.match.params.eventId}/>
+                <QuestionTopic onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuestionTopicList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
 {/*             { this.state.show[5] ?
@@ -177,8 +185,8 @@ class EventTabs extends Component {
               : null } */}
             { this.state.show[5] ?
               <div>
-                <QuizList key={this.state.reloadQuizList} eventId={this.props.match.params.eventId}/>
-                <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.match.params.eventId} noFit={true}/>
+                <QuizList isTemplate={this.props.isTemplate} key={this.state.reloadQuizList} eventId={this.props.match.params.eventId}/>
+                <Quiz onDone={this.onDone} onSave={this.onSave.bind(this, 'reloadQuizList')} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
 {/*             { this.state.show[6] ?
@@ -189,7 +197,7 @@ class EventTabs extends Component {
               : null } */}
             { this.state.show[6] ?
               <div>
-                <ActivitySettings onDone={this.onDone.bind(this)} eventId={this.props.match.params.eventId} noFit={true}/>
+                <ActivitySettings isTemplate={this.props.isTemplate} onDone={this.onDone.bind(this)} eventId={this.props.match.params.eventId}/>
               </div>
               : null }
           </div>

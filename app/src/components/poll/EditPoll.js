@@ -45,6 +45,10 @@ class EditPoll extends Component {
     });
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getPoll() {
     axios.get(this.state.url).then(function(res) {
       this.setState({ poll: res.data });
@@ -63,7 +67,7 @@ class EditPoll extends Component {
     this._editPoll()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 2
@@ -92,7 +96,7 @@ class EditPoll extends Component {
     this._editPoll()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 3
@@ -159,8 +163,8 @@ class EditPoll extends Component {
           <div className="title">
             <h1>Poll Entries</h1>
           </div>
-          <PollEntryList key={this.state.reloadPollEntryList} eventId={this.props.match.params.eventId}/>
-          <PollEntry onDone={this.reloadPollEntry.bind(this)} eventId={this.props.match.params.eventId} />
+          <PollEntryList isTemplate={this.props.isTemplate} key={this.state.reloadPollEntryList} eventId={this.props.match.params.eventId}/>
+          <PollEntry isTemplate={this.props.isTemplate} onDone={this.reloadPollEntry.bind(this)} eventId={this.props.match.params.eventId} />
         </div>
       </div>
     );

@@ -54,7 +54,6 @@ class EventPreview extends Component {
       inviteWith: '',
       showPreviewImg: true,
       showEventBackground: true,
-      url: config.baseAPI_URL + '/event/' + this.props.match.params.eventId,
       principalUrl:  config.baseAPI_URL + '/principal/',
       event: {}
     };
@@ -73,16 +72,24 @@ class EventPreview extends Component {
     }.bind(this));
   }
 
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType() + '/' + this.props.match.params.eventId;
+  }
+
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getPrincipal = (id) => {
     return axios.get(this.state.principalUrl + id);
   }
 
   _handleRedirect() {
-    this.props.history.push('/manager/event/edit/' + this.props.match.params.eventId + '/detail');
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail');
   }
 
   _getEvent() {
-    axios.get(this.state.url).then(function(res) {
+    axios.get(this._url()).then(function(res) {
       res.data.date = new Date(res.data.date);
       this.setState({ 
         event: res.data,
@@ -119,7 +126,7 @@ class EventPreview extends Component {
                     error={this.state.error} />
 
           <div className="title">
-            <h1>Event: {this.state.event.title}</h1>
+            <h1>{this._getType().capitalize()}: {this.state.event.title}</h1>
             <div className="finish-later">
               <RaisedButton label="Finish later" 
                             className="right margin-top-medium grey" 
@@ -129,11 +136,11 @@ class EventPreview extends Component {
 
           <form className="edit-event-form">
             <Paper style={styles.paperLeft}>
-              <TextField floatingLabelText="Event title"
+              <TextField floatingLabelText={this._getType().capitalize() + ' title'}
                         disabled={true}
                         value={this.state.event.title}
                         fullWidth={true} />
-              <TextField floatingLabelText="Event subtitle"
+              <TextField floatingLabelText={this._getType().capitalize() + ' subtitle'}
                         disabled={true}
                         value={this.state.event.subtitle}
                         fullWidth={true} />                    
@@ -145,6 +152,8 @@ class EventPreview extends Component {
                         disabled={true}
                         value={this.state.event.location}
                         fullWidth={true} />
+              {!this.props.isTemplate ?
+              <span>           
               <DatePicker hintText="Date"
                         disabled={true}
                         mode="landscape"
@@ -160,6 +169,8 @@ class EventPreview extends Component {
                         disabled={true}
                         value={this.state.inviteWith}
                         fullWidth={true} />
+              </span>          
+              : null}          
               <SelectField floatingLabelText="Media type"
                           disabled={true}
                           fullWidth={true}

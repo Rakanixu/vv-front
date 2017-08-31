@@ -17,9 +17,6 @@ axios.defaults.withCredentials = true;
 const config = require('../../config.json');
 
 var styles = {
-  screenHeight: {
-    height: window.innerHeight - 250
-  },
   paper: {
     padding: 20,
     overflow: 'auto',
@@ -141,8 +138,8 @@ class MediaSource extends Component {
                           fullWidth={true}
                           value={this.state.main_media_type_id}
                           onChange={this._handleMediaTypeChange}>
-                {config.name_guest_media_type.map((type) => (
-                  <MenuItem value={type.id} primaryText={type.name} />
+                {config.name_guest_media_type.map((type, i) => (
+                  <MenuItem key={i} value={type.id} primaryText={type.name} />
                 ))}
               </SelectField>
               { this.state.main_media_type_id === 1 ?

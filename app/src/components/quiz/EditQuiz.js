@@ -45,6 +45,10 @@ class EditQuiz extends Component {
     });
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getQuiz() {
     axios.get(this.state.url).then(function(res) {
       this.setState({ quiz: res.data });
@@ -73,7 +77,7 @@ class EditQuiz extends Component {
     this._editQuiz()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 6
@@ -155,8 +159,8 @@ class EditQuiz extends Component {
           <div className="title">
             <h1>Quiz Entries</h1>
           </div>
-          <QuizEntryList key={this.state.reloadQuizEntryList} eventId={this.props.match.params.eventId}/>
-          <QuizEntry onDone={this.reloadQuizEntry.bind(this)} eventId={this.props.match.params.eventId} />
+          <QuizEntryList isTemplate={this.props.isTemplate} key={this.state.reloadQuizEntryList} eventId={this.props.match.params.eventId}/>
+          <QuizEntry isTemplate={this.props.isTemplate} onDone={this.reloadQuizEntry.bind(this)} eventId={this.props.match.params.eventId} />
         </div>
       </div>
     );

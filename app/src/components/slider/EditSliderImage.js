@@ -54,6 +54,10 @@ class EditSliderImage extends Component {
     this._getImage();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getImage() {
     axios.get(this.state.url).then(function(res) {
       this.setState({
@@ -79,7 +83,7 @@ class EditSliderImage extends Component {
     this._editImage()
     .then(function(res) {
       this.props.history.push({
-        pathname: '/manager/event/edit/' + this.props.match.params.eventId + '/detail',
+        pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
           index: 0

@@ -87,6 +87,10 @@ class NewEvent extends Component {
     }
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _handleTextFieldChange(e) {
     var state = {}
     state[e.target.dataset.val] = e.target.value;
@@ -135,17 +139,28 @@ class NewEvent extends Component {
       this.setState({ error: null });
     }.bind(this), 5000);
 
-    if (this.state.title === undefined || this.state.title === "" ||
-      this.state.date === undefined || this.state.date === "" ||
-      this.state.speaker_media_type === undefined ||
-      this.state.speaker_media === undefined || this.state.speaker_media === "") {
-      this._handleError();
-      return;
+
+    if (this._getType() === 'event') {
+      if (this.state.title === undefined || this.state.title === "" ||
+        this.state.date === undefined || this.state.date === "" ||
+        this.state.speaker_media_type === undefined ||
+        this.state.speaker_media === undefined || this.state.speaker_media === "") {
+        this._handleError();
+        return;
+      }
+    } else if (this._getType() === 'template') {
+      if (this.state.title === undefined || this.state.title === "" ||
+        this.state.speaker_media_type === undefined ||
+        this.state.speaker_media === undefined || this.state.speaker_media === "") {
+        this._handleError();
+        return;
+      }
     }
+
 
     this._createEvent()
     .then(function(res) {
-      this.props.history.push('/manager/event/edit/' + res.data.id + '/detail');
+      this.props.history.push('/manager/' + this._getType() + '/edit/' + res.data.id + '/detail');
     }.bind(this))
     .catch(err => {
       this._handleError(err);
@@ -218,7 +233,7 @@ class NewEvent extends Component {
     data.append('deleted_at', '1970-01-01T00:00:00.000Z');
     data.append('started_at', '1970-01-01T00:00:00.000Z');
     data.append('ended_at', '1970-01-01T00:00:00.000Z');
-    data.append('date', this.state.date.utc().format());
+    data.append('date', this.state.date ? this.state.date.utc().format() : null);
     data.append('login_required', this.refs.checkbox.state.switched);
     data.append('principal_id', user.principal_id);
     data.append('user_account_id', user.id);
@@ -239,7 +254,7 @@ class NewEvent extends Component {
     data.append('event_background', event_background);
     data.append('speaker_media', this.state.speaker_media);
 
-    return axios.post(config.baseAPI_URL + '/event', data);
+    return axios.post(config.baseAPI_URL + '/' + this._getType(), data);
   }
 
   _handleError(err) {
@@ -264,16 +279,16 @@ class NewEvent extends Component {
                   
         <div>
           <div className="title">
-            <h1>New Event</h1>
+            <h1>New {this._getType().capitalize()}</h1>
           </div>
 
           <form className="new-event-form">
             <Paper style={styles.paperLeft}>
-              <TextField floatingLabelText="Event title"
+              <TextField floatingLabelText={this._getType().capitalize() + " title"}
                         data-val="title"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
-              <TextField floatingLabelText="Event subtitle"
+              <TextField floatingLabelText={this._getType().capitalize() + " subtitle"}
                         data-val="subtitle"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />          
@@ -285,6 +300,8 @@ class NewEvent extends Component {
                         data-val="location"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
+              {!this.props.isTemplate ?
+              <span>   
               <DatePicker hintText="Date"
                         fullWidth={true}
                         mode="landscape" 
@@ -295,6 +312,8 @@ class NewEvent extends Component {
                         mode="landscape" 
                         autoOk={true} 
                         onChange={this._handleTimeChange.bind(this)}/>
+              </span>
+              : null}          
               <SelectField floatingLabelText="Media type"
                           fullWidth={true}
                           value={this.state.speaker_media_type}

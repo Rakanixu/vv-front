@@ -168,16 +168,16 @@
   position: relative;
   display: flex;
   top: 30px;
-  right: 30px;
+  right: 15px;
   justify-content: flex-end;
 }
 
-.events-copy-btn, .events-edit-btn {
+.events-copy-btn, .events-edit-btn, .events-delete-btn {
   border-radius: 5px !important;
   opacity: 0.8;
 }
 
-.events-copy-btn button, .events-edit-btn button {
+.events-copy-btn button, .events-edit-btn button, .events-delete-btn button {
   background-color: rgb(56, 62, 82) !important;
   border-radius: 5px !important;
   border-color: rgb(56, 62, 82) !important;

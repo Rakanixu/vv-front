@@ -13,9 +13,12 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Delete from 'material-ui/svg-icons/action/delete';
+import Create from 'material-ui/svg-icons/file/create-new-folder';
 import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorReporting from 'material-ui-error-reporting';
+import ConfirmationDialog from '../confirmation-dialog/ConfirmationDialog';
 import { ToastContainer, ToastMessage } from 'react-toastr';
 import axios from 'axios';
 import './EventsGridList.css';
@@ -55,7 +58,7 @@ const styles = {
   },
   copyButton: {
     height: 30,
-    width: 70,
+    width: 65,
     minWidth: 20,
     marginRight: 5
   },
@@ -72,7 +75,7 @@ const styles = {
   },
   editButton: {
     height: 30,
-    width: 70,
+    width: 60,
     minWidth: 20,
     marginLeft: 5
   },
@@ -83,6 +86,23 @@ const styles = {
     padding: 0
   },
   editIcon: {
+    width: 15,
+    height: 15,
+    marginLeft: 0
+  },
+  deleteButton: {
+    height: 30,
+    width: 72,
+    minWidth: 20,
+    marginLeft: 5
+  },
+  deleteLabel: {
+    margin: 5,
+    fontSize: 12,
+    color: '#fff',
+    padding: 0
+  },
+  deleteIcon: {
     width: 15,
     height: 15,
     marginLeft: 0
@@ -152,10 +172,20 @@ class EventsGridList extends Component {
     this.state = {
       error: null,
       domain: '',
-      eventsUrl: config.baseAPI_URL + '/event',
+      showDeleteConfirmation: false,
       principalUrl:  config.baseAPI_URL + '/principal/',
       events: []
     };
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    if (nextProps.isTemplate !== this.props.isTemplate) {
+      this._hideConfirmation();
+
+      setTimeout(function() {
+        this._getEvents();
+      }.bind(this), 50);
+    }
   }
 
   componentDidMount() {
@@ -172,50 +202,55 @@ class EventsGridList extends Component {
     this._getEvents();
   }
 
+  _url() {
+    return config.baseAPI_URL + '/' + this._getType();
+  }
+
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getPrincipal = (id) => {
     return axios.get(this.state.principalUrl + id);
   }
 
   _getEvents() {
-    axios.get(this.state.eventsUrl).then(function(res) {
+    axios.get(this._url()).then(function(res) {
       this.setState({ events: res.data });
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
   }
 
-  _handlePageChange() {
-    this.props.history.push('/manager/event/new');
-  }
-
-  _handleEdit(e) {
-    this.props.history.push('/manager/event/edit/' + e.currentTarget.dataset.id);
-  }
-
-  _handleDelete(e) {
-    axios.delete(this.state.eventsUrl + '/' + e.currentTarget.dataset.id).then(function (res) {
+  _deleteEvent() {
+    axios.delete(this._url() + '/' + this.state.eventId).then(function (res) {
       this._getEvents();
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
   }
 
+  _handlePageChange() {
+    this.props.history.push('/manager/' + this._getType() + '/new');
+  }
+
+  _handleEdit(e) {
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + e.currentTarget.dataset.id);
+  }
+
+  _handleDelete(e) {
+    this.setState({ 
+      showDeleteConfirmation: true,
+      eventId: e.currentTarget.dataset.id
+    });
+  }
+
+  _hideConfirmation() {
+    this.setState({ showDeleteConfirmation: false });
+  }
+
   _handleCopy(e) {
-    let event = {};
-    for (var i = 0; i < this.state.events.length; i++) {
-      if (this.state.events[i].id.toString() === e.currentTarget.dataset.id) {
-        event = _.clone(this.state.events[i]);
-        delete event.id;
-        break;
-      }
-    }
-
-    var data = new FormData();
-    for (var i in event) {
-      data.append(i, event[i]);
-    }
-
-    axios.post(config.baseAPI_URL + '/event', data).then(function(res) {
+    axios.post(config.baseAPI_URL + '/' + this._getType() + '/' + e.currentTarget.dataset.id + '/copy', {}).then(function(res) {
       this.props.history.push('/manager/event/edit/' + res.data.id);
     }.bind(this)).catch(err => {
       this._handleError(err);
@@ -268,13 +303,21 @@ class EventsGridList extends Component {
                         toastMessageFactory={ToastMessageFactory}
                         className="toast-top-right" />
 
+        <ConfirmationDialog title="Confirm deletion"
+                            message="Are you sure to do this? Can't be undone."
+                            confirmLabel="Confirm"
+                            cancelLabel="Cancel"
+                            showDialog={this.state.showDeleteConfirmation}
+                            onConfirm={this._deleteEvent.bind(this)}
+                            onCancel={this._hideConfirmation.bind(this)}/>
+
         <ErrorReporting open={this.state.error !== null}
                         error={this.state.error} />
 
         <div className="events-title">
-          <h1>Overview Events</h1>
+          <h1>Overview {this._getType().capitalize()}s</h1>
           <div className="events-new-event">
-            <RaisedButton label="New Event"
+            <RaisedButton label={'New ' + this._getType().capitalize()}
                           primary={true}
                           onTouchTap={this._handlePageChange.bind(this)}/>
           </div>
@@ -403,6 +446,7 @@ class EventsGridList extends Component {
                     <div className="events-card-block-title">{event.title}</div>
 
                     <div className="events-card-block__content__buttons__sub">
+                      {!this.props.isTemplate ?
                       <RaisedButton className="events-copy-btn"
                                     label="Copy"
                                     labelStyle={styles.copyLabel}
@@ -410,6 +454,16 @@ class EventsGridList extends Component {
                                     data-id={event.id}
                                     style={styles.copyButton}
                                     onTouchTap={this._handleCopy.bind(this)}/>
+                      :
+                      <RaisedButton className="events-copy-btn"
+                                    label="New event"
+                                    labelStyle={styles.copyLabel}
+                                    icon={<Create color="white" style={styles.copyIcon}/>}
+                                    data-id={event.id}
+                                    style={styles.copyButton}
+                                    onTouchTap={this._handleCopy.bind(this)}/>
+                      }
+
                       <RaisedButton className="events-edit-btn"
                                     label="Edit"
                                     labelStyle={styles.editLabel}
@@ -417,10 +471,18 @@ class EventsGridList extends Component {
                                     data-id={event.id}
                                     style={styles.editButton}
                                     onTouchTap={this._handleEdit.bind(this)}/>
+                      <RaisedButton className="events-delete-btn"
+                                    label="Delete"
+                                    labelStyle={styles.deleteLabel}
+                                    icon={<Delete color="white" style={styles.deleteIcon}/>}
+                                    data-id={event.id}
+                                    style={styles.deleteButton}
+                                    onTouchTap={this._handleDelete.bind(this)}/>
                     </div>
                   </div>
                 </div>
                 <div className="events-card-block__content__buttons">
+                  {!this.props.isTemplate ?
                   <div className="events-card-block__content__buttons__main">
                     <RaisedButton className="events-start-btn"
                                   label="Start"
@@ -433,8 +495,9 @@ class EventsGridList extends Component {
                                   labelStyle={styles.stopLabel}
                                   label="Stop"
                                   onTouchTap={this._handleStopEvent.bind(this)}
-                                  style={styles.stopButton}/>
+                                  style={styles.stopButton}/>            
                   </div>
+                  : null }  
                   <div className="events-card-block__content__buttons__reset">
                     <a href="#">Reset</a>
                   </div>

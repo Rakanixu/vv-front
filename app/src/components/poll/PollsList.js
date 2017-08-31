@@ -45,6 +45,10 @@ class PollsList extends Component {
     this._getPolls();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getPolls() {
     axios.get(this.state.url).then(res => {
       this.setState({ polls: res.data });
@@ -54,7 +58,7 @@ class PollsList extends Component {
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/poll/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.eventId + '/poll/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {

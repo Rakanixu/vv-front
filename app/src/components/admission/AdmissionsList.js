@@ -47,6 +47,10 @@ class AdmissionsList extends Component {
     this._getAdmissions();
   }
 
+  _getType() {
+    return (this.props.isTemplate ? 'template' : 'event');
+  }
+
   _getAdmissions() {
     axios.get(this.state.url).then(res => {
       this.setState({ admissions: res.data });
@@ -56,7 +60,7 @@ class AdmissionsList extends Component {
   }
 
   _edit(e) {
-    this.props.history.push('/manager/event/edit/' + this.props.eventId + '/admission/' + e.currentTarget.parentNode.dataset.id);
+    this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.eventId + '/admission/' + e.currentTarget.parentNode.dataset.id);
   }
 
   _delete(e) {
