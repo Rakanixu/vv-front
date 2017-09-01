@@ -79,7 +79,7 @@ class Root extends Component {
                   handleChangeRequestNavDrawer={this._handleToggle.bind(this)} />
           <LeftBar navDrawerOpen={this.state.open}
                   menus={data.menus}
-                  username="User" />
+                  username="Root" />
           <div style={styles.container}>
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={Principal} />
