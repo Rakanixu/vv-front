@@ -105,8 +105,8 @@ const data = {
     menus: [
         {text: 'Overview', icon: <Assessment/>, link: '/manager/event'},
         {text: 'New event', icon: <PermIdentity/>, link: '/manager/event/new'},
-        {text: 'Templates', icon: <Assessment/>, link: '/manager/template'},
-        {text: 'New template', icon: <PermIdentity/>, link: '/manager/template/new'},
+        {text: 'Event Templates', icon: <Assessment/>, link: '/manager/template'},
+        {text: 'New Event Template', icon: <PermIdentity/>, link: '/manager/template/new'},
         /* {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'}, */
         {text: 'Donations', icon: <PermIdentity/>, link: '/manager/donations'},
         {text: 'Users', icon: <PermIdentity/>, link: '/manager/users'},

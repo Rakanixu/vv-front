@@ -498,9 +498,6 @@ class EventsGridList extends Component {
                                   style={styles.stopButton}/>            
                   </div>
                   : null }  
-                  <div className="events-card-block__content__buttons__reset">
-                    <a href="#">Reset</a>
-                  </div>
                 </div>
               </div>
             </GridTile>
