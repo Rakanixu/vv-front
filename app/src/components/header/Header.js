@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { withRouter } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -19,10 +20,21 @@ import ViewModule from 'material-ui/svg-icons/action/view-module';
 import {grey900} from 'material-ui/styles/colors';
 import SearchBar from 'material-ui-search-bar';
 import SearchBox from './SearchBox';
-
 import './Header.css';
 
 class Header extends React.Component {
+  _handleRedirect(e) {
+    if (e.currentTarget && e.currentTarget.dataset) {
+      this.props.history.push(e.currentTarget.dataset.url);
+    } else if (e.props && e.props['data-url']) {
+      this.props.history.push(e.props['data-url']);
+    }
+  }
+
+  _logout = (e) => {
+    localStorage.clear();
+    this.props.history.push('/login');
+  }
 
   render() {
     const {styles, handleChangeRequestNavDrawer} = this.props;
@@ -90,37 +102,22 @@ class Header extends React.Component {
               children={
                 <div className="header-full-bar-left">
                   <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                    <Tabs
-                        inkBarStyle={style.inkBarStyle}
-                        tabItemContainerStyle={style.tabItemContainerStyle}
-                        style={style.tabs}>
-                      <Tab
-                          style={style.tab}
-                          label="Cockpit" />
-                      <Tab
-                          style={style.tab}
-                          label="Events" />
-                      <Tab
-                          style={style.tab}
-                          label="Users" />
-                      <Tab
-                          style={style.tab}
-                          label="Donations" />
-                      <Tab
-                          style={style.tab}
-                          label="Shop" />
-                      <Tab
-                          style={style.tab}
-                          label="Resources" />
+                    <Tabs inkBarStyle={style.inkBarStyle}
+                          tabItemContainerStyle={style.tabItemContainerStyle}
+                          style={style.tabs}>
+                      <Tab style={styles.tab}
+                          data-url="/root/principal"
+                          onActive={this._handleRedirect.bind(this)}
+                          label="Principals"></Tab>
                     </Tabs>
                   </MuiThemeProvider>
-                  <FloatingActionButton
+{/*                   <FloatingActionButton
                       mini={true}
                       backgroundColor="#2196F3"
                       zDepth={0}
                       style={style.button}>
                     <ContentAdd />
-                  </FloatingActionButton>
+                  </FloatingActionButton> */}
                 </div>
               }
               iconElementRight={
@@ -140,12 +137,9 @@ class Header extends React.Component {
                   <div className="header-short-bar-left">
                     <IconMenu
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
-                      <MenuItem value="1" primaryText="Cockpit" />
-                      <MenuItem value="2" primaryText="Events" />
-                      <MenuItem value="3" primaryText="Users" />
-                      <MenuItem value="4" primaryText="Donations" />
-                      <MenuItem value="5" primaryText="Shop" />
-                      <MenuItem value="6" primaryText="Resources" />
+                      <MenuItem data-url="/root/principal"
+                                onTouchTap={this._handleRedirect.bind(this)}
+                                primaryText="Principals" />
                     </IconMenu>
                   </div>
 
@@ -164,8 +158,8 @@ class Header extends React.Component {
                               </FloatingActionButton>
                             }
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                    <MenuItem primaryText="Sign out" containerElement={<Link to="/login"/>}/>
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}> 
+                    <MenuItem primaryText="Sign out" onClick={this._logout}/>
                   </IconMenu>
                 </div>
               }
@@ -181,4 +175,4 @@ Header.propTypes = {
   handleChangeRequestNavDrawer: PropTypes.func
 };
 
-export default Header;
+export default withRouter(Header);

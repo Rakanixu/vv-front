@@ -86,7 +86,7 @@ class EditSliderImage extends Component {
         pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
-          index: 0
+          index: 1
         }
       });
     }.bind(this))

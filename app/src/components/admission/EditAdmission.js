@@ -80,7 +80,7 @@ class EditAdmission extends Component {
         pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail',
         query: {
           showTabs: true,
-          index: 1
+          index: 2
         }
       });
     }.bind(this))

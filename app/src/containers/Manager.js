@@ -77,7 +77,7 @@ const styles = {
         background: '#2196F3'
     },
     tabs: {
-        width: 600,
+        width: 900,
         height: 55,
     },
     button: {
@@ -105,8 +105,8 @@ const data = {
     menus: [
         {text: 'Overview', icon: <Assessment/>, link: '/manager/event'},
         {text: 'New event', icon: <PermIdentity/>, link: '/manager/event/new'},
-        {text: 'Templates', icon: <Assessment/>, link: '/manager/template'},
-        {text: 'New template', icon: <PermIdentity/>, link: '/manager/template/new'},
+        {text: 'Event Templates', icon: <Assessment/>, link: '/manager/template'},
+        {text: 'New Event Template', icon: <PermIdentity/>, link: '/manager/template/new'},
         /* {text: 'Event locations', icon: <PermIdentity/>, link: '/manager/event_location'}, */
         {text: 'Donations', icon: <PermIdentity/>, link: '/manager/donations'},
         {text: 'Users', icon: <PermIdentity/>, link: '/manager/users'},
@@ -160,7 +160,12 @@ class Manager extends Component {
   }
 
   _handleRedirect(e) {
-    this.props.history.push(e.currentTarget.dataset.url);
+    if (e.currentTarget) {
+      this.props.history.push(e.currentTarget.dataset.url);
+    } else if (e.props && e.props['data-url']) {
+      this.props.history.push(e.props['data-url']);
+    }
+    
     this.setState({ open: false });
   }
 
@@ -196,37 +201,42 @@ class Manager extends Component {
                   children={
                     <div className="manager-header-bar-left">
                       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                        <Tabs
-                            inkBarStyle={styles.inkBarStyle}
-                            tabItemContainerStyle={styles.tabItemContainerStyle}
-                            style={styles.tabs}>
-                          <Tab
-                              style={styles.tab}
-                              label="Cockpit" > </Tab>
-                          <Tab
-                              style={styles.tab}
-                              label="Events" > </Tab>
-                          <Tab
-                              style={styles.tab}
-                              label="Users" > </Tab>
-                          <Tab
-                              style={styles.tab}
-                              label="Donations" > </Tab>
-                          <Tab
-                              style={styles.tab}
-                              label="Shop" > </Tab>
-                          <Tab
-                              style={styles.tab}
-                              label="Resources" > </Tab>
+                        <Tabs inkBarStyle={styles.inkBarStyle}
+                              tabItemContainerStyle={styles.tabItemContainerStyle}
+                              style={styles.tabs}>
+                          <Tab style={styles.tab}
+                               data-url="/manager/event"
+                               onActive={this._handleRedirect.bind(this)}
+                               label="Events"></Tab>
+                          <Tab style={styles.tab}
+                               data-url="/manager/template"
+                               onActive={this._handleRedirect.bind(this)}
+                               label="Event Templates"></Tab>
+                          <Tab style={styles.tab}
+                               data-url="/manager/users"
+                               onActive={this._handleRedirect.bind(this)}
+                               label="Users"></Tab>
+                          <Tab style={styles.tab}
+                               data-url="/manager/donations"
+                               onActive={this._handleRedirect.bind(this)}
+                               label="Donations"></Tab>
+                          <Tab style={styles.tab}
+                               data-url="/manager/media"
+                               onActive={this._handleRedirect.bind(this)}
+                               label="Media"> </Tab>
+                          <Tab style={styles.tab}
+                               data-url="/manager/design_options"
+                               onActive={this._handleRedirect.bind(this)}
+                               label="Design Options"></Tab>
                         </Tabs>
                       </MuiThemeProvider>
-                      <FloatingActionButton
+{/*                       <FloatingActionButton
                           mini={true}
                           backgroundColor="#2196F3"
                           zDepth={0}
                           style={styles.button}>
                         <ContentAdd />
-                      </FloatingActionButton>
+                      </FloatingActionButton> */}
                     </div>
                   }
                   iconElementRight={
@@ -235,12 +245,24 @@ class Manager extends Component {
                       <div className="manager-header-short-bar-left">
                         <IconMenu
                             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
-                          <MenuItem value="1" primaryText="Cockpit" />
-                          <MenuItem value="2" primaryText="Events" />
-                          <MenuItem value="3" primaryText="Users" />
-                          <MenuItem value="4" primaryText="Donations" />
-                          <MenuItem value="5" primaryText="Shop" />
-                          <MenuItem value="6" primaryText="Resources" />
+                          <MenuItem data-url="/manager/event"
+                                    onTouchTap={this._handleRedirect.bind(this)}
+                                    primaryText="Events" />
+                          <MenuItem data-url="/manager/template"
+                                    onTouchTap={this._handleRedirect.bind(this)}
+                                    primaryText="Event Templates" />
+                          <MenuItem data-url="/manager/users"
+                                    onTouchTap={this._handleRedirect.bind(this)} 
+                                    primaryText="Users" />
+                          <MenuItem data-url="/manager/donations"
+                                    onTouchTap={this._handleRedirect.bind(this)}
+                                    primaryText="Donations" />
+                          <MenuItem data-url="/manager/media"
+                                    onTouchTap={this._handleRedirect.bind(this)} 
+                                    primaryText="Media" />
+                          <MenuItem data-url="/manager/design_options"
+                                    onTouchTap={this._handleRedirect.bind(this)} 
+                                    primaryText="Design Options" />
                         </IconMenu>
                       </div>
 

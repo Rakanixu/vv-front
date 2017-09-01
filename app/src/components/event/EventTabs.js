@@ -34,39 +34,39 @@ class EventTabs extends Component {
     this.state = {
       tabs: [
         {
-          handleActive: this.handleTabChange.bind(this, 0),
+          handleActive: this._handleTabChange.bind(this, 0),
           title: 'Media sources'
         },
         {
-          handleActive: this.handleTabChange.bind(this, 1),
+          handleActive: this._handleTabChange.bind(this, 1),
           title: 'Slider'
         },
         {
-          handleActive: this.handleTabChange.bind(this, 2),
+          handleActive: this._handleTabChange.bind(this, 2),
           title: 'Admissions'
         },
         {
-          handleActive: this.handleTabChange.bind(this, 3),
+          handleActive: this._handleTabChange.bind(this, 3),
           title: 'Polls'
         },
         {
-          handleActive: this.handleTabChange.bind(this, 4),
+          handleActive: this._handleTabChange.bind(this, 4),
           title: 'Question Topics'
         },
 /*         {
-          handleActive: this.handleTabChange.bind(this, 5),
+          handleActive: this._handleTabChange.bind(this, 5),
           title: 'Auctions'
         }, */
         {
-          handleActive: this.handleTabChange.bind(this, 5),
+          handleActive: this._handleTabChange.bind(this, 5),
           title: 'Quizzes'
         },
 /*         {
-          handleActive: this.handleTabChange.bind(this, 6),
+          handleActive: this._handleTabChange.bind(this, 6),
           title: 'Quiz Entries'
         }, */
         {
-          handleActive: this.handleTabChange.bind(this, 6),
+          handleActive: this._handleTabChange.bind(this, 6),
           title: 'Activity Settings'
         }
       ],
@@ -83,7 +83,9 @@ class EventTabs extends Component {
   }
 
   componentWillMount() {
-    this.handleTabChange(this.props.tabIndex ? this.props.tabIndex : 0);
+    if (this.props.history.location.query && this.props.history.location.query.showTabs) {
+      this._handleTabChange(this.props.history.location.query.index || 0);
+    }
   }
 
   componentDidMount() {
@@ -103,7 +105,7 @@ class EventTabs extends Component {
     return config.baseAPI_URL + '/' + this._getType() + '/' + this.props.match.params.eventId;
   }
 
-  handleTabChange = (index) => {
+  _handleTabChange = (index) => {
     var show = [];
     for (var i = 0; i < this.state.tabs.length; i++) {
       if (i === index) {
@@ -112,7 +114,10 @@ class EventTabs extends Component {
         show.push(false);
       }
     }
-    this.setState({ show: show });
+    this.setState({ 
+      show: show, 
+      tabIndex: index 
+    });
   }
 
   onDone = () => {
@@ -146,7 +151,7 @@ class EventTabs extends Component {
 
         <div className="container">
           <div style={{overflow:'hidden'}}>
-            <Nav tabs={this.state.tabs} tabIndex={this.props.tabIndex}/>
+            <Nav tabs={this.state.tabs} tabIndex={this.state.tabIndex}/>
             { this.state.show[0] ?
               <div>
                 <MediaSourceList isTemplate={this.props.isTemplate} key={this.state.reloadMediaSourceList} eventId={this.props.match.params.eventId}/>

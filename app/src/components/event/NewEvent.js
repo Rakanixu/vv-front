@@ -122,8 +122,8 @@ class NewEvent extends Component {
     this.setState({ event_background: pictures });
   }
 
-  _onSpeakerMediaChange = (pictures) => {
-    this.setState({ speaker_media: pictures });
+  _onSpeakerMediaChange = (img) => {
+    this.setState({ speaker_media: img });
   }
 
   _handelImgSelect = (e) => {
@@ -323,9 +323,7 @@ class NewEvent extends Component {
                 ))}
               </SelectField>
               { this.state.speaker_media_type === 1 ?
-                <div className="fit">
-                  <UploadPreview title="Media" label="Add" onChange={this._onSpeakerMediaChange} style={styles.fit}/>
-                </div>
+                <ImgSelectionWrapper onChange={this._onSpeakerMediaChange.bind(this)} hideDefaultImageButton={true}/>
                 :
                 <TextField floatingLabelText="Speaker media"
                           data-val="speaker_media"

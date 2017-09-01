@@ -22,22 +22,6 @@ const moment = require('moment');
 
 var user = {};
 var styles = {
-  gridList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    overflowX: 'auto',
-  },
-  gridTile: {
-    cursor: 'pointer',
-    width: 240
-  },
-  titleStyle: {
-    color: 'rgb(0, 188, 212)',
-  },
-  fit: {
-    overflow: 'hidden',
-    maxHeight: 250
-  },
   paperLeft: {
     padding: 20,
     overflow: 'auto',
@@ -160,8 +144,8 @@ class EditEvent extends Component {
     this.setState({ event: this.state.event });
   }
 
-  _onSpeakerMediaChange = (pictures) => {
-    this.state.event.speaker_media = pictures;
+  _onSpeakerMediaChange = (img) => {
+    this.state.event.speaker_media = img;
     this.setState({ event: this.state.event });
   }
 
@@ -327,14 +311,10 @@ class EditEvent extends Component {
                 ))}
               </SelectField>
               { this.state.event.speaker_media_type === 1 ?
-                <div>
-                  <div ref="galleryPreviewImg" className="margin-bottom-medium">
-                    { this.state.event.speaker_media ? <img className="preview-img" src={config.baseURL + this.state.event.speaker_media} alt="preview"/> : null }
-                  </div>  
-                  <div className="fit">
-                    <UploadPreview title="Media" label="Change image" onChange={this._onSpeakerMediaChange} style={styles.fit}/>
-                  </div>
-                </div>
+                <ImgSelectionWrapper ref="speakerMediaSelector"
+                                     onChange={this._onSpeakerMediaChange.bind(this)}
+                                     defaultImage={this.state.event.speaker_media}
+                                     hideDefaultImageButton={true}/>
                 :
                 <TextField floatingLabelText="Speaker media"
                           data-val="speaker_media"

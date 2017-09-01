@@ -79,7 +79,7 @@ class EditPollEntry extends Component {
         pathname: '/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/poll/' + this.props.match.params.pollId,
         query: {
           showTabs: true,
-          index: 7
+          index: 3
         }
       });
     }.bind(this))
