@@ -76,7 +76,7 @@ const styles = {
     backgroundImage: 'url("/background-login.jpg")',
     backgroundSize: '100% 100%',
     backgroundRepeat: 'no-repeat'
-  } 
+  }
 };
 
 class Login extends Component {
@@ -173,10 +173,11 @@ class Login extends Component {
                   onChange={this._handleTextFieldChange.bind(this)}
                   fullWidth={true} />
                 <TextField floatingLabelText="Password"
+                  type="password"
                   data-val="password"
                   onChange={this._handleTextFieldChange.bind(this)}
                   fullWidth={true} />
-                <div style={styles.alignRight}>  
+                <div style={styles.alignRight}>
                   <a style={styles.forgotPassword} href="/forgot_password">Forgot password?</a>
                 </div>
                 <div style={styles.alignCenter}>
@@ -184,7 +185,7 @@ class Login extends Component {
                     onTouchTap={this._handleLogin.bind(this)}
                     primary={true}
                     style={styles.loginBtn} />
-                  <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>  
+                  <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>
                 </div>
               </form>
             </Paper>

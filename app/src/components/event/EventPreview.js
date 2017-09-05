@@ -85,13 +85,14 @@ class EventPreview extends Component {
   }
 
   _handleRedirect() {
-    this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail');
+    //this.props.history.push('/manager/' + this._getType() + '/edit/' + this.props.match.params.eventId + '/detail');
+    this.props.history.push('/manager/event');
   }
 
   _getEvent() {
     axios.get(this._url()).then(function(res) {
       res.data.date = new Date(res.data.date);
-      this.setState({ 
+      this.setState({
         event: res.data,
         inviteWith: 'https://' + this.state.domain + '/events/' + res.data.id,
         eventBackgroundUrlFromGallery: res.data.event_background,
@@ -128,11 +129,11 @@ class EventPreview extends Component {
           <div className="title">
             <h1>{this._getType().capitalize()}: {this.state.event.title}</h1>
             <div className="finish-later">
-              <RaisedButton label="Finish later" 
-                            className="right margin-top-medium grey" 
+              <RaisedButton label="Finish later"
+                            className="right margin-top-medium grey"
                             onTouchTap={this._handleRedirect.bind(this)} />
-            </div>    
-          </div>          
+            </div>
+          </div>
 
           <form className="edit-event-form">
             <Paper style={styles.paperLeft}>
@@ -143,7 +144,7 @@ class EventPreview extends Component {
               <TextField floatingLabelText={this._getType().capitalize() + ' subtitle'}
                         disabled={true}
                         value={this.state.event.subtitle}
-                        fullWidth={true} />                    
+                        fullWidth={true} />
               <TextField floatingLabelText="Notes"
                         disabled={true}
                         value={this.state.event.notes}
@@ -153,7 +154,7 @@ class EventPreview extends Component {
                         value={this.state.event.location}
                         fullWidth={true} />
               {!this.props.isTemplate ?
-              <span>           
+              <span>
               <DatePicker hintText="Date"
                         disabled={true}
                         mode="landscape"
@@ -163,14 +164,14 @@ class EventPreview extends Component {
                         disabled={true}
                         fullWidth={true}
                         value={this.state.event.date}
-                        mode="landscape" 
+                        mode="landscape"
                         autoOk={true} />
               <TextField floatingLabelText="Invite With"
                         disabled={true}
                         value={this.state.inviteWith}
                         fullWidth={true} />
-              </span>          
-              : null}          
+              </span>
+              : null}
               <SelectField floatingLabelText="Media type"
                           disabled={true}
                           fullWidth={true}
@@ -183,7 +184,7 @@ class EventPreview extends Component {
                 <div>
                   <div ref="galleryPreviewImg" className="margin-bottom-medium">
                     { this.state.event.speaker_media ? <img src={config.baseURL + this.state.event.speaker_media} alt="preview"/> : null }
-                  </div>  
+                  </div>
                 </div>
                 :
                 <TextField floatingLabelText="Speaker media"
@@ -203,13 +204,13 @@ class EventPreview extends Component {
               <label className="load-img-label">Preview Image</label>
               <div ref="galleryPreviewImg" className="margin-bottom-medium">
               { this.state.showPreviewImg ? <img src={config.baseURL + this.state.previewImgUrlFromGallery} alt="preview"/> : null }
-              </div>  
+              </div>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
               <div ref="galleryEventBackground" className="margin-bottom-medium">
               { this.state.showEventBackground ? <img src={config.baseURL + this.state.eventBackgroundUrlFromGallery} alt="preview"/> : null }
-              </div>  
-            </Paper>  
+              </div>
+            </Paper>
           </form>
         </div>
       </div>
