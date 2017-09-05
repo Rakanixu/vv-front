@@ -34,7 +34,7 @@ const LeftBar = (props) => {
     <Drawer docked={true}
             open={navDrawerOpen}>
       <div style={styles.logoContainer}>
-        <img style={styles.logo} src="/logo-white.png" alt="logo"/>
+        <img id="principalLogo" style={styles.logo} src="/logo-white.png" alt="logo"/>
       </div>
       <div>
         {props.menus.map((menu, index) =>

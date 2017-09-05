@@ -101,7 +101,11 @@ class MediaSourceList extends Component {
             {this.state.event_guests.map((event_guest, i) =>
               <TableRow key={i} data-id={event_guest.id}>
                 <TableRowColumn style={styles.tablePreview}>
+                  { event_guest.main_media_type_id !== 1 ?
+                  <p>{event_guest.main_media}</p>
+                  :
                   <img className="table-img" src={config.baseURL + event_guest.main_media} alt="named guest media file"/>
+                  }
                 </TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{event_guest.name}</TableRowColumn>
                 <TableRowColumn style={styles.alignLeft}>{event_guest.description}</TableRowColumn>
