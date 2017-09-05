@@ -83,7 +83,7 @@ class EditEvent extends Component {
   _getEvent() {
     axios.get(this._url()).then(function(res) {
       res.data.date = new Date(res.data.date);
-      this.setState({ 
+      this.setState({
         event: res.data,
         eventBackgroundUrlFromGallery: res.data.event_background,
         previewImgUrlFromGallery: res.data.preview_img,
@@ -214,7 +214,7 @@ class EditEvent extends Component {
 
     if (this.state.event.time !== undefined) {
       this.state.event.date = moment(this.state.event.date).hour(moment(this.state.event.time).get('hour'));
-      this.state.event.date = moment(this.state.event.date).minute(moment(this.state.event.time).get('minute')); 
+      this.state.event.date = moment(this.state.event.date).minute(moment(this.state.event.time).get('minute'));
     }
 
     var now = moment().utc(new Date()).format();
@@ -260,8 +260,8 @@ class EditEvent extends Component {
                     error={this.state.error} />
 
           <div className="title">
-            <h1>Edit {this._getType().capitalize()}</h1>  
-          </div>          
+            <h1>Edit {this._getType().capitalize()}</h1>
+          </div>
 
           <form className="edit-event-form">
             <Paper style={styles.paperLeft}>
@@ -276,7 +276,7 @@ class EditEvent extends Component {
                         primary={true}
                         value={this.state.event.subtitle}
                         onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />                    
+                        fullWidth={true} />
               <TextField floatingLabelText="Notes"
                         data-val="notes"
                         value={this.state.event.notes}
@@ -288,7 +288,7 @@ class EditEvent extends Component {
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
               {!this.props.isTemplate ?
-              <span>            
+              <span>
               <DatePicker hintText="Date"
                         mode="landscape"
                         fullWidth={true}
@@ -297,11 +297,11 @@ class EditEvent extends Component {
               <TimePicker hintText="Time"
                         fullWidth={true}
                         value={this.state.event.date}
-                        mode="landscape" 
-                        autoOk={true} 
+                        mode="landscape"
+                        autoOk={true}
                         onChange={this._handleTimeChange.bind(this)}/>
               </span>
-              : null }          
+              : null }
               <SelectField floatingLabelText="Media type"
                           fullWidth={true}
                           value={this.state.event.speaker_media_type}
@@ -340,15 +340,15 @@ class EditEvent extends Component {
 
             <Paper style={styles.paperRight}>
               <label className="load-img-label">Preview Image</label>
-              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)} 
+              <ImgSelectionWrapper onChange={this._previewImageChange.bind(this)}
                                    defaultImage={this.state.event.preview_img}
                                    hideDefaultImageButton={true}/>
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
-              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} 
+              <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)}
                                    defaultImage={this.state.event.event_background}
                                    hideDefaultImageButton={true}/>
-            </Paper>  
+            </Paper>
           </form>
         </div>
       </div>

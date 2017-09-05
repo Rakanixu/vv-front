@@ -84,6 +84,7 @@ class NewEvent extends Component {
       this._handleError(new Error('User cannot be retrieved'));
     } else {
       user = JSON.parse(localStorage.getItem('alantu-user'));
+      this._handleMediaTypeChange(null, 2, 3);
     }
   }
 
@@ -218,7 +219,7 @@ class NewEvent extends Component {
 
     if (this.state.time !== undefined) {
       this.state.date = this.state.date.hour(this.state.time.get('hour'));
-      this.state.date = this.state.date.minute(this.state.time.get('minute')); 
+      this.state.date = this.state.date.minute(this.state.time.get('minute'));
     }
 
     var now = moment().utc(new Date()).format();
@@ -276,7 +277,7 @@ class NewEvent extends Component {
       <div className="container">
         <ErrorReporting open={this.state.error !== null}
                   error={this.state.error} />
-                  
+
         <div>
           <div className="title">
             <h1>New {this._getType().capitalize()}</h1>
@@ -291,7 +292,7 @@ class NewEvent extends Component {
               <TextField floatingLabelText={this._getType().capitalize() + " subtitle"}
                         data-val="subtitle"
                         onChange={this._handleTextFieldChange.bind(this)}
-                        fullWidth={true} />          
+                        fullWidth={true} />
               <TextField floatingLabelText="Notes"
                         data-val="notes"
                         onChange={this._handleTextFieldChange.bind(this)}
@@ -301,19 +302,19 @@ class NewEvent extends Component {
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
               {!this.props.isTemplate ?
-              <span>   
+              <span>
               <DatePicker hintText="Date"
                         fullWidth={true}
-                        mode="landscape" 
-                        autoOk={true} 
+                        mode="landscape"
+                        autoOk={true}
                         onChange={this._handleDateChange.bind(this)}/>
               <TimePicker hintText="Time"
                         fullWidth={true}
-                        mode="landscape" 
-                        autoOk={true} 
+                        mode="landscape"
+                        autoOk={true}
                         onChange={this._handleTimeChange.bind(this)}/>
               </span>
-              : null}          
+              : null}
               <SelectField floatingLabelText="Media type"
                           fullWidth={true}
                           value={this.state.speaker_media_type}
@@ -349,7 +350,7 @@ class NewEvent extends Component {
 
               <label className="load-img-label margin-top-medium block">Background Image</label>
               <ImgSelectionWrapper onChange={this._eventBackgroundChange.bind(this)} hideDefaultImageButton={true}/>
-            </Paper>  
+            </Paper>
           </form>
         </div>
       </div>
