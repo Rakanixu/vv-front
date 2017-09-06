@@ -261,7 +261,10 @@ class EventsGridList extends Component {
   _handleStartEvent(e) {
     this._startEvent(e.currentTarget.dataset.id).then(function(res) {
       this.refs.toastContainer.success('Event ' + res.data.title + ' started.', '', { closeButton: true });
-      window.open('https://' + this.state.domain + '/event/' + res.data.id + '/run', '_blank');
+      window.open(
+        'https://' + this.state.domain + '/event/' + res.data.id + '/run?t=' + localStorage.getItem('token'), 
+        '_blank'
+      );
     }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));

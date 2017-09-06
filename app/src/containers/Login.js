@@ -102,6 +102,7 @@ class Login extends Component {
   }
 
   _getMe(res) {
+    localStorage.setItem('token', res.data.token);
     return axios.get(config.baseAPI_URL + '/user/me');
   }
 
