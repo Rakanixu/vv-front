@@ -73,34 +73,34 @@ const styles = {
     height: 32,
     padding: 0
   },
-    inkBarStyle: {
-        height: 5,
-        background: '#2196F3'
-    },
-    tabs: {
-        width: 900,
-        height: 55,
-    },
-    button: {
-        marginLeft:10
-    },
-    tabItemContainerStyle: {
-        height: 54,
-        background: '#ffffff'
-    },
-    text: {
-        fontSize: 15
-    },
-    tab: {
-        textTransform: 'none'
-    },
-    userMenu: {
-        position: 'absolute',
-        boxShadow: 'none',
-        padding: 0,
-        top: 10,
-        right: 0
-    }
+  inkBarStyle: {
+      height: 5,
+      background: '#2196F3'
+  },
+  tabs: {
+      width: 900,
+      height: 55,
+  },
+  button: {
+      marginLeft:10
+  },
+  tabItemContainerStyle: {
+      height: 54,
+      background: '#ffffff'
+  },
+  text: {
+      fontSize: 15
+  },
+  tab: {
+      textTransform: 'none'
+  },
+  userMenu: {
+      position: 'absolute',
+      boxShadow: 'none',
+      padding: 0,
+      top: 10,
+      right: 0
+  }
 };
 const data = {
     menus: [

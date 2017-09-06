@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import {Link} from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {customgrey, bartextcolor} from '../../theme-colors';
+import './LeftBar.css';
 
 const LeftBar = (props) => {
   let { navDrawerOpen } = props;
@@ -32,6 +33,7 @@ const LeftBar = (props) => {
 
   return (
     <Drawer docked={true}
+            className="left-menu"
             open={navDrawerOpen}>
       <div style={styles.logoContainer}>
         <img id="principalLogo" style={styles.logo} src="/logo-white.png" alt="logo"/>

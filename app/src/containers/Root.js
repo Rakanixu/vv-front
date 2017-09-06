@@ -18,6 +18,7 @@ import GridOn from 'material-ui/svg-icons/image/grid-on';
 import ImageExposurePlus1 from 'material-ui/svg-icons/image/exposure-plus-1';
 import PermIdentity from 'material-ui/svg-icons/action/perm-identity';
 import Web from 'material-ui/svg-icons/av/web';
+import './Root.css'
 
 const utils = require('../utils.js');
 const data = {
@@ -63,13 +64,7 @@ class Root extends Component {
   render() {
     const paddingLeftDrawerOpen = 300;
     const styles = {
-      header: {
-        paddingLeft: this.state.open ? paddingLeftDrawerOpen : 0
-      },
-      container: {
-        margin: '90px 20px 20px 15px',
-        paddingLeft: this.state.open && this.props.width !== SMALL ? paddingLeftDrawerOpen : 0
-      }
+      header: {}
     };
 
     return (
@@ -80,7 +75,7 @@ class Root extends Component {
           <LeftBar navDrawerOpen={this.state.open}
                   menus={data.menus}
                   username="Root" />
-          <div style={styles.container}>
+          <div className="root-container">
             <Switch>
               <Route exact path={`${this.props.match.path}`} component={Principal} />
               <Route exact path={`${this.props.match.path}/principal`} component={Principal} />

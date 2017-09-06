@@ -53,20 +53,40 @@
   display: none;
   position: absolute;
   left: 290px;
+  display: flex;
 }
 
 @media (max-width: 1300px) {
   .manager-header-bar-left {
     width: 640px;
+    margin-left: 195px !important;
   }
 }
 
-@media (max-width: 1265px) {
+@media (min-width: 1200px) {
+  .manager-header-short-bar-left {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1200px) {
   .manager-header-bar-left {
     display: none;
   }
 
   .manager-header-short-bar-left {
-    display: flex;
+    left: 220px !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .manager-header-bar-left {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .manager-header-short-bar-left {
+    left: 55px !important;
   }
 }
