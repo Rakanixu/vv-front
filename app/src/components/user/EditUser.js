@@ -191,8 +191,8 @@ class EditUser extends Component {
                 ))}
               </SelectField>
 
-              <RaisedButton label="Edit"                           
-                          className="right margin-bottom-medium margin-top-medium" 
+              <RaisedButton label="Edit"
+                          className="right margin-bottom-medium margin-top-medium"
                           primary={true}
                           onTouchTap={this._handleEditUser.bind(this)} />
             </Paper>

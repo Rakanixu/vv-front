@@ -44,7 +44,7 @@ const styles = {
     backgroundImage: 'url("/background-register.jpg")',
     backgroundSize: '100% 100%',
     backgroundRepeat: 'no-repeat'
-  } 
+  }
 };
 
 class Register extends Component {
@@ -102,7 +102,7 @@ class Register extends Component {
     this._createPrincipal()
     .then(this._createUser.bind(this))
     .then(function(res) {
-      this.props.history.push('/' + config.roles.manager.name);
+      this.props.history.push('/login');
     }.bind(this))
     .catch(function(err) {
       this._handleError();
@@ -125,7 +125,7 @@ class Register extends Component {
         <div style={styles.background}>
           <ErrorReporting open={this.state.error !== null}
                           error={this.state.error} />
-          <div className="register-container">                
+          <div className="register-container">
             <Paper style={styles.paper}>
               <form>
                 <img style={styles.logo} src="/logo.png" alt="logo"/>
@@ -138,10 +138,12 @@ class Register extends Component {
                           onChange={this._handleTextFieldChange.bind(this)}
                           fullWidth={true} />
                 <TextField floatingLabelText="Password"
+                          type="password"
                           data-val="password"
                           onChange={this._handleTextFieldChange.bind(this)}
                           fullWidth={true} />
                 <TextField floatingLabelText="Password confirmation"
+                          type="password"
                           data-val="passwordConfirmation"
                           onChange={this._handleTextFieldChange.bind(this)}
                           fullWidth={true} />

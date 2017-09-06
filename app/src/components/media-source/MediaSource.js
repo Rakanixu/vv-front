@@ -15,7 +15,7 @@ import './MediaSource.css';
 axios.defaults.withCredentials = true;
 
 const config = require('../../config.json');
-
+var user = {};
 var styles = {
   paper: {
     padding: 20,
@@ -33,8 +33,22 @@ class MediaSource extends Component {
       count: 0,
       main_media: {},
       main_media_url: '',
-      url: config.baseAPI_URL + '/event/'
+      url: config.baseAPI_URL + '/event/',
+      usersUrl: config.baseAPI_URL + '/principal/',
+      vip_users: []
     };
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem('alantu-user')) {
+      user = JSON.parse(localStorage.getItem('alantu-user'));
+    }
+
+    axios.get(this.state.usersUrl + user.principal_id + '/role/5/user').then(res => {
+      this.setState({ vip_users: res.data });
+    }).catch(function(err) {
+      this._handleError(err);
+    }.bind(this));
   }
 
   _handleTextFieldChange(e) {
@@ -57,6 +71,12 @@ class MediaSource extends Component {
     });
   }
 
+  _handleSpeakerChange = (e, index, val) => {
+    this.setState({
+      main_media: val
+    });
+  }
+  
   _handleNewMediaSource(e) {
     this._createMediaSource()
     .then(function(res) {
@@ -146,12 +166,25 @@ class MediaSource extends Component {
                 <div className="image-selector-container">
                   <ImgSelectionWrapper onChange={this._onMainMediaChange.bind(this)} hideDefaultImageButton={true}/>
                 </div>
-                :
-                <TextField floatingLabelText="Media URL"
-                          data-val="main_media_url"
+              : null }
+              { this.state.main_media_type_id === 2 ?
+              <TextField floatingLabelText="Media URL"
+                          data-val="main_media"
                           onChange={this._handleTextFieldChange.bind(this)}
                           fullWidth={true} />
-              }
+              : null }
+              { this.state.main_media_type_id === 3 ?
+                <SelectField floatingLabelText="Speaker"
+                          fullWidth={true}
+                          value={this.state.main_media}
+                          onChange={this._handleSpeakerChange.bind(this)}>
+                {this.state.vip_users.map((user, i) => (
+                  <MenuItem key={i} value={user.email} primaryText={user.email} />
+                ))}
+              </SelectField>
+              : null }
+
+
               <div className="overflow">
                 <RaisedButton label="Save Source"
                               primary={true}

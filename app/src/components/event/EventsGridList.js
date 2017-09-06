@@ -228,6 +228,7 @@ class EventsGridList extends Component {
     }.bind(this)).catch(err => {
       this._handleError(err);
     });
+    this._hideConfirmation();
   }
 
   _handlePageChange() {
@@ -239,7 +240,7 @@ class EventsGridList extends Component {
   }
 
   _handleDelete(e) {
-    this.setState({ 
+    this.setState({
       showDeleteConfirmation: true,
       eventId: e.currentTarget.dataset.id
     });
@@ -260,7 +261,10 @@ class EventsGridList extends Component {
   _handleStartEvent(e) {
     this._startEvent(e.currentTarget.dataset.id).then(function(res) {
       this.refs.toastContainer.success('Event ' + res.data.title + ' started.', '', { closeButton: true });
-      window.open('https://' + this.state.domain + '/events/' + res.data.id, '_blank');
+      window.open(
+        'https://' + this.state.domain + '/event/' + res.data.id + '/run?t=' + localStorage.getItem('token'), 
+        '_blank'
+      );
     }.bind(this)).catch(function(err) {
       this._handleError(err);
     }.bind(this));
@@ -495,9 +499,9 @@ class EventsGridList extends Component {
                                   labelStyle={styles.stopLabel}
                                   label="Stop"
                                   onTouchTap={this._handleStopEvent.bind(this)}
-                                  style={styles.stopButton}/>            
+                                  style={styles.stopButton}/>
                   </div>
-                  : null }  
+                  : null }
                 </div>
               </div>
             </GridTile>

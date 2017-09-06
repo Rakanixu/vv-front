@@ -11,3 +11,28 @@
 .finish-later button span {
   color: white !important;
 }
+
+.event-info-column-share-icons {
+  padding-top: 15px;
+}
+
+.event-info-column-share-icons i {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.invite-with input {
+  cursor: text !important;
+}
+
+#share {
+  font-size: 16px;
+}
+
+#share .jssocials-shares {
+  float: left;
+}
+
+.event-info-column-share-icons i {
+  margin-left: 0 !important;
+}

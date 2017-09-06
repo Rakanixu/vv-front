@@ -86,11 +86,11 @@ class EditPrincipal extends Component {
     var data = new FormData();
     data.append('name', this.state.principal.name);
     data.append('domain', this.state.principal.domain);
-    data.append('design', this.state.principal.design);
+    data.append('design', this.state.principal.design != null ? this.state.principal.design : '');
     data.append('primary_color', this.state.principal.primary_color);
     data.append('secondary_color', this.state.principal.secondary_color);
-    data.append('tags', this.state.principal.tags);
-    data.append('description', this.state.principal.description);
+    data.append('tags', this.state.principal.tags ? this.state.principal.tags : '');
+    data.append('description', this.state.principal.description ? this.state.principal.description : '');
     data.append('created_at', this.state.principal.created_at);
     data.append('enabled', this.state.principal.enabled);
     data.append('background', background);

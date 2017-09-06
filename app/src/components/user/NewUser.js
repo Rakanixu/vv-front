@@ -150,10 +150,12 @@ class NewUser extends Component {
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
               <TextField floatingLabelText="Password"
+                        type="password"
                         data-val="password"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
               <TextField floatingLabelText="Password confirmation"
+                        type="password"
                         data-val="password_confirmation"
                         onChange={this._handleTextFieldChange.bind(this)}
                         fullWidth={true} />
@@ -167,9 +169,9 @@ class NewUser extends Component {
                 ))}
               </SelectField>
 
-              <RaisedButton label="Save User"                           
-                          className="right margin-bottom-medium margin-top-medium" 
-                          primary={true}  
+              <RaisedButton label="Save User"
+                          className="right margin-bottom-medium margin-top-medium"
+                          primary={true}
                           onTouchTap={this._handleNewUser.bind(this)} />
             </Paper>
 

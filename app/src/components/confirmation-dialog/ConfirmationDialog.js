@@ -35,10 +35,8 @@ class ConfirmationDialog extends Component {
   };
 
   _handleCondfirm() {
-    setTimeout(function() {
-      this._handleDialogClose();
-    }.bind(this), 50);
     this.props.onConfirm();
+    this._handleDialogClose();
   }
 
   render() {
@@ -54,11 +52,11 @@ class ConfirmationDialog extends Component {
 
           <div className="dialog-actions">
             <RaisedButton label={this.props.cancelLabel}
-                          className="cancel-button" 
+                          className="cancel-button"
                           onTouchTap={this.props.onCancel} />
             <span className="separator"></span>
             <RaisedButton label={this.props.confirmLabel}
-                          className="confirm-button" 
+                          className="confirm-button"
                           onTouchTap={this._handleCondfirm.bind(this)} />
           </div>
         </div>

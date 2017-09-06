@@ -1,0 +1,28 @@
+.left-menu > div {
+  transition: all ease .3s !important;
+}
+
+@media (max-width: 1300px) {
+  .left-menu > div {
+    width: 220px !important;
+    overflow: hidden !important;
+  }
+
+  .manager-container {
+    margin-left: 220px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .left-menu >div {
+    width: 50px !important;
+    overflow: hidden !important;
+  }
+  .left-menu img {
+    visibility: hidden;
+  }
+
+  .manager-container {
+    margin-left: 50px !important;
+  }
+}

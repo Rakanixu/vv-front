@@ -48,6 +48,7 @@ import EventLocationList from '../components/event-location/EventLocationList';
 import NewEventLocation from '../components/event-location/NewEventLocation';
 import EditEventLocation from '../components/event-location/EditEventLocation';
 import Profile from '../components/profile/Profile';
+import { setBackground, setLogo } from '../utils';
 import axios from 'axios';
 import './Manager.css';
 
@@ -72,34 +73,34 @@ const styles = {
     height: 32,
     padding: 0
   },
-    inkBarStyle: {
-        height: 5,
-        background: '#2196F3'
-    },
-    tabs: {
-        width: 900,
-        height: 55,
-    },
-    button: {
-        marginLeft:10
-    },
-    tabItemContainerStyle: {
-        height: 54,
-        background: '#ffffff'
-    },
-    text: {
-        fontSize: 15
-    },
-    tab: {
-        textTransform: 'none'
-    },
-    userMenu: {
-        position: 'absolute',
-        boxShadow: 'none',
-        padding: 0,
-        top: 10,
-        right: 0
-    }
+  inkBarStyle: {
+      height: 5,
+      background: '#2196F3'
+  },
+  tabs: {
+      width: 900,
+      height: 55,
+  },
+  button: {
+      marginLeft:10
+  },
+  tabItemContainerStyle: {
+      height: 54,
+      background: '#ffffff'
+  },
+  text: {
+      fontSize: 15
+  },
+  tab: {
+      textTransform: 'none'
+  },
+  userMenu: {
+      position: 'absolute',
+      boxShadow: 'none',
+      padding: 0,
+      top: 10,
+      right: 0
+  }
 };
 const data = {
     menus: [
@@ -144,6 +145,8 @@ class Manager extends Component {
   _getPrincipal = (id) => {
     axios.get(this.state.url + '/' + id).then(res => {
       principal = res.data;
+      setBackground(config.baseURL + principal.background);
+      setLogo(config.baseURL + principal.logo);
     }).catch(function(err) {
       this._handleError(err);
     }.bind(this));
