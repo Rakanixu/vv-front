@@ -169,11 +169,15 @@ class EventPreview extends Component {
                           value={this.state.event.date}
                           mode="landscape"
                           autoOk={true} />
-                <TextField floatingLabelText="Invite With"
+                <p id="invite-with-label">Invite With</p>
+                <hr id="invite-with-hr"/>
+                <p id="invite-with-text-select">{this.state.inviteWith}</p>          
+                {/* <TextField floatingLabelText="Invite With"
                           className="invite-with"
                           disabled={true}
+                          style={{cursor: 'text', userSelect: 'all'}}
                           value={this.state.inviteWith}
-                          fullWidth={true} />
+                          fullWidth={true} /> */}
                 <div id="share" className="event-info-column-share-icons"></div>
               </span>
               : null}

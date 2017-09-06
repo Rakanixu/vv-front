@@ -214,7 +214,7 @@ class EditMediaSource extends Component {
                           fullWidth={true} />
               : null }
               { this.state.event_guest.main_media_type_id === 3 ?
-                <SelectField floatingLabelText="Speaker"
+                <SelectField floatingLabelText="User"
                           fullWidth={true}
                           value={this.state.event_guest.main_media}
                           onChange={this._handleSpeakerChange.bind(this)}>

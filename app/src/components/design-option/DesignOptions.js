@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { dataURItoBlob } from '../../utils';
+import { dataURItoBlob, setBackground, setLogo, setPrimaryColor } from '../../utils';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -92,6 +92,9 @@ class DesignOptions extends Component {
     data.append('logo', this.state.logo || this.state.principal.logo);
 
     axios.put(config.baseAPI_URL + '/principal/' + user.principal_id, data).then(function(res) {
+      setBackground(config.baseURL + res.data.background);
+      setLogo(config.baseURL + res.data.logo);
+      setPrimaryColor(res.data.primary_color);
       this.props.history.push('/manager');
     }.bind(this)).catch(function(err) {
       this._handleError(err);

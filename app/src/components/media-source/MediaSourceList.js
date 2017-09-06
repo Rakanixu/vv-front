@@ -87,7 +87,7 @@ class MediaSourceList extends Component {
         <Table fixedHeader={true}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={{width: '52px'}}>Media</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '52px'}}>Source</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft}>Name</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Description</TableHeaderColumn>
               <TableHeaderColumn style={styles.alignLeft} className="column-fix-left-margin">Media type</TableHeaderColumn>

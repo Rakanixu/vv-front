@@ -3,6 +3,7 @@
   "baseAPI_URL": "http://stagingapi.vvents.com:9000/api/v1",
   "defaultLogo": "/logo.svg",
   "defaultBackground": "/background.png",
+  "defaultPrimaryColor": "rgb(56, 62, 82)",
   "roles": {
     "root": {
       "name": "root",
