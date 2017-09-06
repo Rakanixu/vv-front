@@ -44,6 +44,15 @@ export function setLogo(url) {
   }
 }
 
+export function setPrimaryColor(color) {
+  if (color === undefined || color === '') {
+    color = config.defaultPrimaryColor;
+  }
+  if (document.querySelector('.left-menu div')) {
+    document.querySelector('.left-menu div').style.backgroundColor = color;
+  }
+}
+
 export function dataURItoBlob(dataURI) {
   var binary = atob(dataURI.split(',')[1]);
   var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];

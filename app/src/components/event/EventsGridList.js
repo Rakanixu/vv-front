@@ -326,108 +326,6 @@ class EventsGridList extends Component {
                           onTouchTap={this._handlePageChange.bind(this)}/>
           </div>
         </div>
-{/*         <Tabs style={styles.tabs}
-              tabItemContainerStyle={styles.tabItemContainerStyle}
-              tabTemplateStyle={styles.tabTemplateStyle}
-              inkBarStyle={styles.inkBarStyle}>
-          <Tab style={styles.tab}
-               label="All Events" >
-            <div>
-              <p>
-                This is an example tab.
-              </p>
-              <p>
-                You can put any sort of HTML or react component in here. It even keeps the component state!
-              </p>
-            </div>
-          </Tab>
-          <Tab style={styles.tab}
-               label="Custom" >
-            <div>
-              <p className="events-tabs__custom">
-                  <Paper
-                      zDepth={1}
-                      style={styles.searchRow}>
-                    <div style={styles.searchRowLeftSide}>
-                      <DropDownMenu value={1}
-                                    underlineStyle={{display: 'none'}}
-                                    iconStyle={{marginRight: -20}}
-                                    style={{height: 60, borderRight: 'solid 1px rgb(219, 223, 222)'}}
-                                    onChange={this.handleChange}>
-                        <MenuItem value={1} primaryText="Filter products" />
-                        <MenuItem value={2} primaryText="Item one" />
-                        <MenuItem value={3} primaryText="Item two" />
-                        <MenuItem value={4} primaryText="Item three" />
-                        <MenuItem value={5} primaryText="Item +" />
-                      </DropDownMenu>
-                      <IconButton>
-                        <Search color={'black'} />
-                      </IconButton>
-                      <TextField underlineShow={false}
-                                 hintText="Start typing to search for products..."/>
-                    </div>
-                    <div style={styles.searchRowRightSide}>
-                      <FlatButton style={{height: 40, borderLeft: 'solid 1px rgb(219, 223, 222)'}}
-                                  labelStyle={styles.addSearchItem}
-                                  label="Save this search" />
-                      <FlatButton style={{height: 45}}
-                                  icon={<ActionDelete color={'#ffffff'} />}
-                                  backgroundColor={'rgb(72, 78, 100)'}/>
-                    </div>
-                  </Paper>
-                <div style={styles.searchItemsRow}>
-                  <FlatButton label="Product vendor is Alantu"
-                              labelPosition="before"
-                              backgroundColor={'rgb(54, 152, 222)'}
-                              style={{borderRadius: 15}}
-                              labelStyle={{fontSize: 12, color: '#ffffff', textTransform: 'none'}}
-                              primary={true}
-                              icon={<ActionClear color={"#ffffff"} />}/>
-                </div>
-              </p>
-            </div>
-          </Tab>
-          <Tab
-              style={styles.tab}
-              label="Period" >
-            <div>
-              <h2 style={styles.headline}>Tab Two</h2>
-              <p>
-                This is another example tab.
-              </p>
-            </div>
-          </Tab>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-          <Tab
-              style={styles.tab}
-              disabled/>
-        </Tabs> */}
 
         <GridList ref="grid"
                   className="events-cards-grid"
@@ -460,7 +358,7 @@ class EventsGridList extends Component {
                                     onTouchTap={this._handleCopy.bind(this)}/>
                       :
                       <RaisedButton className="events-copy-btn"
-                                    label="New event"
+                                    label="New"
                                     labelStyle={styles.copyLabel}
                                     icon={<Create color="white" style={styles.copyIcon}/>}
                                     data-id={event.id}

@@ -48,7 +48,7 @@ import EventLocationList from '../components/event-location/EventLocationList';
 import NewEventLocation from '../components/event-location/NewEventLocation';
 import EditEventLocation from '../components/event-location/EditEventLocation';
 import Profile from '../components/profile/Profile';
-import { setBackground, setLogo } from '../utils';
+import { setBackground, setLogo, setPrimaryColor } from '../utils';
 import axios from 'axios';
 import './Manager.css';
 
@@ -147,6 +147,7 @@ class Manager extends Component {
       principal = res.data;
       setBackground(config.baseURL + principal.background);
       setLogo(config.baseURL + principal.logo);
+      setPrimaryColor(principal.primary_color);
     }).catch(function(err) {
       this._handleError(err);
     }.bind(this));

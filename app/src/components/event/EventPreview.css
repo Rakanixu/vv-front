@@ -12,17 +12,21 @@
   color: white !important;
 }
 
-.event-info-column-share-icons {
-  padding-top: 15px;
-}
-
 .event-info-column-share-icons i {
   margin-left: 15px;
   cursor: pointer;
 }
 
+.invite-with {
+  cursor: text !important;
+}
+
 .invite-with input {
   cursor: text !important;
+  -webkit-user-select: all !important; 
+  -moz-user-select: all !important;  
+  -ms-user-select: all !important;   
+  user-select: all !important;     
 }
 
 #share {
@@ -35,4 +39,30 @@
 
 .event-info-column-share-icons i {
   margin-left: 0 !important;
+}
+
+#invite-with-label {
+  color: rgb(158, 158, 158) !important;
+}
+
+#invite-with-hr {
+  border-top: none rgba(0, 0, 0, 0.3); 
+  border-left: none rgba(0, 0, 0, 0.3); 
+  border-right: none rgba(0, 0, 0, 0.3); 
+  border-bottom: 2px dotted rgba(0, 0, 0, 0.3); 
+  bottom: 8px; 
+  box-sizing: content-box; 
+  margin: 0px; 
+  width: 100%;
+}
+
+#invite-with-text-select {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.4);
+  cursor: text !important;
+  -webkit-user-select: all !important; 
+  -moz-user-select: all !important;  
+  -ms-user-select: all !important;   
+  user-select: all !important;   
+  z-index: 9999;
 }
