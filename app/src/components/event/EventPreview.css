@@ -25,6 +25,10 @@
   cursor: text !important;
 }
 
+#share {
+  font-size: 16px;
+}
+
 #share .jssocials-shares {
   float: left;
 }
