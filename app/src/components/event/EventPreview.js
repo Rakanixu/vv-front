@@ -94,11 +94,13 @@ class EventPreview extends Component {
       res.data.date = new Date(res.data.date);
       this.setState({
         event: res.data,
-        inviteWith: 'https://' + this.state.domain + '/events/' + res.data.id,
+        inviteWith: 'https://' + this.state.domain + '/event/' + res.data.id + '/run',
         eventBackgroundUrlFromGallery: res.data.event_background,
         previewImgUrlFromGallery: res.data.preview_img,
         original_speaker_media: res.data.speaker_media
       });
+
+      window.shareReady();
     }.bind(this))
     .catch(function(err) {
       this._handleError(err);
@@ -138,6 +140,7 @@ class EventPreview extends Component {
           <form className="edit-event-form">
             <Paper style={styles.paperLeft}>
               <TextField floatingLabelText={this._getType().capitalize() + ' title'}
+                        className="title"
                         disabled={true}
                         value={this.state.event.title}
                         fullWidth={true} />
@@ -155,21 +158,23 @@ class EventPreview extends Component {
                         fullWidth={true} />
               {!this.props.isTemplate ?
               <span>
-              <DatePicker hintText="Date"
-                        disabled={true}
-                        mode="landscape"
-                        fullWidth={true}
-                        value={this.state.event.date}/>
-              <TimePicker hintText="Time"
-                        disabled={true}
-                        fullWidth={true}
-                        value={this.state.event.date}
-                        mode="landscape"
-                        autoOk={true} />
-              <TextField floatingLabelText="Invite With"
-                        disabled={true}
-                        value={this.state.inviteWith}
-                        fullWidth={true} />
+                <DatePicker hintText="Date"
+                          disabled={true}
+                          mode="landscape"
+                          fullWidth={true}
+                          value={this.state.event.date}/>
+                <TimePicker hintText="Time"
+                          disabled={true}
+                          fullWidth={true}
+                          value={this.state.event.date}
+                          mode="landscape"
+                          autoOk={true} />
+                <TextField floatingLabelText="Invite With"
+                          className="invite-with"
+                          disabled={true}
+                          value={this.state.inviteWith}
+                          fullWidth={true} />
+                <div id="share" className="event-info-column-share-icons"></div>
               </span>
               : null}
               <SelectField floatingLabelText="Media type"
