@@ -71,8 +71,16 @@ class Unauthenticated extends Component {
           <AppBar style={styles.header}
                   showMenuIconButton={false}
                   children={
-                    <div className="logo-container">
-                      <img id="principalLogo" src=""/>
+                    <div>
+                      <div className="logo-container">
+                        <a href="/">
+                          <img id="principalLogo" src=""/>
+                        </a>
+                      </div>
+                      <div className="unauthenticated-right-header-container">
+                        <a href="/login">Login</a>
+                        <a href="/register">Don't you have an account?</a>
+                      </div>
                     </div>
                   } />
 

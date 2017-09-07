@@ -14,6 +14,19 @@
   height: 100%;
   padding: 0;
 }
+.unauthenticated-right-header-container {
+  margin-top: 12px;
+}
+
+.unauthenticated-right-header-container a {
+  color: rgb(25, 118, 210);
+  font-size: 1.1em;
+}
+
+.unauthenticated-right-header-container a:first-of-type {
+  font-size: 2em;
+  margin-right: 15px;
+}
 
 @media (max-width: 1300px) {
   .header-bar-left {
