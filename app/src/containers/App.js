@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ThemeDefault from '../theme-default';
 import Login from './Login';
 import Register from './Register';
+import EventsGridList from '../components/event/EventsGridList';
 import Root from './Root';
 import Manager from './Manager';
 import './App.css';
@@ -18,8 +19,12 @@ class App extends Component {
         <MuiThemeProvider muiTheme={ThemeDefault}>
           <div>
             <Switch>
-              <Route exact path='/'/>
-              <Route exact path='/event'/>
+              <Route exact path='/'>
+                <EventsGridList isTemplate={false} authenticated={false}/>
+              </Route>
+              <Route exact path='/event'>
+                <EventsGridList isTemplate={false} authenticated={false}/>
+              </Route>
               <Route exact path='/event/:eventId'/>
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />

@@ -59,20 +59,13 @@
   min-height: 300px;
 }
 
-/* .events-card-block  > div:nth-child(2) {
-  top: 124px !important;
-  height: 68px !important;
-} */
-
 .events-card-block-img {
   width: 100%;
-  height: 60%;
+  height: 75%;
 }
 
 .events-card-block-img-wrapper {
   position: relative;
-  /*padding-bottom: prc(150, 300);*/
-  /*max-height: 0;*/
   height: 100%;
 }
 
@@ -107,7 +100,7 @@
 }
 
 .events-card-block__content__buttons {
-  height: 40%;
+  height: 25%;
   padding-top: 10%;
   background-color: #fff;
   display: flex;
@@ -128,7 +121,7 @@
   justify-content: flex-end;
   flex-direction: row;
   align-items: baseline;
-  height: 40%;
+  height: 25%;
   margin-right: 30px;
 }
 
