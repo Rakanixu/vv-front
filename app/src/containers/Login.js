@@ -12,6 +12,7 @@ import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Help from 'material-ui/svg-icons/action/help';
 import ThemeDefault from '../theme-default';
 import UnauthenticatedHeader from './../components/header/UnauthenticatedHeader';
+import FbLogin from './FbLogin';
 import axios from 'axios';
 
 const config = require('./../config.json');
@@ -92,6 +93,14 @@ class Login extends Component {
   componentDidMount() {
     utils.setBackground();
     utils.setLogo();
+  }
+
+  handleResponse = (data) => {
+    console.log(data);
+  }
+ 
+  handleError = (error) => {
+    this.setState({ error });
   }
 
   _login() {
@@ -191,6 +200,11 @@ class Login extends Component {
                       primary={true}
                       style={styles.loginBtn} />
                     <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>
+                  </div>
+
+                  <div style={{marginTop: '40px', textAlign: 'center'}}>
+                    <p style={{marginBottom: '25px'}}>- or -</p>
+                    <FbLogin />
                   </div>
                 </form>
               </Paper>
