@@ -106,61 +106,6 @@ const styles = {
     width: 15,
     height: 15,
     marginLeft: 0
-  },
-  tabs: {
-    height: 200,
-    backgroundColor: '#ffffff'
-  },
-  tab: {
-
-    color: 'gray',
-    marginTop: -5,
-    height: 45,
-    textTransform: 'none'
-  },
-  inkBarStyle: {
-    background: '#ffffff',
-    height: 40,
-    marginTop: -40
-  },
-  tabItemContainerStyle: {
-    background: 'rgb(219, 223, 222)'
-  },
-  tabTemplateStyle: {
-    background: '#ffffff'
-  },
-  searchRow: {
-    display: 'flex',
-    width: '95%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 10,
-    borderRadius: 5,
-    overflow: 'hidden',
-    height: 40
-  },
-  searchItemsRow: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '95%',
-    marginTop: 20,
-    overflow: 'hidden',
-    height: 40
-  },
-  searchRowLeftSide: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
-  searchRowRightSide: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
-  addSearchItem: {
-    fontSize: 15,
-    textTransform: 'none'
   }
 };
 let user = {};
@@ -190,7 +135,9 @@ class EventsGridList extends Component {
 
   componentDidMount() {
     if (!JSON.parse(localStorage.getItem('alantu-user'))) {
-      this._handleError(new Error('User cannot be retrieved'));
+      if (!this.props.authenticated === false) {
+        this._handleError(new Error('User cannot be retrieved'));
+      }
     } else {
       user = JSON.parse(localStorage.getItem('alantu-user'));
     }
@@ -211,7 +158,13 @@ class EventsGridList extends Component {
   }
 
   _getPrincipal = (id) => {
-    return axios.get(this.state.principalUrl + id);
+    let url;
+    if (!id) {
+      url = this.state.principalUrl + 'me';
+    } else {
+      url = this.state.principalUrl + id;
+    }
+    return axios.get(url);
   }
 
   _getEvents() {
@@ -318,6 +271,7 @@ class EventsGridList extends Component {
         <ErrorReporting open={this.state.error !== null}
                         error={this.state.error} />
 
+        {(this.props.authenticated !== false) ? 
         <div className="events-title">
           <h1>Overview {this._getType().capitalize()}s</h1>
           <div className="events-new-event">
@@ -326,6 +280,7 @@ class EventsGridList extends Component {
                           onTouchTap={this._handlePageChange.bind(this)}/>
           </div>
         </div>
+        : null }
 
         <GridList ref="grid"
                   className="events-cards-grid"
@@ -347,6 +302,7 @@ class EventsGridList extends Component {
                     </div>
                     <div className="events-card-block-title">{event.title}</div>
 
+                    {(this.props.authenticated !== false) ? 
                     <div className="events-card-block__content__buttons__sub">
                       {!this.props.isTemplate ?
                       <RaisedButton className="events-copy-btn"
@@ -381,10 +337,11 @@ class EventsGridList extends Component {
                                     style={styles.deleteButton}
                                     onTouchTap={this._handleDelete.bind(this)}/>
                     </div>
+                    : null}
                   </div>
                 </div>
                 <div className="events-card-block__content__buttons">
-                  {!this.props.isTemplate ?
+                  {!this.props.isTemplate && (this.props.authenticated !== false) ?
                   <div className="events-card-block__content__buttons__main">
                     <RaisedButton className="events-start-btn"
                                   label="Start"

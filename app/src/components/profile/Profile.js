@@ -63,7 +63,6 @@ class Profile extends Component {
 
   _getProfile(id) {
     axios.get(this.state.userUrl + id).then(function(res) {
-      debugger;
       this.setState({ 
         user: res.data,
         avatar: res.data.avatar,

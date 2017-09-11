@@ -7,6 +7,7 @@ import Login from './Login';
 import Register from './Register';
 import Root from './Root';
 import Manager from './Manager';
+import Unauthenticated from './Unauthenticated';
 import './App.css';
 
 injectTapEventPlugin();
@@ -18,8 +19,12 @@ class App extends Component {
         <MuiThemeProvider muiTheme={ThemeDefault}>
           <div>
             <Switch>
-              <Route exact path='/'/>
-              <Route exact path='/event'/>
+              <Route exact path='/'>
+                <Unauthenticated/>
+              </Route>
+              <Route exact path='/event'>
+                <Unauthenticated/>
+              </Route>
               <Route exact path='/event/:eventId'/>
               <Route path='/login' component={Login} />
               <Route path='/register' component={Register} />

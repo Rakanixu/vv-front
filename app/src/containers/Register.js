@@ -8,6 +8,7 @@ import ErrorReporting from 'material-ui-error-reporting';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
+import UnauthenticatedHeader from './../components/header/UnauthenticatedHeader';
 import axios from 'axios';
 import './Register.css';
 
@@ -122,44 +123,48 @@ class Register extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={ThemeDefault}>
-        <div style={styles.background}>
-          <ErrorReporting open={this.state.error !== null}
-                          error={this.state.error} />
-          <div className="register-container">
-            <Paper style={styles.paper}>
-              <form>
-                <img style={styles.logo} src="/logo.png" alt="logo"/>
-                <TextField floatingLabelText="Username"
-                          data-val="username"
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Email"
-                          data-val="email"
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Password"
-                          type="password"
-                          data-val="password"
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <TextField floatingLabelText="Password confirmation"
-                          type="password"
-                          data-val="passwordConfirmation"
-                          onChange={this._handleTextFieldChange.bind(this)}
-                          fullWidth={true} />
-                <div className="checkbox-container">
-                  <Checkbox ref="checkbox"/>
-                  <span>I accept the
-                    <a style={styles.link} href='/terms'> Terms</a> and
-                    <a style={styles.link} href='/privacy_policy'> Data Protection Policy</a> of vVents LLC
-                  </span>
-                </div>
-                <div style={styles.alignCenter}>
-                  <RaisedButton label="Register" primary={true} onTouchTap={this._handleRegister.bind(this)} />
-                  <p>Already have an account? <a style={styles.login} href="/login">Sign in</a></p>
-                </div>
-              </form>
-            </Paper>
+        <div>
+          <UnauthenticatedHeader />
+
+          <div style={styles.background}>
+            <ErrorReporting open={this.state.error !== null}
+                            error={this.state.error} />
+            <div className="register-container">
+              <Paper style={styles.paper}>
+                <form>
+                  <img style={styles.logo} src="/logo.png" alt="logo"/>
+                  <TextField floatingLabelText="Username"
+                            data-val="username"
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <TextField floatingLabelText="Email"
+                            data-val="email"
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <TextField floatingLabelText="Password"
+                            type="password"
+                            data-val="password"
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <TextField floatingLabelText="Password confirmation"
+                            type="password"
+                            data-val="passwordConfirmation"
+                            onChange={this._handleTextFieldChange.bind(this)}
+                            fullWidth={true} />
+                  <div className="checkbox-container">
+                    <Checkbox ref="checkbox"/>
+                    <span>I accept the
+                      <a style={styles.link} href='/terms'> Terms</a> and
+                      <a style={styles.link} href='/privacy_policy'> Data Protection Policy</a> of vVents LLC
+                    </span>
+                  </div>
+                  <div style={styles.alignCenter}>
+                    <RaisedButton label="Register" primary={true} onTouchTap={this._handleRegister.bind(this)} />
+                    <p>Already have an account? <a style={styles.login} href="/login">Sign in</a></p>
+                  </div>
+                </form>
+              </Paper>
+            </div>
           </div>
         </div>
       </MuiThemeProvider>

@@ -91,8 +91,7 @@ class Header extends React.Component {
 
     return (
         <div>
-            <AppBar
-              style={{...styles, ...style.appBar}}
+            <AppBar style={{...styles, ...style.appBar}}
               showMenuIconButton={false}
               iconElementLeft={
                 <IconButton style={style.menuButton} onClick={handleChangeRequestNavDrawer}>
@@ -111,29 +110,10 @@ class Header extends React.Component {
                           label="Principals"></Tab>
                     </Tabs>
                   </MuiThemeProvider>
-{/*                   <FloatingActionButton
-                      mini={true}
-                      backgroundColor="#2196F3"
-                      zDepth={0}
-                      style={style.button}>
-                    <ContentAdd />
-                  </FloatingActionButton> */}
                 </div>
               }
               iconElementRight={
                 <div className="header-bar-right">
-                  {/* <IconMenu color={grey900}
-                            iconButtonElement={
-                              <IconButton><ViewModule color={grey900}/></IconButton>
-                            }
-                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                  >
-                    <MenuItem key={1} primaryText="Application 1"/>
-                    <MenuItem key={2} primaryText="Application 2"/>
-                    <MenuItem key={3} primaryText="Application 3"/>
-                  </IconMenu> */}
-
                   <div className="header-short-bar-left">
                     <IconMenu
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
@@ -164,7 +144,6 @@ class Header extends React.Component {
                 </div>
               }
             />
-
         </div>
       );
   }
