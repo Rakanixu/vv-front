@@ -11,6 +11,7 @@ import ErrorReporting from 'material-ui-error-reporting';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Help from 'material-ui/svg-icons/action/help';
 import ThemeDefault from '../theme-default';
+import UnauthenticatedHeader from './../components/header/UnauthenticatedHeader';
 import axios from 'axios';
 
 const config = require('./../config.json');
@@ -162,34 +163,38 @@ class Login extends Component {
 
     return (
       <MuiThemeProvider muiTheme={ThemeDefault}>
-        <div style={styles.background}>
-          <div style={styles.loginContainer}>
-            <Paper style={styles.paper}>
-              <ErrorReporting open={this.state.error !== null}
-                  error={this.state.error} />
-              <form>
-                <img style={styles.logo} src="/logo.png" alt="logo"/>
-                <TextField floatingLabelText="Email or username"
-                  data-val="email"
-                  onChange={this._handleTextFieldChange.bind(this)}
-                  fullWidth={true} />
-                <TextField floatingLabelText="Password"
-                  type="password"
-                  data-val="password"
-                  onChange={this._handleTextFieldChange.bind(this)}
-                  fullWidth={true} />
-                <div style={styles.alignRight}>
-                  <a style={styles.forgotPassword} href="/forgot_password">Forgot password?</a>
-                </div>
-                <div style={styles.alignCenter}>
-                  <RaisedButton label="Login"
-                    onTouchTap={this._handleLogin.bind(this)}
-                    primary={true}
-                    style={styles.loginBtn} />
-                  <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>
-                </div>
-              </form>
-            </Paper>
+        <div>
+          <UnauthenticatedHeader />
+
+          <div style={styles.background}>
+            <div style={styles.loginContainer}>
+              <Paper style={styles.paper}>
+                <ErrorReporting open={this.state.error !== null}
+                    error={this.state.error} />
+                <form>
+                  <img style={styles.logo} src="/logo.png" alt="logo"/>
+                  <TextField floatingLabelText="Email or username"
+                    data-val="email"
+                    onChange={this._handleTextFieldChange.bind(this)}
+                    fullWidth={true} />
+                  <TextField floatingLabelText="Password"
+                    type="password"
+                    data-val="password"
+                    onChange={this._handleTextFieldChange.bind(this)}
+                    fullWidth={true} />
+                  <div style={styles.alignRight}>
+                    <a style={styles.forgotPassword} href="/forgot_password">Forgot password?</a>
+                  </div>
+                  <div style={styles.alignCenter}>
+                    <RaisedButton label="Login"
+                      onTouchTap={this._handleLogin.bind(this)}
+                      primary={true}
+                      style={styles.loginBtn} />
+                    <p>Don't you have an account? <a style={styles.signUp} href="/register">Sign Up</a></p>
+                  </div>
+                </form>
+              </Paper>
+            </div>
           </div>
         </div>
       </MuiThemeProvider>
